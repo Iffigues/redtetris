@@ -9,10 +9,11 @@ services:
   react:
     image: node:latest
     working_dir: /react
-    command:  bash -c "npm install  && npm install npm@latest -g && npm serve"
+    command:  bash -c "ls * && npm install  && npm install npm@latest -g && npm audit fix && npm start run --host 0.0.0.0"
     expose: 
       - 3000
     ports:
       - "3000:3000"
+    stdin_open: true
     volumes:
       - ./react:/react
