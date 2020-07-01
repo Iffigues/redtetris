@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  node:
+    image: node:latest
+    command: "npm install npm@latest -g"
+    environment:
+      - ./node:.
+  react:
+    image: node:latest
+    working_dir: /react
+    command:  bash -c "npm install  && npm install npm@latest -g && npm serve"
+    expose: 
+      - 3000
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./react:/react
