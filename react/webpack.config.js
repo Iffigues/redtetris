@@ -9,12 +9,12 @@ module.exports = {
   },
 
   module: {
-    loaders: [{
+    rules: [{
       test: /\.js$/,
       exclude: /node_modules/,
-      loader: 'babel',
+      rules: 'babel',
       query:{
-        presets: ["es2015", "react", "stage-0"]
+        presets: ["es2017", "react", "stage-0"]
       }
     }]
   }
