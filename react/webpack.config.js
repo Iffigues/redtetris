@@ -17,7 +17,7 @@ module.exports = {
           loader: 'babel-loader',
           options: {
               cacheDirectory: true,
-              babelrc: false,
+              // babelrc: false,
               presets: [["@babel/env"], "@babel/react"],
               plugins: ["react-hot-loader/babel"]
           }
