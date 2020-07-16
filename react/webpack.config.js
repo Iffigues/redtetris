@@ -1,21 +1,28 @@
-var path = require('path');
+const path = require('path');
 
 module.exports = {
-  entry: './src/client/index.js',
-
-  output: {
-    path: path.join(__dirname, 'build'),
-    filename: 'bundle.js'
+  entry: {
+    app: './src/client/index.js'
   },
-
+  output: {
+    filename: 'bundle.js',
+    path: path.resolve(__dirname, 'dist')
+  },
   module: {
-    rules: [{
-      test: /\.js$/,
-      exclude: /node_modules/,
-      rules: 'babel',
-      query:{
-        presets: ["es2017", "react", "stage-0"]
+    rules: [
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: [{
+          loader: 'babel-loader',
+          options: {
+              cacheDirectory: true,
+              babelrc: false,
+              presets: [["@babel/env"], "@babel/react"],
+              plugins: ["react-hot-loader/babel"]
+          }
+        }]
       }
-    }]
+    ]
   }
 };
