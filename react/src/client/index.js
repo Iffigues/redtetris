@@ -6,7 +6,6 @@ import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'                                                                                                                                                    
 import {storeStateMiddleWare} from './middleware/storeStateMiddleWare'
 import reducer from './reducers'
-import App from './containers/app'
 import Router from './router/index';
 import {alert} from './actions/alert'
 

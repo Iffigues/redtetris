@@ -3,7 +3,7 @@ import { HashRouter, Route, Switch } from 'react-router-dom';
 import Home from 'pages/home/home'
 import Alerts from 'components/alerts'
 
-const router = (props) => {
+const router = () => {
   return (
     <div>
       <Alerts />
