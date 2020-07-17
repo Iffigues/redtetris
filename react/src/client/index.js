@@ -24,7 +24,6 @@ ReactDom.render((
 ), document.getElementById('tetris'))
 
 store.dispatch(alert('Soon, will be here a fantastic Tetris ...', 'info'))
-store.dispatch(alert('Soon, will be here a fantastic Tetris ...', 'info'))
 setTimeout(() => {
   store.dispatch(alert())
 }, 5000)

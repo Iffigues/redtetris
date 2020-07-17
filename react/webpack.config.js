@@ -13,7 +13,9 @@ module.exports = {
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
-        use: [{
+        use: [
+          'react-hot-loader/webpack',
+          {
           loader: 'babel-loader',
           options: {
               cacheDirectory: true,

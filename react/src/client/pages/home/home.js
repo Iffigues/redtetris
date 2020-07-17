@@ -2,6 +2,8 @@ import React from 'react'
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
+import { Link } from 'react-router-dom';
+
 
 const Home = () => {
   return (
@@ -12,7 +14,11 @@ const Home = () => {
             <span>Bienvenu sur red-tetris</span>
           </Grid>
           <Grid item xs={6}>
-            <Button variant="contained">Rejoindre une partie</Button>
+          <Link to="/board">
+            <Button variant="contained">
+              Rejoindre une partie !
+            </Button>
+          </Link>
           </Grid>
           <Grid item xs={6}>
             <Button variant="contained" color="primary">Crée une partie</Button>
