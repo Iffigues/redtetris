@@ -7,6 +7,7 @@ class op {
 class pieces extends op{
 	constructor() {
 		super();
+		this.intervalle = 1000;
 		this.srs = [[0, 1], [-1, 0]];
 		this.lrs = [[0, -1], [1, 0]];
 	}
@@ -20,7 +21,15 @@ class pieces extends op{
 			pivot: pivot,
 		};
 	}
-	
+
+	timer(map, events) {
+		setInterval(this.timeDown(map, events), this.intervalle);
+
+	}
+
+	timeDown(map, events) {
+	}
+
 	canPose(map, xp, yp) {
 		let xx = this.x + xp;
 		let yy = this.y + yp;
@@ -38,6 +47,36 @@ class pieces extends op{
 		return true
 	}
 
+	copyBlock() {
+		let blocker = [];
+		for (let i = 0; i < 4; i++)
+			blocker.push(Object.assign( Object.create( Object.getPrototypeOf(this.block[i])), this.block[i]));
+		return {
+			blk: blocker,
+			y: this.y,
+			x: this.x,
+			rotate: this.rotate,
+			field: this.field,
+		};
+	}
+	
+	getOposite() {
+		let i = 0;
+		for (let i = 0; i < 4; i++)
+                        if (this.block[i].y < i) {
+				i = this.block[i];
+			}
+		return i
+	}
+
+	retro (blk) {
+		this.x = blk.x;
+		this.y = blk.y;
+		this.rotate= blk.rotate;
+		this.field = blk.field;
+		this.block = blk.block;
+	}
+
 	rotate (sens) {
 		let srs;
 		if (!Number.isInteger(sens))
@@ -48,6 +87,7 @@ class pieces extends op{
 			srs = this.lrs;
 		else
 			return false
+		let blk = this.copyBlock();
 		for (let i = 0; i < 4; i++) {
 			let xs = srs[0][0] * this.block[i].x + srs[0][1] * this.block[i].y;
 			let ys = srs[1][0] * this.block[i].x + srs[1][1] * this.block[i].y;

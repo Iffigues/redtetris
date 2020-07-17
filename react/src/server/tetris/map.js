@@ -1,16 +1,23 @@
 const block = require('./tetriminos');
 
 class map extends block{
-	constructor() {
+	constructor(events) {
 		super();
+		this.events = events;
 		this.map = [];
+		this.indestructible = 0;
+		this.time = 1000;
 		for (let i = 0; i < 20; i++) {
 			this.map.push([0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
 		}
 	}
 	start () {
 		this.blocks = this.getBlock();
-		this.blocks.canPose(this.map);
+		if (this.blocks.canPose(this.map)) {
+			this.blocks.timer(map, this.events);	
+		} else {
+			return;
+		}
 	}
 }
 
