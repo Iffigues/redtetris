@@ -13,13 +13,15 @@ module.exports = {
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
-        use: [{
+        use: [
+          'react-hot-loader/webpack',
+          {
           loader: 'babel-loader',
           options: {
               cacheDirectory: true,
               babelrc: false,
               presets: [["@babel/env"], "@babel/react"],
-              plugins: ["react-hot-loader/babel"]
+              plugins: ["react-hot-loader/babel", ["module-resolver", {"root": ["./src/client"]}]]
           }
         }]
       }
