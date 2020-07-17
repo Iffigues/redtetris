@@ -28,7 +28,7 @@ class pieces extends op{
 			return false;
 		for (let i = 0; i < 4; i++) {
 			let abx = this.block[i] + xx;
-			let aby = this.block[i] + yy;
+			let aby = this.block[i] - yy;
 			if (abx < 0 || abx > 10 || aby < 0 || aby > 20 )
 				return false;
 			if (map[abx][aby] != 0)
