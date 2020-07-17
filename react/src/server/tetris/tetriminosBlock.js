@@ -24,6 +24,17 @@ class pieces extends op{
 	canPose(map, xp, yp) {
 		let xx = this.x + xp;
 		let yy = this.y + yp;
+		if (xx < 0 || yy < 0 || xx > 10 || yy > 20)
+			return false;
+		for (let i = 0; i < 4; i++) {
+			let abx = this.block[i] + xx;
+			let aby = this.block[i] + yy;
+			if (abx < 0 || abx > 10 || aby < 0 || aby > 20 )
+				return false;
+			if (map[abx][aby] != 0)
+				return false;
+		}
+
 		return true
 	}
 
