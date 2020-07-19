@@ -1,11 +1,10 @@
 import React from 'react';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
-import Preview from 'components/preview'
+import Preview from 'components/Preview'
 import Game from 'components/game'
-import {withRouter} from 'react-router';
 
-const BoardPage = () => {
+const Board = () => {
   return (
     <div>
       <Container style={{ backgroundColor: '#cfe8fc', height: '70vh'}}>
@@ -18,4 +17,4 @@ const BoardPage = () => {
     </div>
   );
 }
-export default withRouter(BoardPage)
+export default Board
