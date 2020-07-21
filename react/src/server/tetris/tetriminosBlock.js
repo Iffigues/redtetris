@@ -1,12 +1,9 @@
-class op {
-        canFall() {
-                return true;
-        }
-}
-
-class pieces extends op{
+class pieces {
 	constructor() {
-		super();
+		this.shadow = {
+			x: this.x,
+			y: this.y,
+		};
 		this.intervalle = 1000;
 		this.srs = [[0, 1], [-1, 0]];
 		this.lrs = [[0, -1], [1, 0]];
@@ -22,15 +19,15 @@ class pieces extends op{
 		};
 	}
 
-	timer(map, events) {
-		setInterval(this.timeDown(map, events), this.intervalle);
+	timer(events) {
+		setInterval(this.timeDown(this.map, events), this.intervalle);
 
 	}
 
-	timeDown(map, events) {
+	timeDown(events) {
 	}
 
-	canPose(map, xp, yp) {
+	canPose(xp, yp) {
 		let xx = this.x + xp;
 		let yy = this.y + yp;
 		if (xx < 0 || yy < 0 || xx > 10 || yy > 20)
@@ -38,19 +35,21 @@ class pieces extends op{
 		for (let i = 0; i < 4; i++) {
 			let abx = this.block[i] + xx;
 			let aby = this.block[i] - yy;
-			if (abx < 0 || abx > 10 || aby < 0 || aby > 20 )
+			if (abx < 0 || abx > 10 ||  aby > 20 )
 				return false;
-			if (map[abx][aby] != 0)
+			if (this.map[abx][aby] != 0)
 				return false;
 		}
-
 		return true
 	}
 
 	copyBlock() {
+
 		let blocker = [];
+		
 		for (let i = 0; i < 4; i++)
 			blocker.push(Object.assign( Object.create( Object.getPrototypeOf(this.block[i])), this.block[i]));
+		
 		return {
 			blk: blocker,
 			y: this.y,
@@ -59,15 +58,6 @@ class pieces extends op{
 			field: this.field,
 		};
 	}
-	
-	getOposite() {
-		let i = 0;
-		for (let i = 0; i < 4; i++)
-                        if (this.block[i].y < i) {
-				i = this.block[i];
-			}
-		return i
-	}
 
 	retro (blk) {
 		this.x = blk.x;
@@ -75,6 +65,41 @@ class pieces extends op{
 		this.rotate= blk.rotate;
 		this.field = blk.field;
 		this.block = blk.block;
+	}
+
+	willBePosed(blk) {
+
+		for (let i = 0; i < 3; i = i + 1) {
+			
+			for (let n = 0; n < 3; n = n + 1) {
+			
+				if (this.canPose(i, n)) {
+					this.x = i;
+					this.y = n;
+					return true;
+				}
+
+				if (this.canPose(i, -n)) {
+					this.x = i;
+					this.y = -n;
+					return true;
+				}
+
+				if (this.canPose(-i, n)) {
+					this.x = -i;
+					this.y = n;
+					return true;
+				}
+
+				if (this.canPose(-i, -n)) {
+					this.x = -i;
+					this.y = -n;
+					return true;
+				}
+			}
+		}
+		this.retro(blk);
+		return false;
 	}
 
 	rotate (sens) {
@@ -94,8 +119,9 @@ class pieces extends op{
 			this.block[i].x = xs;
 			this.block[i].y = ys;
 		}
-		return true;
+		return this.willBePosed(blk);
 	}
+
 	fallen() {
 		if (this.canFall()) {
 			this.y++;

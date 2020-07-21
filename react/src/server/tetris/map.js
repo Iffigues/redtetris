@@ -1,6 +1,7 @@
-const block = require('./tetriminos');
+const block = require('./tetriminosBlock');
 
-class map extends block{
+class map extends block {
+
 	constructor(events) {
 		super();
 		this.events = events;
