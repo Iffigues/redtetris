@@ -1,5 +1,7 @@
-import fs  from 'fs'
-import debug from 'debug'
+//import fs  from 'fs'
+const fs = require('fs');
+//import debug from 'debug'
+const debug = require('debug');
 
 const logerror = debug('tetris:error')
   , loginfo = debug('tetris:info')
@@ -38,7 +40,7 @@ const initEngine = io => {
   })
 }
 
-export function create(params){
+module.exports.create = function create(params){
   const promise = new Promise( (resolve, reject) => {
     const app = require('http').createServer()
     initApp(app, params, () =>{
