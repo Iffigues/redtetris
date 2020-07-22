@@ -15,6 +15,7 @@
   "dependencies": {
     "@babel/preset-es2017": "^7.0.0-beta.53",
     "@babel/preset-react": "^7.10.4",
+    "es6-promise": "^4.2.8",
     "eslint-config-airbnb": "^18.2.0",
     "react": "^15.0.2",
     "react-dom": "^15.0.2",

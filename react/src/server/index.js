@@ -2,6 +2,7 @@
 const fs = require('fs');
 //import debug from 'debug'
 const debug = require('debug');
+const Promise = require('es6-promise').Promise;
 
 const logerror = debug('tetris:error')
   , loginfo = debug('tetris:info')
