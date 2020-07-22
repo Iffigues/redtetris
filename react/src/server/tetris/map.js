@@ -8,7 +8,7 @@ class map extends block {
 		this.map = [];
 		this.indestructible = 0;
 		this.time = 1000;
-		for (let i = 0; i < 20; i++) {
+		for (let i = 0; i < 22; i++) {
 			this.map.push([0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
 		}
 	}

@@ -19,12 +19,10 @@ class pieces {
 		};
 	}
 
-	timer(events) {
-		setInterval(this.timeDown(this.map, events), this.intervalle);
-
-	}
-
-	timeDown(events) {
+	timer() {
+		let inter = function () {
+		}
+		setInterval(inter, this.intervalle);
 	}
 
 	canPose(xp, yp) {
