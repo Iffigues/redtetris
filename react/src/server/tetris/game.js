@@ -1,6 +1,6 @@
 const block = require('./tetriminosBlock');
 
-class map extends block {
+class game extends block {
 
 	constructor(events) {
 		super();
@@ -22,4 +22,4 @@ class map extends block {
 	}
 }
 
-module.exports = map;
+module.exports = game;

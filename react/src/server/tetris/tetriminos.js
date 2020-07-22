@@ -1,5 +1,5 @@
 const random = require('random');
-const pieces = require('./tetriminosBlock');
+const pieces = require('./piece');
 
 class I extends pieces {
 	constructor() {
@@ -122,7 +122,7 @@ class Z extends pieces {
 }
 
 
-class block {
+class Block {
 	constructor() {
 		this.block = [I, O, T, S, Z, J, L];
 	}
@@ -132,4 +132,4 @@ class block {
 	}
 }
 
-module.exports = block;
+module.exports = Block;
