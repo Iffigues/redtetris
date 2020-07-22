@@ -14,8 +14,8 @@ class game extends block {
 	}
 	start () {
 		this.blocks = this.getBlock();
-		if (this.blocks.canPose(this.map)) {
-			this.blocks.timer(map, this.events);	
+		if (this.blocks.canPose()) {
+			this.blocks.timer(this.events);	
 		} else {
 			return;
 		}
