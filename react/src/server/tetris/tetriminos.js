@@ -4,7 +4,12 @@ const pieces = require('./piece');
 class mounter {
 	constructor () {
 	}
-	 newCase(x, y , pivot) {
+	timer() {
+                let inter = function () {
+                }
+                setInterval(inter, this.intervalle);
+        }
+	newCase(x, y , pivot) {
                 if (!Number.isInteger(x) || !Number.isInteger(y) || !typeof pivot == "boolean")
                         return false;
                 return {
@@ -142,9 +147,8 @@ class Block extends pieces{
 		this.map = [];
                 this.indestructible = 0;
                 this.time = 1000;
-                for (let i = 0; i < 22; i++) {
+                for (let i = 0; i < 22; i++)
                         this.map.push([0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
-                }
 		this.blocks = [I, O, T, S, Z, J, L];
 		this.newBlock();
 	}

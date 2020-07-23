@@ -9,12 +9,6 @@ class pieces {
 		this.lrs = [[0, -1], [1, 0]];
 	}
 
-	timer() {
-		let inter = function () {
-		}
-		setInterval(inter, this.intervalle);
-	}
-
 	canPose(xp, yp) {
 		let xx = this.block.x + xp;
 		let yy = this.block.y + yp;
@@ -58,9 +52,7 @@ class pieces {
 	willBePosed(blk) {
 
 		for (let i = 0; i < 3; i = i + 1) {
-			
-			for (let n = 0; n < 3; n = n + 1) {
-			
+			for (let n = 0; n < 3; n = n + 1) {			
 				if (this.canPose(i, n)) {
 					this.x = i;
 					this.y = n;
