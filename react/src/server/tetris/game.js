@@ -8,7 +8,7 @@ class game extends block {
 	start () {
 		this.newBlock();
 		if (this.canPose(0, 0)) {
-			this.block.timer(this.events);	
+			console.log(this.block.constructor.name)
 		} else {
 			return;
 		}
