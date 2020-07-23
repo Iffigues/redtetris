@@ -1,7 +1,21 @@
 const random = require('random');
 const pieces = require('./piece');
 
-class I extends pieces {
+class mounter {
+	constructor () {
+	}
+	 newCase(x, y , pivot) {
+                if (!Number.isInteger(x) || !Number.isInteger(y) || !typeof pivot == "boolean")
+                        return false;
+                return {
+                        x: x,
+                        y: y,
+                        pivot: pivot,
+                };
+        }
+}
+
+class I extends mounter {
 	constructor() {
 		super();
 		this.state = false;
@@ -18,7 +32,7 @@ class I extends pieces {
 	}
 }
 
-class O extends pieces {
+class O extends mounter {
 	constructor() {
 		super();
 		this.state = false;
@@ -35,7 +49,7 @@ class O extends pieces {
 	}
 }
 
-class T extends pieces {
+class T extends mounter {
 	constructor() {
 		super();
 		this.state = false;
@@ -52,7 +66,7 @@ class T extends pieces {
 	}
 }
 
-class J extends pieces {
+class J extends mounter {
 	constructor() {
 		super();
 		this.state = false;
@@ -69,8 +83,8 @@ class J extends pieces {
 	}
 }
 
-class L extends pieces {
-	constructor() {
+class L extends mounter {
+	constructor() {	
 		super();
 		this.state = false;
 		this.x = 0;
@@ -87,7 +101,7 @@ class L extends pieces {
 }
 
 
-class S extends pieces {
+class S extends mounter {
 	constructor() {
 		super();
 		this.state = false;
@@ -104,7 +118,7 @@ class S extends pieces {
 	}
 }
 
-class Z extends pieces {
+class Z extends mounter {
 	constructor() {
 		super();
 		this.state = false;
@@ -122,13 +136,21 @@ class Z extends pieces {
 }
 
 
-class Block {
+class Block extends pieces{
 	constructor() {
-		this.block = [I, O, T, S, Z, J, L];
+		super();
+		this.map = [];
+                this.indestructible = 0;
+                this.time = 1000;
+                for (let i = 0; i < 22; i++) {
+                        this.map.push([0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+                }
+		this.blocks = [I, O, T, S, Z, J, L];
+		this.newBlock();
 	}
-	getBlock() {
-		let i = random.int( 0, this.block.length - 1);
-		return new this.block[i];
+	newBlock() {
+		let i = random.int( 0, this.blocks.length - 1);
+		this.block =  new this.blocks[i]();
 	}
 }
 

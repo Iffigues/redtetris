@@ -9,16 +9,6 @@ class pieces {
 		this.lrs = [[0, -1], [1, 0]];
 	}
 
-	newCase(x, y , pivot) {
-		if (!Number.isInteger(x) || !Number.isInteger(y) || typeof pivot == "boolean")
-			return false;
-		return {
-			x: x,
-			y: y,
-			pivot: pivot,
-		};
-	}
-
 	timer() {
 		let inter = function () {
 		}
@@ -26,13 +16,13 @@ class pieces {
 	}
 
 	canPose(xp, yp) {
-		let xx = this.x + xp;
-		let yy = this.y + yp;
+		let xx = this.block.x + xp;
+		let yy = this.block.y + yp;
 		if (xx < 0 || yy < 0 || xx > 10 || yy > 20)
 			return false;
 		for (let i = 0; i < 4; i++) {
-			let abx = this.block[i] + xx;
-			let aby = this.block[i] - yy;
+			let abx = this.block.block[i].x + xx;
+			let aby = this.block.block[i].y - yy;
 			if (abx < 0 || abx > 10 ||  aby > 20 )
 				return false;
 			if (this.map[abx][aby] != 0)
