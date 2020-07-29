@@ -1,9 +1,10 @@
 const game = require("./game");
 
 class player extends game{
-	constructor () {
+	constructor (cb) {
 		super()
 		this.start()
+		this.cb = cb
 	}
 }
 
