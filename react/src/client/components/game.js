@@ -1,24 +1,16 @@
 import React from 'react';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
+import Cell from 'components/cell'
+import StyledStage from 'components/style/styledStage'
 
-const boxProps = {
-  bgcolor: 'background.paper',
-  borderColor: 'text.primary',
-  border: 1,
-  borderRadius: "borderRadius",
-  style: { backgroundColor: 'white', height: '60vh', width: '60vw'},
-  m: 1
-};
-
-const Game = () => {
+const Game = ({game}) => {
   return (
     <div>
-      <Grid item xs={9}>
-        <Box {...boxProps}>
-            <p>GAME</p>
-        </Box>
-      </Grid>
+      <StyledStage isOtherUser={game.isOtherUser} width={game.game[0].length} height={game.game.length}>
+        {game.game.map(row => 
+          row.map((cell, x) => 
+            <Cell key={x} type={cell[0]}/>
+        ))}
+      </StyledStage>
     </div>
   );
 }
