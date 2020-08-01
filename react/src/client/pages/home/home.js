@@ -5,7 +5,7 @@ import Container from '@material-ui/core/Container';
 import { Link } from 'react-router-dom';
 
 
-const Home = () => {
+const HomePage = () => {
   return (
     <div>
       <Container fixed>
@@ -29,4 +29,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default HomePage

@@ -7,8 +7,8 @@ import Alerts from 'components/alerts'
 import NavBar from 'components/navBar'
 
 // pages
-import Home from 'pages/home/home'
-import Board from 'pages/board/board'
+import HomePage from 'pages/home/home'
+import BoardPage from 'pages/board/board'
 
 const router = () => {
   return (
@@ -16,8 +16,8 @@ const router = () => {
       <BrowserRouter>
         <NavBar/>
         <Alerts />
-        <Route exact path="/" component={Home} />
-        <Route path="/board" component={Board} />
+        <Route exact path="/" component={HomePage} />
+        <Route path="/board" component={BoardPage} />
       </BrowserRouter>
     </div>
   )
