@@ -14,7 +14,7 @@ const initApp = (app, params, cb) => {
 				return res.end('Error loading index.html')
 			}
 			res.writeHead(200)
-			res.end(data)
+			/res.end(data)
 		})
 	}
 	app.on('request', handler)

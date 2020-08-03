@@ -26,7 +26,6 @@ class pieces {
 	}
 
 	copyBlock() {
-
 		let blocker = [];
 		
 		for (let i = 0; i < 4; i++)
