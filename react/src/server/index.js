@@ -14,7 +14,7 @@ const initApp = (app, params, cb) => {
 				return res.end('Error loading index.html')
 			}
 			res.writeHead(200)
-			/res.end(data)
+			res.end(data)
 		})
 	}
 	app.on('request', handler)
@@ -28,7 +28,9 @@ const initEngine = io => {
 	io.on('connection', function(socket){
 		loginfo("Socket connected: " + socket.id)
 		socket.on('action', (action) => {
+				console.log("hello wep");
 			if(action.type === 'server/ping'){
+				console.log("ez")
 				socket.emit('action', {type: 'pong'})
 			}
 		})
@@ -40,7 +42,9 @@ module.exports.create = function create(params){
 		const app = require('http').createServer()
 		initApp(app, params, () =>{
 			const io = require('socket.io')(app)
+			console.log("zze");
 			const stop = (cb) => {
+				console.log("hello")
 				io.close()
 				app.close( () => {
 					app.unref()
