@@ -1,4 +1,5 @@
-const fs = require('fs');
+//const fs = require('fs');
+import fs from 'fs'
 const debug = require('debug');
 const Promise = require('es6-promise').Promise;
 const logerror = debug('tetris:error'), loginfo = debug('tetris:info')
