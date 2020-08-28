@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 
@@ -13,6 +14,11 @@ const mapStateToProps = (state) => {
     message: state.message
   }
 }
+
+App.propTypes = {
+  message: PropTypes.string
+}
+
 export default connect(mapStateToProps, null)(App)
 
 
