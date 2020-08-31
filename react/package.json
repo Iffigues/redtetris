@@ -19,16 +19,11 @@
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.56",
     "eslint-config-airbnb": "^18.2.0",
-<<<<<<< HEAD
     "import": "0.0.6",
     "lodash": "^4.17.19",
-    "react": "^15.0.2",
-    "react-dom": "^15.0.2",
-=======
     "prop-types": "^15.7.2",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
->>>>>>> 4f093fc2609cf2ceaf80a9eead15648f34c1bc97
     "react-hot-loader": "^4.12.21",
     "react-redux": "^6.0.0",
     "react-router-dom": "^5.2.0",
