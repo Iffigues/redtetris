@@ -24,7 +24,7 @@ class Server {
 		}
 		this.app.on('request', handler);
 		this.app.listen({host, port}, () =>{
-			loginfo(`tetris listen on ${params.url}`);
+			loginfo(`tetris listen on ${this.params.url}`);
 			cb();
 		})
 	}
@@ -34,11 +34,9 @@ class Server {
 			socket.on('action', (action) => {
 				console.log("hello wep");
 				if(action.type === 'server/ping'){
-					console.log("oui");
 					socket.emit('action', {type: 'pong'});
 				}
 				if (action.type === 'server/create') {
-					console.log("ezezez");
 					let data = JSON.parse(action.data);
 				}
 			})
