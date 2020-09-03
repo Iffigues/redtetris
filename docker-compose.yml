@@ -6,8 +6,10 @@ services:
     working_dir: /react
     expose:
       - 8080
+      - 3004
     ports:
       - "8080:8080"
+      - "3004:3004"
     stdin_open: true
     volumes:
       - ./react:/react
