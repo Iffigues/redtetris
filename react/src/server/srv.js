@@ -2,12 +2,27 @@ import fs from 'fs'
 const debug = require('debug');
 const Promise = require('es6-promise').Promise;
 const logerror = debug('tetris:error'), loginfo = debug('tetris:info')
+import {rooms} from './tetris/room';
+import {players} from './tetris/player';
+const  uuidv4 = require('uuid');
 
 class Server {
 	constructor (params) {
 		this.app = require('http').createServer();
 		this.params = params;
+		this.rooms = {};
 	}
+
+	AddRoom () {
+		console.log("creating new room");
+		let p = players(true);
+		let r = rooms(null, p);
+		if (!(r.name in this.rooms)) {
+			//this.rooms[r.name] = r;
+			console.log("room created");
+		}
+	}
+	
 	initApp (cb)  {
 		const {host, port} = this.params;
 		const handler = (req, res) => {
@@ -28,7 +43,11 @@ class Server {
 			cb();
 		})
 	}
+
 	initEngine (io) {
+		let e = () => {
+			this.AddRoom();
+		}
 		io.on('connection', function(socket){
 			loginfo("Socket connected: " + socket.id)
 			socket.on('action', (action) => {
@@ -38,6 +57,8 @@ class Server {
 				}
 				if (action.type === 'server/create') {
 					let data = JSON.parse(action.data);
+					e();
+					console.log("eee")
 				}
 			})
 		})
