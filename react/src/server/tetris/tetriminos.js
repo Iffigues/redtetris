@@ -1,5 +1,4 @@
 const random = require('random');
-const pieces = require('./piece');
 
 class mounter {
 	constructor () {
@@ -141,20 +140,13 @@ class Z extends mounter {
 }
 
 
-class Block extends pieces{
+class Block {
 	constructor() {
-		super();
-		this.map = [];
-                this.indestructible = 0;
-                this.time = 1000;
-                for (let i = 0; i < 22; i++)
-                        this.map.push([0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
 		this.blocks = [I, O, T, S, Z, J, L];
-		this.newBlock();
 	}
 	newBlock() {
 		let i = random.int( 0, this.blocks.length - 1);
-		this.block =  new this.blocks[i]();
+		return new this.blocks[i]();
 	}
 }
 

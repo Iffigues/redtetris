@@ -1,4 +1,4 @@
-const block = require('./tetriminos');
+const block = require('./piece');
 
 class game extends block {
 
@@ -8,11 +8,11 @@ class game extends block {
 	start () {
 		this.newBlock();
 		if (this.canPose(0, 0)) {
-			console.log(this.block.constructor.name)
 		} else {
 			return;
 		}
 	}
 }
-
+let e = new game()
+console.log(e);
 module.exports = game;
