@@ -45,7 +45,7 @@ class Server {
 	}
 
 	initEngine (io) {
-		let e = () => {
+		let addRoom = () => {
 			this.AddRoom();
 		}
 		io.on('connection', function(socket){
@@ -57,8 +57,10 @@ class Server {
 				}
 				if (action.type === 'server/create') {
 					let data = JSON.parse(action.data);
-					e();
 					console.log("eee")
+				}
+				if (action.type === 'server/connect') {
+					let data = JSON.parse(action.data)
 				}
 			})
 		})
