@@ -1,6 +1,6 @@
 import { ALERT_POP } from '../actions/alert'
 
-const reducer = (state = {} , action) => {
+const alertReducer = (state = {} , action) => {
   switch(action.type){
     case ALERT_POP:
       return { message: action.message, type: action.typeAlert }
@@ -9,5 +9,4 @@ const reducer = (state = {} , action) => {
   }
 }
 
-export default reducer
-
+export default alertReducer

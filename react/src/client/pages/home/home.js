@@ -21,7 +21,9 @@ const HomePage = () => {
           </Link>
           </Grid>
           <Grid item xs={6}>
-            <Button variant="contained" color="primary">Crée une partie</Button>
+            <Link to="/create-room">
+              <Button variant="contained" color="primary">Crée une partie</Button>
+            </Link>
           </Grid>
         </Grid>
       </Container>
