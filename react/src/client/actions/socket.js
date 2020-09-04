@@ -1,6 +1,7 @@
 import sendData from '../socket/sendData';
 
 const sendDataApi = (socket, type, data, dispatch) => {
+  console.log("hello world 666")
   dispatch(sendData(socket, type, data));
 }
 
