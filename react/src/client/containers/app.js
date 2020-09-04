@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-
 const App = ({message}) => {
   return (
     <span>{message}</span>

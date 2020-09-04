@@ -4,7 +4,6 @@ import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 import { Link } from 'react-router-dom';
 
-
 const HomePage = () => {
   return (
     <div>
@@ -21,7 +20,9 @@ const HomePage = () => {
           </Link>
           </Grid>
           <Grid item xs={6}>
-            <Button variant="contained" color="primary">Crée une partie</Button>
+            <Link to="/create-room">
+              <Button variant="contained" color="primary">Crée une partie</Button>
+            </Link>
           </Grid>
         </Grid>
       </Container>

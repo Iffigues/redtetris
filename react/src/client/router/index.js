@@ -9,6 +9,7 @@ import NavBar from 'components/navBar'
 // pages
 import HomePage from 'pages/home/home'
 import BoardPage from 'pages/board/board'
+import CreateRoomPage from 'pages/create-room/create-room'
 
 const router = () => {
   return (
@@ -17,6 +18,7 @@ const router = () => {
         <NavBar/>
         <Alerts />
         <Route exact path="/" component={HomePage} />
+        <Route exact path="/create-room" component={CreateRoomPage} />
         <Route path="/board" component={BoardPage} />
       </BrowserRouter>
     </div>

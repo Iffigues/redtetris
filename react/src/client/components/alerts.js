@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import Alert from '@material-ui/lab/Alert';
 
 const Alerts = ({message, type}) => {
+  console.log(message, type)
   if (message && type) {
   return (
       <Alert severity={type}>{message}</Alert>
@@ -14,8 +15,8 @@ const Alerts = ({message, type}) => {
 
 const mapStateToProps = (state) => {
   return {
-    message: state.message,
-    type: state.type
+    message: state.alert.message,
+    type: state.alert.type
   }
 }
 
