@@ -4,7 +4,7 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import Game from 'components/game'
+import Game from './game'
 import { createGame } from 'plugins/createGame'
 
 const boxProps = {

@@ -1,6 +1,6 @@
 import React from 'react';
-import Cell from 'components/cell'
-import StyledStage from 'components/style/styledStage'
+import Cell from './cell'
+import StyledStage from './style/styledStage'
 
 const Game = ({game}) => {
   return (

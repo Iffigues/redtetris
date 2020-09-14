@@ -15,6 +15,7 @@ const socketReducer = (state = {} , action) => {
     };
     // return {actionName: action.actionName, type}
   } else {
+    initialState.socket.on('ping', () => { console.log("pong") })
     return initialState
   }
 }
