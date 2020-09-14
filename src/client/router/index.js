@@ -3,13 +3,13 @@ import { HashRouter, BrowserRouter, Route, Switch } from 'react-router-dom';
 import { hot } from 'react-hot-loader/root'
 
 // components
-import Alerts from 'components/alerts'
-import NavBar from 'components/navBar'
+import Alerts from '../components/alerts'
+import NavBar from '../components/navBar'
 
 // pages
-import HomePage from 'pages/home/home'
-import BoardPage from 'pages/board/board'
-import CreateRoomPage from 'pages/create-room/create-room'
+import HomePage from '../pages/home/home'
+import BoardPage from '../pages/board/board'
+import CreateRoomPage from '../pages/create-room/create-room'
 
 const router = () => {
   return (

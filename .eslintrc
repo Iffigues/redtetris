@@ -1,6 +1,8 @@
 {
   "parser": "babel-eslint",
   "env": {
+    "jest/globals": true,
+    "jest": true,
     "browser": true,
     "node": true
   },
@@ -17,7 +19,8 @@
       }
   },
   "plugins": [
-      "react"
+      "react",
+      "jest"
   ],
   "extends": ["eslint:recommended", "plugin:react/recommended"],
   "rules": {
