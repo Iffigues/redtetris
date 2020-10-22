@@ -1,7 +1,6 @@
 import sendData from '../socket/sendData';
 
 const sendDataApi = (socket, type, data, dispatch) => {
-  console.log("hello world 666")
   dispatch(sendData(socket, type, data));
 }
 
@@ -12,7 +11,21 @@ export const sendSocket = (actionName, content = null) => {
       uuidUser: getState().socket.uuidUser,
       content
     };
-    console.log(actionName, getState().socket.socket)
+    console.log("sendSocket function", actionName, getState().socket.socket)
     sendDataApi(getState().socket.socket, { type: actionName }, data, dispatch);
+  }
+}
+
+export const updateUuidRoom = (uuidRoom) => {
+  return {
+    type: 'updateUuidRoom',
+    uuidRoom
+  }
+}
+
+export const updateUuidUser = (uuidUser) => {
+  return {
+    type: 'updateUuidUser',
+    uuidUser
   }
 }

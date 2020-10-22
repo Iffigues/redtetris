@@ -1,8 +1,11 @@
+import uuidv4 from 'uuid'
 import game from './game'
 
 class player extends game {
-	constructor (role) {
+	constructor (name, role) {
 		super()
+		this.uuid = uuidv4()
+		this.name = name
 		this.score = 0;
 		this.role = role;
 		this.live = true;
@@ -20,6 +23,6 @@ class player extends game {
 		this.block = a;
 	}
 }
-export const players = (admin = false) => {
-	return new player(admin);
+export const createPlayer = (name, admin = false) => {
+	return new player(name, admin);
 }

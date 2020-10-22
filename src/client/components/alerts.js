@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import Alert from '@material-ui/lab/Alert';
 
 const Alerts = ({message, type}) => {
-  console.log(message, type)
+  console.log("Alerts components", message, type)
   if (message && type) {
   return (
       <Alert severity={type}>{message}</Alert>

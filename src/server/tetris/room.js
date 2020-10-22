@@ -3,10 +3,10 @@ import uuidv4 from 'uuid'
 
 class Room extends block {
 	
-	constructor(name = uuidv4(), admin) {
+	constructor(admin, channel = uuidv4()) {
 		super();
 		this.state = 0;
-		this.name = name;
+		this.channel = channel;
 		this.admin = admin;
 		this.player = [admin];
 	}
@@ -26,11 +26,12 @@ class Room extends block {
 		let y = this.newBlock();
 		console.log(y)
 	}
+
 }
 let e = new Room();
 console.log(e);
 e.startGame();
 
-export const rooms = (name = uuidv4(), admin) => {
-	return new Room(name, admin);
+export const createRoom = (admin, channel = uuidv4()) => {
+	return new Room(admin, channel);
 }

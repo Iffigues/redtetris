@@ -1,15 +1,28 @@
 import fs from 'fs'
 import debug from 'debug'
-import { Promise } from 'es6-promise'
 import { rooms } from './tetris/room';
 import { players } from './tetris/player';
-import uuidv4 from 'uuid'
+import socketIo from 'socket.io';
+import bodyParser from 'body-parser';
+import cors from 'cors'
+import express from 'express'
+import { initListener } from './sockets/initSocket';
+import { params } from '../../params'
 const logerror = debug('tetris:error'), loginfo = debug('tetris:info')
 
 class Server {
-	constructor (params) {
-		this.app = require('http').createServer();
+	constructor () {
+		const { host, port } = params;
+		this.app = express();
+		this.app.use(cors())
 		this.params = params;
+		this.app.use(bodyParser.json({limit: '10mb', extended: true}));
+		this.server = this.app.listen({ host, port }, () => {
+			loginfo(`tetris listen on ${this.params.url}`);
+		})
+		const io = socketIo(this.server);
+		io.on('connection', initListener);
+		this.app.io = io;
 		this.rooms = {};
 	}
 
@@ -21,69 +34,6 @@ class Server {
 			//this.rooms[r.name] = r;
 			console.log("room created");
 		}
-	}
-	
-	initApp = (cb) => {
-		const { host, port } = this.params;
-		const handler = (req, res) => {
-			const file = req.url === '/bundle.js' ? '/../../build/bundle.js' : '/../../index.html';
-			fs.readFile(__dirname + file, (err, data) => {
-				if (err) {
-					logerror(err);
-					res.writeHead(500);
-					return res.end('Error loading index.html');
-				}
-				res.writeHead(200);
-				res.end(data);
-			})
-		}
-		this.app.on('request', handler);
-		this.app.listen({ host, port }, () =>{
-			loginfo(`tetris listen on ${this.params.url}`);
-			cb();
-		})
-	}
-
-	initEngine = (io) => {
-		let addRoom = () => {
-			this.addRoom();
-		}
-		io.on('connection', function(socket){
-			loginfo("Socket connected: " + socket.id)
-			socket.on('action', (action) => {
-				console.log("hello wep");
-				if (action.type === 'server/ping'){
-					socket.emit('action', {type: 'pong'});
-				}
-				// create room
-				if (action.type === 'server/create') {
-					let data = JSON.parse(action.data);
-					console.log("eee")
-				}
-				// connect user to room
-				if (action.type === 'server/connect') {
-					let data = JSON.parse(action.data)
-				}
-			})
-		})
-	}
-	create = () => {
-		const promise = new Promise( (resolve, reject) => {
-			this.initApp(() =>{
-				const io = require('socket.io')(this.app);
-				const stop = (cb) => {
-					io.close();
-					this.app.close(() => {
-						this.app.unref();
-					})
-					loginfo(`Engine stopped.`);
-					cb();
-				}
-				this.initEngine(io);
-				resolve({stop});
-			})
-		})
-		return promise;
 	}
 }
 
