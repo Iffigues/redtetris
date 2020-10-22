@@ -1,10 +1,10 @@
 import fs from 'fs'
-const debug = require('debug');
-const Promise = require('es6-promise').Promise;
+import debug from 'debug'
+import { Promise } from 'es6-promise'
+import { rooms } from './tetris/room';
+import { players } from './tetris/player';
+import uuidv4 from 'uuid'
 const logerror = debug('tetris:error'), loginfo = debug('tetris:info')
-import {rooms} from './tetris/room';
-import {players} from './tetris/player';
-const  uuidv4 = require('uuid');
 
 class Server {
 	constructor (params) {
@@ -13,7 +13,7 @@ class Server {
 		this.rooms = {};
 	}
 
-	AddRoom () {
+	addRoom = () => {
 		console.log("creating new room");
 		let p = players(true);
 		let r = rooms(null, p);
@@ -23,8 +23,8 @@ class Server {
 		}
 	}
 	
-	initApp (cb)  {
-		const {host, port} = this.params;
+	initApp = (cb) => {
+		const { host, port } = this.params;
 		const handler = (req, res) => {
 			const file = req.url === '/bundle.js' ? '/../../build/bundle.js' : '/../../index.html';
 			fs.readFile(__dirname + file, (err, data) => {
@@ -38,34 +38,36 @@ class Server {
 			})
 		}
 		this.app.on('request', handler);
-		this.app.listen({host, port}, () =>{
+		this.app.listen({ host, port }, () =>{
 			loginfo(`tetris listen on ${this.params.url}`);
 			cb();
 		})
 	}
 
-	initEngine (io) {
+	initEngine = (io) => {
 		let addRoom = () => {
-			this.AddRoom();
+			this.addRoom();
 		}
 		io.on('connection', function(socket){
 			loginfo("Socket connected: " + socket.id)
 			socket.on('action', (action) => {
 				console.log("hello wep");
-				if(action.type === 'server/ping'){
+				if (action.type === 'server/ping'){
 					socket.emit('action', {type: 'pong'});
 				}
+				// create room
 				if (action.type === 'server/create') {
 					let data = JSON.parse(action.data);
 					console.log("eee")
 				}
+				// connect user to room
 				if (action.type === 'server/connect') {
 					let data = JSON.parse(action.data)
 				}
 			})
 		})
 	}
-	creates() {
+	create = () => {
 		const promise = new Promise( (resolve, reject) => {
 			this.initApp(() =>{
 				const io = require('socket.io')(this.app);
@@ -85,6 +87,6 @@ class Server {
 	}
 }
 
-module.exports.serveSrv =  function serveSrv(params) {
+export const serveSrv = (params) => {
 	return new Server(params);
 }

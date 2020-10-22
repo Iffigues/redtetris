@@ -1,22 +1,16 @@
-const random = require('random');
+import random from 'random'
 
 class mounter {
 	constructor () {
 	}
-	timer() {
-                let inter = function () {
-                }
-                setInterval(inter, this.intervalle);
-        }
-	newCase(x, y , pivot) {
-                if (!Number.isInteger(x) || !Number.isInteger(y) || !typeof pivot == "boolean")
-                        return false;
-                return {
-                        x: x,
-                        y: y,
-                        pivot: pivot,
-                };
-        }
+	timer = () => {
+		setInterval(() => {}, this.interval);
+	}
+	newCase = (x, y , pivot) => {
+		return (!Number.isInteger(x) || !Number.isInteger(y) || !typeof pivot == "boolean")
+			? false
+			: { x, y, pivot };
+		}
 }
 
 class I extends mounter {
@@ -144,10 +138,10 @@ class Block {
 	constructor() {
 		this.blocks = [I, O, T, S, Z, J, L];
 	}
-	newBlock() {
-		let i = random.int( 0, this.blocks.length - 1);
+	newBlock = () => {
+		let i = random.int(0, this.blocks.length - 1);
 		return new this.blocks[i]();
 	}
 }
 
-module.exports = Block;
+export default Block;

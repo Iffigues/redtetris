@@ -5,8 +5,13 @@ module.exports = function (api) {
     ["@babel/preset-env"],
     ["@babel/preset-react"]
   ]
+  const plugins = [
+    ['@babel/plugin-transform-arrow-functions'],
+    ['transform-class-properties']
+  ]
   
   return {
-    presets
+    presets,
+    plugins
   }
 }
