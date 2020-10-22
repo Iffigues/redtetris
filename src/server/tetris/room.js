@@ -1,5 +1,5 @@
-const  uuidv4 = require('uuid');
-const block = require('./tetriminos');
+import block from './tetriminos'
+import uuidv4 from 'uuid'
 
 class Room extends block {
 	
@@ -11,18 +11,18 @@ class Room extends block {
 		this.player = [admin];
 	}
 	
-	addPlayer(player) {
+	addPlayer = (player) => {
 		this.player.push(player);
 	}
 	
-	countPlayer () {
+	countPlayer = () => {
 		let i = this.player.length;
 		if (i == 4) {
 			this.startGame();
 		}
 	}
 
-	startGame() {
+	startGame = () => {
 		let y = this.newBlock();
 		console.log(y)
 	}
@@ -30,6 +30,7 @@ class Room extends block {
 let e = new Room();
 console.log(e);
 e.startGame();
-module.exports.rooms =  function serveSrv(name = uuidv4(), admin) {
-        return new Room(name, admin);
+
+export const rooms = (name = uuidv4(), admin) => {
+	return new Room(name, admin);
 }

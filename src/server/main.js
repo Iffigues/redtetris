@@ -1,3 +1,5 @@
 const params = require('../../params');
-const server = require('./index');
+import { serveSrv } from './srv'
+
+let server = serveSrv(params);
 server.create(params.server).then( () => console.log('not yet ready to play tetris with U ...') )

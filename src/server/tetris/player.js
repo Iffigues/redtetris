@@ -1,4 +1,4 @@
-const game = require("./game");
+import game from './game'
 
 class player extends game {
 	constructor (role) {
@@ -7,19 +7,19 @@ class player extends game {
 		this.role = role;
 		this.live = true;
 		//this.cb = cb
-		this.map = [];
-                this.indestructible = 0;
-                this.time = 1000;
-                for (let i = 0; i < 22; i++)
-                        this.map.push([0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+		this.map_game = [];
+		this.indestructible = 0;
+		this.time = 1000;
+		for (let i = 0; i < 22; i++) {
+			this.map_game.push([0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+		}
 		this.block = null;
 	}
 
-	pushSheet(a) {
+	pushSheet = (a) => {
 		this.block = a;
 	}
 }
-
-module.exports.players =  function players(admin = false) {
-        return new player(admin);
+export const players = (admin = false) => {
+	return new player(admin);
 }

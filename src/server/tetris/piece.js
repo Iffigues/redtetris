@@ -9,27 +9,31 @@ class pieces {
 		this.lrs = [[0, -1], [1, 0]];
 	}
 
-	canPose(xp, yp) {
+	canPose = (xp, yp) => {
 		let xx = this.block.x + xp;
 		let yy = this.block.y + yp;
-		if (xx < 0 || yy < 0 || xx > 10 || yy > 20)
+		if (xx < 0 || yy < 0 || xx > 10 || yy > 20) {
 			return false;
+		}
 		for (let i = 0; i < 4; i++) {
 			let abx = this.block.block[i].x + xx;
 			let aby = this.block.block[i].y - yy;
-			if (abx < 0 || abx > 10 ||  aby > 20 )
+			if (abx < 0 || abx > 10 ||  aby > 20 ) {
 				return false;
-			if (this.map[abx][aby] != 0)
+			}
+			if (this.map_game[abx][aby] != 0) {
 				return false;
+			}
 		}
 		return true
 	}
 
-	copyBlock() {
+	copyBlock = () => {
 		let blocker = [];
 		
-		for (let i = 0; i < 4; i++)
-			blocker.push(Object.assign( Object.create( Object.getPrototypeOf(this.block[i])), this.block[i]));
+		for (let i = 0; i < 4; i++) {
+			blocker.push(Object.assign(Object.create(Object.getPrototypeOf(this.block[i])), this.block[i]));
+		}
 		
 		return {
 			blk: blocker,
@@ -40,7 +44,7 @@ class pieces {
 		};
 	}
 
-	retro (blk) {
+	retro = (blk) => {
 		this.x = blk.x;
 		this.y = blk.y;
 		this.rotate= blk.rotate;
@@ -48,7 +52,7 @@ class pieces {
 		this.block = blk.block;
 	}
 
-	willBePosed(blk) {
+	willBePosed = (blk) => {
 
 		for (let i = 0; i < 3; i = i + 1) {
 			for (let n = 0; n < 3; n = n + 1) {			
@@ -57,19 +61,16 @@ class pieces {
 					this.y = n;
 					return true;
 				}
-
 				if (this.canPose(i, -n)) {
 					this.x = i;
 					this.y = -n;
 					return true;
 				}
-
 				if (this.canPose(-i, n)) {
 					this.x = -i;
 					this.y = n;
 					return true;
 				}
-
 				if (this.canPose(-i, -n)) {
 					this.x = -i;
 					this.y = -n;
@@ -81,16 +82,20 @@ class pieces {
 		return false;
 	}
 
-	rotate (sens) {
+	rotate = (direction) => {
 		let srs;
-		if (!Number.isInteger(sens))
+		if (!Number.isInteger(direction)) {
 			return false;
-		if (sens == 0)
+		}
+		if (direction == 0) {
 			srs = this.srs;
-		else if (sens == 1)
+		}
+		else if (direction == 1) {
 			srs = this.lrs;
-		else
+		}
+		else {
 			return false
+		}
 		let blk = this.copyBlock();
 		for (let i = 0; i < 4; i++) {
 			let xs = srs[0][0] * this.block[i].x + srs[0][1] * this.block[i].y;
@@ -101,11 +106,11 @@ class pieces {
 		return this.willBePosed(blk);
 	}
 
-	fallen() {
+	fallen = () => {
 		if (this.canFall()) {
 			this.y++;
 		}
 	}
 }
 
-module.exports = pieces;
+export default pieces;

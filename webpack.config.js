@@ -21,7 +21,7 @@ module.exports = {
               cacheDirectory: true,
               babelrc: false,
               presets: [["@babel/env"], "@babel/react"],
-              plugins: ["react-hot-loader/babel", ["module-resolver", {"root": ["./src/client"]}]]
+              plugins: ["@babel/plugin-transform-arrow-functions", "@babel/plugin-proposal-class-properties", "transform-class-properties", "react-hot-loader/babel", ["module-resolver", {"root": ["./src/client"]}]]
           }
         }]
       }
