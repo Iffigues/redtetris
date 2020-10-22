@@ -55,10 +55,12 @@ class Server {
 				if (action.type === 'server/ping'){
 					socket.emit('action', {type: 'pong'});
 				}
+				// create room
 				if (action.type === 'server/create') {
 					let data = JSON.parse(action.data);
 					console.log("eee")
 				}
+				// connect user to room
 				if (action.type === 'server/connect') {
 					let data = JSON.parse(action.data)
 				}
