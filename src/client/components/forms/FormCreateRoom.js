@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import { useDispatch } from 'react-redux'
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
@@ -40,12 +39,10 @@ const mapDispatchToProps = { sendSocket,  updateUuidRoom, updateUuidUser };
 
 const FormCreateRoom = ({ socket, sendSocket, updateUuidRoom, updateUuidUser }) => {
   const [login, setLogin] = useState('');
-  // const dispatch = useDispatch()
   const createRoom = () => {
     sendSocket('server/create-room', login)
   }
   useEffect(() => {
-    console.log('hello world')
     socket.on('client/created-room', (data) => {
       console.log('client/created-room', data)
       const { uuidRoom, uuidUser } = data;
@@ -53,18 +50,6 @@ const FormCreateRoom = ({ socket, sendSocket, updateUuidRoom, updateUuidUser }) 
       updateUuidUser(uuidUser)
       // redirect user to => url/#uuidRoom[name_player]
     })
-    //   const { uuidRoom, uuidUser } = data;
-    //   // add in store roomUuid
-    //   // add in store uuidUser
-    //   console.log("create-room", data)
-    //   store.setState(uuidRoom)
-    //   store.setState(uuidUser)
-    //   // return {
-    //   //   ...state,
-    //   //   uuidRoom,
-    //   //   uuidUser
-    //   // }
-    // })
   })
   const classes = useStyles();
   return (

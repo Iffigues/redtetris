@@ -1,6 +1,6 @@
-import block from './piece'
+import Block from './Piece'
 
-class game extends block {
+class Game extends Block {
 	constructor(events) {
 		super();
 	}
@@ -11,7 +11,7 @@ class game extends block {
 		}
 	}
 }
-let e = new game()
+let e = new Game()
 console.log(e);
 
-export default game;
+export default Game;

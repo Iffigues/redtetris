@@ -1,4 +1,4 @@
-import { serveSrv } from './srv'
+import Server from './class/Server'
 
-serveSrv();
+new Server()
 // server.create(params.server).then( () => console.log('not yet ready to play tetris with U ...') )

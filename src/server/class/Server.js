@@ -1,13 +1,12 @@
-import fs from 'fs'
 import debug from 'debug'
-import { rooms } from './tetris/room';
-import { players } from './tetris/player';
-import socketIo from 'socket.io';
+import { rooms } from './tetris/Room';
+import { players } from './tetris/Player';
 import bodyParser from 'body-parser';
 import cors from 'cors'
 import express from 'express'
-import { initListener } from './sockets/initSocket';
-import { params } from '../../params'
+// import { initListener } from './sockets/initSocket';
+import { params } from '../../../params'
+import SocketsManager from './sockets/SocketsManager';
 const logerror = debug('tetris:error'), loginfo = debug('tetris:info')
 
 class Server {
@@ -20,9 +19,9 @@ class Server {
 		this.server = this.app.listen({ host, port }, () => {
 			loginfo(`tetris listen on ${this.params.url}`);
 		})
-		const io = socketIo(this.server);
-		io.on('connection', initListener);
-		this.app.io = io;
+		const socketsManager = new SocketsManager(this.server);
+		this.app.io = socketsManager.io;
+		this.app.socketsManager = socketsManager;
 		this.rooms = {};
 	}
 
@@ -37,6 +36,4 @@ class Server {
 	}
 }
 
-export const serveSrv = (params) => {
-	return new Server(params);
-}
+export default Server;

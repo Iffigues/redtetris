@@ -1,4 +1,4 @@
-class pieces {
+class Pieces {
 	constructor() {
 		this.shadow = {
 			x: this.x,
@@ -113,4 +113,4 @@ class pieces {
 	}
 }
 
-export default pieces;
+export default Pieces;

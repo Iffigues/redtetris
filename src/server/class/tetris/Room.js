@@ -1,4 +1,4 @@
-import block from './tetriminos'
+import block from './Tetriminos'
 import uuidv4 from 'uuid'
 
 class Room extends block {
@@ -32,6 +32,4 @@ let e = new Room();
 console.log(e);
 e.startGame();
 
-export const createRoom = (admin, channel = uuidv4()) => {
-	return new Room(admin, channel);
-}
+export default Room;
