@@ -1,6 +1,7 @@
 import socketIo from 'socket.io';
-import Room from '../tetris/Room'
-import Player from '../tetris/Player'
+import Room from '../tetris/Room';
+import instanceRooms from '../tetris/Rooms';
+import Player from '../tetris/Player';
 
 class SocketsManager {
 	constructor (server) {
@@ -23,10 +24,6 @@ class SocketsManager {
     });
   }
 
-  // Rooms Global Singleton
-  // instance => instance of Rooms
-  // rooms => Object = key (uuid), value (instance of Room)
-
   // Room listener
   roomListener = () => {
     // Create and join room
@@ -35,6 +32,10 @@ class SocketsManager {
       console.log('data', content)
       const player = new Player(content, true);
       const room = new Room(player)
+      const rooms = instanceRooms;
+      console.log("Before", rooms)
+      rooms.add(room);
+      console.log("After", rooms)
       console.log('server/create')
       console.log("rooms", room.channel)
       console.log('player', player.uuid)
@@ -45,14 +46,19 @@ class SocketsManager {
   
     // leave room
     this.socket.on('server/leave-room', (data) => {
-      this.socket.broadcast.leave(data.channel);
-      console.log(`user leave channel: ${data.channel}`)
+      const { channel, uuidUser } = data;
+      const rooms = new Rooms();
+      rooms.deletePlayer(channel, uuidUser)
+      this.socket.broadcast.leave(channel);
+      console.log(`user leave channel: ${channel}`)
     });
   
     // join room
     this.socket.on('server/join-room', (data) => {
-      const { channel, login } = data.content;
-      const player = new Player(login, true);
+      const { channel, uuidUser } = data.content;
+      const player = new Player(uuidUser, false);
+      const rooms = new Rooms();
+      rooms.addPlayer(channel, player);
       this.socket.broadcast.join(channel);
     });
   }

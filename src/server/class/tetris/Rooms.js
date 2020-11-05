@@ -1,22 +1,40 @@
+// Rooms Singleton
+// instance => instance of Rooms
+// rooms => Object = key (uuid), value (instance of Room)
+
 class Rooms {
   constructor() {
    if (!Rooms.instance){
-     this._data = [];
+     this._data = {};
      Rooms.instance = this;
    }
    return Rooms.instance;
   }
 
   add = item => {
-    this.instance[item.channel] = item;
+    if (!Object.keys(this._data).includes(item.channel)) {
+      this._data[item.channel] = item;
+    } else {
+      this._data[item.channel].player.push(item.player);
+    }
   }
+  addPlayer = (channel, player) => {
+    this._data[channel].player.addPlayer(player);
+  }
+
+  deletePlayer = (uuidUser, channel) => {
+    this._data[channel] =
+      this._data[channel].player
+        .filter(item => item.uuid !== uuidUser)
+  }
+
   get = channel =>  {
-    return this.instance.find(elmt => elmt.channel === channel)
+    return this._data.find(elmt => elmt.channel === channel)
   }
 }
 
-const instance = new Rooms();
-Object.freeze(instance);
+const instanceRooms = new Rooms();
+Object.freeze(instanceRooms);
 
-export default instance;
+export default instanceRooms;
 

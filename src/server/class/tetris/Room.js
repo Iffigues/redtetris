@@ -3,20 +3,19 @@ import uuidv4 from 'uuid'
 
 class Room extends block {
 	
-	constructor(admin, channel = uuidv4()) {
+	constructor(player, channel = uuidv4()) {
 		super();
 		this.state = 0;
 		this.channel = channel;
-		this.admin = admin;
-		this.player = [admin];
+		this.players = [player];
 	}
 	
 	addPlayer = (player) => {
-		this.player.push(player);
+		this.players.push(player);
 	}
 	
 	countPlayer = () => {
-		let i = this.player.length;
+		let i = this.players.length;
 		if (i == 4) {
 			this.startGame();
 		}

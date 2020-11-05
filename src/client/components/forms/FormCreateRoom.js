@@ -7,6 +7,8 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { SocketContext } from "../../context/SocketContext";
+import { Context as UserContext } from "../../context/UserContext";
+import { useHistory } from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -32,10 +34,14 @@ const useStyles = makeStyles((theme) => ({
 
 const FormCreateRoom = () => {
   const { sendSocket } = useContext(SocketContext);
+  const { state: {uuidRoom} } = useContext(UserContext);
+
   const [login, setLogin] = useState('');
-  const createRoom = () => {
-    console.log('hello world', login)
-    sendSocket('server/create-room', login)
+  const history = useHistory()
+
+  const createRoom = async () => {
+    await sendSocket('server/create-room', login)
+    history.push(`/room/${uuidRoom}`)
   }
   const classes = useStyles();
   return (

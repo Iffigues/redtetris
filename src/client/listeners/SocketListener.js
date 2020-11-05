@@ -1,18 +1,21 @@
 import { useEffect, useContext } from 'react';
-import { SocketContext } from "../context/SocketContext";
+import { Context as UserContext } from "../context/UserContext";
 
-export default () => {
-  const { state: { socketClient } } = useContext(SocketContext);
+
+export default (socketClient) => {
+  const {
+    updateUuidRoom,
+    updateUuidUser
+  } = useContext(UserContext);
 
   useEffect(() => {
+    console.log(socketClient, 'UseEffect')
     socketClient.on('client/ping', () => { console.log("ping") })
     socketClient.on('client/pong', () => { console.log("pong") })
-    socketClient.on('client/created-room', (data) => {
-      console.log('client/created-room', data)
-      // const { uuidRoom, uuidUser } = data;
-      // updateUuidRoom(uuidRoom)
-      // updateUuidUser(uuidUser)
-      // redirect user to => url/#uuidRoom[name_player]
+    socketClient.on('client/created-room', async (data) => {
+      const { uuidRoom, uuidUser } = data;
+      await updateUuidRoom(uuidRoom)
+      await updateUuidUser(uuidUser)
     })
     return ;
   }, [])

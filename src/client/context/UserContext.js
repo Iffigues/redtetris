@@ -7,8 +7,10 @@ const initialState = {
 
 const UserReducer = (state, payload) => {
   switch (payload.type) {
-    case "updateUuidRoom":
+    case "updateUuidRoom": {
+      console.log(payload, "payload")
       return {  ...state, uuidRoom: payload.uuidRoom };
+    }
     case "updateUuidUser":
       return {  ...state, uuidUser: payload.uuidUser };
     default:
@@ -16,11 +18,11 @@ const UserReducer = (state, payload) => {
   }
 };
 
-const updateUuidRoom = dispatch => (uuidRoom) => 
-  dispatch({ type: "updateUuidRoom", payload: uuidRoom });
+const updateUuidRoom = dispatch => uuidRoom => 
+  dispatch({ type: "updateUuidRoom", uuidRoom });
 
 const updateUuidUser = dispatch => uuidUser => 
-  dispatch({ type: "updateUuidUser", payload: uuidUser });
+  dispatch({ type: "updateUuidUser", uuidUser });
 
 export const { Provider, Context } = createDataContext(
   //reducer :
