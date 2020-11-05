@@ -1,6 +1,5 @@
 import React from "react";
 import { HashRouter, BrowserRouter, Route, Switch } from 'react-router-dom';
-import { hot } from 'react-hot-loader/root'
 
 // components
 import Alerts from '../components/alerts'
@@ -11,8 +10,7 @@ import HomePage from '../pages/home/home'
 import BoardPage from '../pages/board/board'
 import CreateRoomPage from '../pages/create-room/create-room'
 
-const router = () => {
-  return (
+export default () => (
     <div>
       <BrowserRouter>
         <NavBar/>
@@ -22,7 +20,4 @@ const router = () => {
         <Route path="/board" component={BoardPage} />
       </BrowserRouter>
     </div>
-  )
-}
-
-export default hot(router);
+)

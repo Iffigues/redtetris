@@ -23,6 +23,10 @@ class SocketsManager {
     });
   }
 
+  // Rooms Global Singleton
+  // instance => instance of Rooms
+  // rooms => Object = key (uuid), value (instance of Room)
+
   // Room listener
   roomListener = () => {
     // Create and join room
@@ -48,8 +52,8 @@ class SocketsManager {
     // join room
     this.socket.on('server/join-room', (data) => {
       const { channel, login } = data.content;
-      const player = createPlayer(login, true);
-  
+      const player = new Player(login, true);
+      this.socket.broadcast.join(channel);
     });
   }
 

@@ -6,9 +6,8 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { sendSocket } from 'actions/socket'
-import { updateUuidRoom, updateUuidUser } from 'actions/socket'
-import { connect } from 'react-redux'
+import { sendSocket } from '../../actions/socket'
+import { updateUuidRoom, updateUuidUser } from '../../actions/socket'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -89,5 +88,5 @@ const FormCreateRoom = ({ socket, sendSocket, updateUuidRoom, updateUuidUser }) 
     </div>
   );
 }
-export default connect(mapStateToProps, mapDispatchToProps)(FormCreateRoom)
+export default FormCreateRoom;
 
