@@ -15,7 +15,7 @@ const alertReducer = (state, action) => {
   }
 };
 
-const sendAlert = (message, typeAlert) =>
+const sendAlert = (dispatch) => (message, typeAlert) =>
   dispatch({ type: ALERT_POP, typeAlert, message })
 
 export const { Provider, Context } = createDataContext(

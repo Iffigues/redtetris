@@ -3,8 +3,24 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 import { Link } from 'react-router-dom';
+import { Context as AlertContext } from "../../context/AlertContext";
+import { SocketContext } from "../../context/SocketContext";
+import { useContext, useEffect } from 'react';
 
 const HomePage = () => {
+  const { state, sendAlert } = useContext(AlertContext);
+  const { sendSocket } = useContext(SocketContext);
+
+  useEffect(
+    () => {
+      console.log(state)
+      sendAlert('Soon, will be here a fantastic Tetris ...', 'info')
+      sendSocket('server/ping')
+      setTimeout(() => {
+        sendAlert()
+      }, 5000)
+    }
+    ,[])
   return (
     <div>
       <Container fixed>

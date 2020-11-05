@@ -1,20 +1,22 @@
 import { hot } from "react-hot-loader";
 import React from "react";
 import Router from '../router/index';
-import { Provider as SocketContext } from "../context/SocketContext";
+import { SocketContextProvider } from "../context/SocketContext";
 import { Provider as AlertContext } from "../context/AlertContext";
+import { Provider as UserContext } from "../context/UserContext";
 
 
 // process.env.NODE_ENV === "production"
 //   ? require("../sass/main.css")
 //   : require("../sass/main.scss");
-
-  const App = (
-    <AlertContext>
-      <SocketContext>
+const App = () => (
+  <AlertContext>
+    <UserContext>
+      <SocketContextProvider>
         <Router />
-      </SocketContext>
-    </AlertContext>
-  )
+      </SocketContextProvider>
+    </UserContext>
+  </AlertContext>
+)
 
 export default hot(module)(App);

@@ -1,59 +1,22 @@
-import createDataContext from "./createDataContext";
-const initialState = {
-  socket: socketIOClient('http://localhost:3004'),
-  uuidRoom: null,
-  uuidUser: null
-};
+import React, { createContext } from "react"
+import { params } from "../../../params"
+import socketIOClient from "socket.io-client"
 
-const socketReducer = (state, action) => {
-  switch (action.type) {
-    case "updateUuidRoom":
-      return {  ...state, uuidRoom: action.uuidRoom };
-    case "updateUuidUser":
-      return {  ...state, uuidUser: action.uuidUser };
-    case "socket":
-      return {  ...state, content: action.content, status: 'DONE' };
-    default:
-      initialState.socket.on('client/ping', () => { console.log("ping") })
-      initialState.socket.on('client/pong', () => { console.log("pong") })
-      return state;
+export const SocketContext = createContext();
+
+export const SocketContextProvider = ({ children }) => {
+  const socketClient = socketIOClient(params.url);
+  
+  const sendSocket = (type, data = false) => {
+    console.log("sendSocket", data)
+    socketClient.emit(type, data);
   }
-};
-
-const sendData = (socket, { type }, data) => {
-  socket.emit(type, data);
-  return { type: 'socket' }
+  
+  return (
+    <SocketContext.Provider
+    value={{socketClient, sendSocket}}
+    >
+      { children }
+    </SocketContext.Provider>
+  )
 }
-
-const sendSocket = (dispatch, getState) => () => {
-  const data = {
-    uuidRoom: getState().socket.uuidRoom,
-    uuidUser: getState().socket.uuidUser,
-    content
-  };
-  console.log("sendSocket function", actionName, getState().socket.socket)
-  return dispatch(sendData(getState().socket.socket, { type: actionName }, data))
-}
-
-const updateUuidRoom = dispatch => (uuidRoom) => 
-  dispatch({ type: "updateUuidRoom", payload: uuidRoom });
-
-const updateUuidUser = dispatch => uuidUser => 
-  dispatch({ type: "updateUuidUser", payload: uuidUser });
-
-export const { Provider, Context } = createDataContext(
-  //reducer :
-  socketReducer,
-
-  //action functions :
-  {
-    sendSocket,
-    updateUuidRoom,
-    updateUuidUser
-  },
-
-  //initialState :
-  {
-   ...initialState
-  }
-);
