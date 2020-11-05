@@ -6,9 +6,10 @@ import Alerts from '../components/Alerts'
 import NavBar from '../components/navBar'
 
 // pages
-import HomePage from '../pages/home/home'
-import BoardPage from '../pages/board/board'
-import CreateRoomPage from '../pages/create-room/create-room'
+import HomePage from '../pages/home/Home'
+import BoardPage from '../pages/board/Board'
+import CreateRoomPage from '../pages/create-room/CreateRoom'
+import JoinRoom from '../pages/join-room/JoinRoom'
 import Room from '../pages/_room/room'
 
 import SocketLister from '../listeners/SocketListener'
@@ -27,6 +28,7 @@ export default () => {
         <Alerts />
         <Route exact path="/" component={HomePage} />
         <Route exact path="/create-room" component={CreateRoomPage} />
+        <Route exact path="/join-room" component={JoinRoom} />
         <Route exact path="/room/:uuidRoom" render={(props) => {
           return ( <Room {...props } /> )
         }} />

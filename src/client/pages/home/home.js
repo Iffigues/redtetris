@@ -29,7 +29,7 @@ const HomePage = () => {
             <span>Bienvenu sur red-tetris</span>
           </Grid>
           <Grid item xs={6}>
-          <Link to="/board">
+          <Link to="/join-room">
             <Button variant="contained">
               Rejoindre une partie !
             </Button>
