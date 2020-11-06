@@ -1,16 +1,15 @@
 import React from 'react'
 import Container from '@material-ui/core/Container';
-import FormCreateRoom from '../../components/forms/FormCreateRoom'
+import FormJoinRoom from '../../components/forms/FormJoinRoom'
 
-
-const CreateRoomPage = () => {
+const JoinRoomPage = () => {
   return (
     <div>
       <Container fixed>
-        <FormCreateRoom />
+        <FormJoinRoom />
       </Container>
     </div>
   )
 }
 
-export default CreateRoomPage
+export default JoinRoomPage

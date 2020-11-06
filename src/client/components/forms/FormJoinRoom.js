@@ -36,12 +36,13 @@ const FormCreateRoom = () => {
   const { sendSocket } = useContext(SocketContext);
   const { state: {uuidRoom} } = useContext(UserContext);
 
-  const [login, setLogin] = useState('');
+  const [uuidRoomSearch, setUuidRoomSearch] = useState('');
   const history = useHistory()
 
-  const createRoom = async () => {
-    await sendSocket('server/create-room', login)
-    history.push(`/room/${uuidRoom}`)
+  const joinRoom = async () => {
+    // await sendSocket('server/join-room', uuidRoomSearch)
+
+    // history.push(`/room/${uuidRoom}`)
   }
   const classes = useStyles();
   return (
@@ -50,20 +51,20 @@ const FormCreateRoom = () => {
         <CssBaseline />
       <div className={classes.paper}>
         <Typography component="h1" variant="h5">
-          Crée une partie
+          Rejoindre une partie
         </Typography>
         <form className={classes.form} noValidate>
           <TextField
-            value={login}
-            onInput={e => setLogin(e.target.value)}
+            value={uuidRoomSearch}
+            onInput={e => setUuidRoomSearch(e.target.value)}
             variant="outlined"
             margin="normal"
             required
             fullWidth
-            name="login"
-            label="login"
-            type="login"
-            id="login"
+            name="Nom de la partie"
+            label="Nom de la partie"
+            type="Nom de la partie"
+            id="Nom de la partie"
             autoComplete="current-login"
           />
           <Button
@@ -71,9 +72,9 @@ const FormCreateRoom = () => {
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={createRoom}
-            >
-            Valider
+            onClick={joinRoom}
+          >
+            Rechercher
           </Button>
         </form>
       </div>

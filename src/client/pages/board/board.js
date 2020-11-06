@@ -4,7 +4,7 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Preview from '../../components/preview'
 import Game from '../../components/game'
-import { createGame } from 'plugins/createGame'
+import { createGame } from '../../plugins/createGame'
 import {withRouter} from 'react-router';
 
 const boxProps = {

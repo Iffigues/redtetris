@@ -1,10 +1,12 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
 import Alert from '@material-ui/lab/Alert';
+import { Context as AlertContext } from "../context/AlertContext";
+import { useContext } from 'react';
 
-const Alerts = ({message, type}) => {
-  console.log(message, type)
+const Alerts = () => {
+  const {
+    state: { message, type }
+  } = useContext(AlertContext);
   if (message && type) {
   return (
       <Alert severity={type}>{message}</Alert>
@@ -13,16 +15,6 @@ const Alerts = ({message, type}) => {
   return null;
 }
 
-const mapStateToProps = (state) => {
-  return {
-    message: state.alert.message,
-    type: state.alert.type
-  }
-}
+export default Alerts
 
-Alerts.propTypes = {
-  message: PropTypes.string,
-  type: PropTypes.string
-}
-
-export default connect(mapStateToProps, null)(Alerts)
+// use memo

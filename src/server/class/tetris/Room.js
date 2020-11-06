@@ -1,22 +1,21 @@
-import block from './tetriminos'
+import block from './Tetriminos'
 import uuidv4 from 'uuid'
 
 class Room extends block {
 	
-	constructor(name = uuidv4(), admin) {
+	constructor(player, channel = uuidv4()) {
 		super();
 		this.state = 0;
-		this.name = name;
-		this.admin = admin;
-		this.player = [admin];
+		this.channel = channel;
+		this.players = [player];
 	}
 	
 	addPlayer = (player) => {
-		this.player.push(player);
+		this.players.push(player);
 	}
 	
 	countPlayer = () => {
-		let i = this.player.length;
+		let i = this.players.length;
 		if (i == 4) {
 			this.startGame();
 		}
@@ -26,11 +25,10 @@ class Room extends block {
 		let y = this.newBlock();
 		console.log(y)
 	}
+
 }
 let e = new Room();
 console.log(e);
 e.startGame();
 
-export const rooms = (name = uuidv4(), admin) => {
-	return new Room(name, admin);
-}
+export default Room;
