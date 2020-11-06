@@ -17,6 +17,10 @@ export default (socketClient) => {
       await updateUuidRoom(uuidRoom)
       await updateUuidUser(uuidUser)
     })
+    socketClient.on('client/join-room', async (data) => {
+      const { uuidRoom } = data;
+      await updateUuidRoom(uuidRoom)
+    })
     return ;
   }, [])
 }
