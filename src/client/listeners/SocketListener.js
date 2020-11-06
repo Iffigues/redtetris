@@ -5,7 +5,7 @@ import { Context as RoomsContext } from "../context/RoomsContext";
 export default (socketClient) => {
   const {
     updateUuidRoom,
-    updateUuidUser
+    updatePlayer
   } = useContext(UserContext);
 
   const {
@@ -18,18 +18,25 @@ export default (socketClient) => {
     socketClient.on('client/pong', () => { console.log("pong") })
 
     socketClient.on('client/created-room', (data) => {
-      const { uuidRoom, uuidUser } = data;
+      const { uuidRoom, player } = data;
       updateUuidRoom(uuidRoom)
-      updateUuidUser(uuidUser)
+      console.log("player", player)
+      updatePlayer(player)
     })
 
     socketClient.on('client/join-room', (data) => {
-      const { uuidRoom } = data;
+      const { uuidRoom, player } = data;
       updateUuidRoom(uuidRoom)
+      updatePlayer(player)
     })
 
     socketClient.on('client/update-rooms', (rooms) => {
+      console.log("rooms", rooms)
       updateRooms(rooms)
+    })
+
+    socketClient.on('client/start-game', () => {
+      console.log('client/start-game')
     })
 
     return ;

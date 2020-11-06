@@ -7,6 +7,7 @@ export const SocketContext = createContext();
 export const SocketContextProvider = ({ children }) => {
   const socketClient = socketIOClient(params.url);  
   const sendSocket = (type, data = false) => {
+    console.log("sendSocket", data)
     socketClient.emit(type, data);
   }
   

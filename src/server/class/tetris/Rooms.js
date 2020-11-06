@@ -21,11 +21,18 @@ class Rooms {
   addPlayer = (channel, player) => {
     this._data[channel].addPlayer(player);
   }
+  startGame = (channel) => {
+    this._data[channel].startGame();
+  }
 
   deletePlayer = (uuidUser, channel) => {
     this._data[channel] =
-      this._data[channel].player
+      this._data[channel].players
         .filter(item => item.uuid !== uuidUser)
+  }
+
+  changeIsPlaying = (channel, value) => {
+    this._data[channel].changeIsPlaying(value);
   }
 
   get = channel =>  {
