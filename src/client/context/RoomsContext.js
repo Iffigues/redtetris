@@ -13,10 +13,8 @@ const RoomsReducer = (state, payload) => {
   }
 };
 
-const updateRooms = dispatch => rooms => {
-  console.log("updateRooms", rooms)
+const updateRooms = dispatch => rooms =>
   dispatch({ type: "updateRooms", rooms: rooms._data });
-}
 
 export const { Provider, Context } = createDataContext(
   //reducer :

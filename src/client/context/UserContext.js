@@ -8,7 +8,6 @@ const initialState = {
 const UserReducer = (state, payload) => {
   switch (payload.type) {
     case "updateUuidRoom": {
-      console.log(payload, "payload")
       return {  ...state, uuidRoom: payload.uuidRoom };
     }
     case "updateUuidUser":

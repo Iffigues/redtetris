@@ -19,7 +19,6 @@ import { useEffect, useContext } from 'react';
 
 export default () => {
   const { socketClient } = useContext(SocketContext);
-  console.log(socketClient, "Router")
   SocketLister(socketClient);
   return (
     <div>

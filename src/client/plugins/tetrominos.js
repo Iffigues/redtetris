@@ -63,8 +63,6 @@ export const TETROMINOS = {
 
 
 export const getTetrominos = () => {
-  // console.log(TETROMINOS);
-  // console.log(TETROMINOS_CHAR.charAt(Math.floor(Math.random() * TETROMINOS_CHAR.length)));
   return 'L'
 }
 

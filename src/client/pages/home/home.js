@@ -2,14 +2,12 @@ import React from 'react'
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
-import { Link } from 'react-router-dom';
 import { Context as AlertContext } from "../../context/AlertContext";
 import { Context as UserContext } from "../../context/UserContext";
 import { Context as RoomsContext } from "../../context/RoomsContext";
 import { SocketContext } from "../../context/SocketContext";
 import { useContext, useEffect, useState } from 'react';
 import TextField from '@material-ui/core/TextField';
-import instanceRooms from '../../../server/class/tetris/Rooms'
 import { useHistory } from 'react-router-dom'
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -32,7 +30,6 @@ const SectionGames = (props) => {
   };
 
   if (wantJoinGame) {
-    console.log("rooms", rooms)
     if (!rooms || Object.keys(rooms).length === 0) {
       return (
         <Grid item xs={6}>
@@ -40,7 +37,6 @@ const SectionGames = (props) => {
         </Grid>
       )
     } else {
-      console.log("rooms", rooms)
       return (
         <Select
           labelId="demo-controlled-open-select-label"
@@ -93,13 +89,11 @@ const HomePage = () => {
     if (uuidRoom) {
       history.push(`/room/${uuidRoom}`)
     } else {
-      console.log("uuidRoom", uuidRoom)
     }
   }, [uuidRoom])
 
   useEffect(
     () => {
-      console.log(state)
       sendAlert('Soon, will be here a fantastic Tetris ...', 'info')
       sendSocket('server/ping')
       setTimeout(() => {

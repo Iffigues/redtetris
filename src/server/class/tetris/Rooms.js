@@ -19,7 +19,6 @@ class Rooms {
     }
   }
   addPlayer = (channel, player) => {
-    console.log("channels", this._data[channel])
     this._data[channel].addPlayer(player);
   }
 

@@ -1,6 +1,4 @@
 import debug from 'debug'
-import { rooms } from './tetris/Room';
-import { players } from './tetris/Player';
 import bodyParser from 'body-parser';
 import cors from 'cors'
 import express from 'express'
@@ -23,16 +21,6 @@ class Server {
 		this.app.io = socketsManager.io;
 		this.app.socketsManager = socketsManager;
 		this.rooms = {};
-	}
-
-	addRoom = () => {
-		console.log("creating new room");
-		let p = players(true);
-		let r = rooms(null, p);
-		if (!(r.name in this.rooms)) {
-			//this.rooms[r.name] = r;
-			console.log("room created");
-		}
 	}
 }
 
