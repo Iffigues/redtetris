@@ -18,19 +18,19 @@ class SocketsManager {
     this.socket.on('server/ping', () => {
       console.log('ping')
       this.socket.emit('client/pong');
+      this.socket.emit('client/update-rooms', instanceRooms);
     })
     this.socket.on('disconnect', () => {
       this.socket.disconnect();
     });
   }
-
+  
   // Room listener
   roomListener = () => {
     // Create and join room
     this.socket.on('server/create-room', (data) => {
-      const { content } = data
-      console.log('data', content)
-      const player = new Player(content, true);
+      console.log('data', data)
+      const player = new Player(data, true);
       const room = new Room(player)
       const rooms = instanceRooms;
       console.log("Before", rooms)
@@ -39,26 +39,31 @@ class SocketsManager {
       console.log('server/create')
       console.log("rooms", room.channel)
       console.log('player', player.uuid)
+      this.socket.emit('client/update-rooms', instanceRooms);
       this.socket.emit('client/created-room', { uuidRoom: room.channel, uuidUser: player.uuid })
       this.socket.broadcast.join(room.channel);
       console.log(`user join room: ${room.channel}`)
     });
-  
+    
     // leave room
     this.socket.on('server/leave-room', (data) => {
       const { channel, uuidUser } = data;
-      const rooms = new Rooms();
+      const rooms = instanceRooms;
       rooms.deletePlayer(channel, uuidUser)
       this.socket.broadcast.leave(channel);
+      this.socket.emit('client/update-rooms', instanceRooms);
       console.log(`user leave channel: ${channel}`)
     });
-  
+    
     // join room
     this.socket.on('server/join-room', (data) => {
-      const { channel, uuidUser } = data.content;
-      const player = new Player(uuidUser, false);
-      const rooms = new Rooms();
+      const { channel, login } = data;
+      const player = new Player(login, false);
+      const rooms = instanceRooms;
+      console.log(channel, login)
       rooms.addPlayer(channel, player);
+      this.socket.emit('client/update-rooms', instanceRooms);
+      this.socket.emit('client/join-room', { uuidRoom: channel, uuidUser: player.uuid })
       this.socket.broadcast.join(channel);
     });
   }

@@ -19,7 +19,8 @@ class Rooms {
     }
   }
   addPlayer = (channel, player) => {
-    this._data[channel].player.addPlayer(player);
+    console.log("channels", this._data[channel])
+    this._data[channel].addPlayer(player);
   }
 
   deletePlayer = (uuidUser, channel) => {

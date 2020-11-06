@@ -4,6 +4,7 @@ import Router from '../router/index';
 import { SocketContextProvider } from "../context/SocketContext";
 import { Provider as AlertContext } from "../context/AlertContext";
 import { Provider as UserContext } from "../context/UserContext";
+import { Provider as RoomsContext } from "../context/RoomsContext";
 
 
 // process.env.NODE_ENV === "production"
@@ -12,9 +13,11 @@ import { Provider as UserContext } from "../context/UserContext";
 const App = () => (
   <AlertContext>
     <UserContext>
-      <SocketContextProvider>
-        <Router />
-      </SocketContextProvider>
+      <RoomsContext>
+        <SocketContextProvider>
+          <Router />
+        </SocketContextProvider>
+      </RoomsContext>
     </UserContext>
   </AlertContext>
 )
