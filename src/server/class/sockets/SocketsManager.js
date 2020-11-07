@@ -29,62 +29,65 @@ class SocketsManager {
   roomListener = () => {
     // Create and join room
     this.socket.on('server/create-room', (data) => {
-      console.log('data', data)
+      console.log('create-room', data)
       const { login, playSolo } = data
-      console.log("data", data)
       const player = new Player(login, true);
       const room = new Room(player, playSolo)
       const rooms = instanceRooms;
-      console.log("Before", rooms)
       rooms.add(room);
-      console.log("After", rooms)
-      console.log('server/create')
-      console.log("rooms", room.channel)
-      console.log('player', player.uuid)
-      this.socket.emit('client/update-rooms', instanceRooms);
+      this.socket.emit('client/update-rooms', rooms);
       this.socket.emit('client/created-room', { uuidRoom: room.channel, player })
       this.socket.broadcast.join(room.channel);
       console.log(`user join room: ${room.channel}`)
     });
     
-    // leave room
-    this.socket.on('server/leave-room', (data) => {
-      const { channel, uuidUser } = data;
-      const rooms = instanceRooms;
-      rooms.deletePlayer(channel, uuidUser)
-      this.socket.broadcast.leave(channel);
-      this.socket.emit('client/update-rooms', instanceRooms);
-      console.log(`user leave channel: ${channel}`)
-    });
+    // // leave room
+    // this.socket.on('server/leave-room', (data) => {
+    //   console.log('leave-room', data)
+    //   const { channel, uuidUser } = data;
+    //   const rooms = instanceRooms;
+    //   rooms.deletePlayer(channel, uuidUser)
+    //   this.socket.leave(channel);
+    //   this.socket.emit('client/update-rooms', rooms);
+    //   console.log(`user leave channel: ${channel}`)
+    // });
     
     // join room
     this.socket.on('server/join-room', (data) => {
+      console.log('join-room', data)
       const { channel, login } = data;
       const player = new Player(login, false);
+      console.log("before:", instanceRooms.get(channel).getPlayers())
       const rooms = instanceRooms;
-      console.log(channel, login)
+      console.log("after", instanceRooms.get(channel).getPlayers())
+      console.log("join", channel, login)
       rooms.addPlayer(channel, player);
-      this.socket.emit('client/update-rooms', instanceRooms);
-      this.socket.emit('client/join-room', { uuidRoom: channel, player })
+      this.socket.emit('client/update-rooms', rooms);
+      this.io.sockets.in(channel).emit('client/update-rooms')
+      this.socket.emit('client/join-room', { uuidRoom: channel, player });
       this.socket.broadcast.join(channel);
+      console.log(`User join channel ${channel}`)
+      // this.socket.to(channel).emit('client/join-room', { uuidRoom: channel, player })
     });
   }
   
   // Game Listener
   gameListener = () => {
     this.socket.on('server/start-game', (data) => {
-      console.log('start game', data)
+      console.log('start-game', data)
       const { uuidRoom } = data;
+      console.log("before", rooms)
       const rooms = instanceRooms;
+      console.log("after", rooms)
       rooms.startGame(uuidRoom);
       console.log('start game', data)
-      this.socket.broadcast.to(uuidRoom).emit('client/start-game')
-      this.socket.emit('client/update-rooms', rooms);
-      this.socket.emit('client/start-game')
+      this.io.sockets.in(uuidRoom).emit('client/start-game')
+      this.io.sockets.emit('client/update-rooms', rooms);
     });
     
     this.socket.on('server/key-up', (data) => {
       // KEY: 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Escape'
+      console.log('key-up', data)
       const { key } = data;
       // get channel
       console.log(key)
@@ -96,6 +99,7 @@ class SocketsManager {
     });
     
     this.socket.on('server/pause-resume', (data) => {
+      console.log('pause-resume', data)
       // get channel
       const { channel } = data;
       const rooms = instanceRooms;
@@ -107,6 +111,7 @@ class SocketsManager {
       // rooms[channel];
       rooms.changeIsPlaying(channel, !isPlaying);
       this.socket.emit('client/update-rooms', instanceRooms);
+      this.io.sockets.emit('client/update-rooms', instanceRooms)
       console.log("rooms after", rooms);
       console.log(isPlaying, channel);
       // stop timer

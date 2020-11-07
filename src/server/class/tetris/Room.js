@@ -3,7 +3,7 @@ import uuidv4 from 'uuid'
 
 class Room extends block {
 	
-	constructor(player, solo = false, channel = uuidv4()) {
+	constructor(player, io, solo = false, channel = uuidv4()) {
 		super();
 		this.isStart = false;
 		this.isPlaying = false;
@@ -31,10 +31,9 @@ class Room extends block {
 	changeIsPlaying = (value) => {
 		this.isPlaying = value;
 	}
-
+	getPlayers = () => {
+    return this.players
+  }
 }
-let e = new Room();
-console.log(e);
-e.startGame();
 
 export default Room;

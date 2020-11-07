@@ -18,6 +18,7 @@ export default (socketClient) => {
     socketClient.on('client/pong', () => { console.log("pong") })
 
     socketClient.on('client/created-room', (data) => {
+      console.log('created-room', data)
       const { uuidRoom, player } = data;
       updateUuidRoom(uuidRoom)
       console.log("player", player)
@@ -25,13 +26,15 @@ export default (socketClient) => {
     })
 
     socketClient.on('client/join-room', (data) => {
+      console.log('join-room', data)
       const { uuidRoom, player } = data;
       updateUuidRoom(uuidRoom)
       updatePlayer(player)
     })
 
     socketClient.on('client/update-rooms', (rooms) => {
-      console.log("rooms", rooms)
+      console.log("update-rooms", rooms)
+      console.log("rooms: [", rooms, "]")
       updateRooms(rooms)
     })
 

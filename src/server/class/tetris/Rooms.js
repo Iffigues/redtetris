@@ -36,7 +36,7 @@ class Rooms {
   }
 
   get = channel =>  {
-    return this._data.find(elmt => elmt.channel === channel)
+    return this._data[channel]
   }
 }
 
