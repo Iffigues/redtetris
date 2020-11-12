@@ -6,10 +6,15 @@ import Player from '../tetris/Player';
 class SocketsManager {
 	constructor (server) {
     this.io = socketIo(server);
-    this.io.on('connection', (socket) => {
+    this.io.sockets.on('connection', (socket) => {
       this.socket = socket
       this.initListener()
     });
+  }
+
+  updateRooms = (rooms) => {
+    this.socket.emit('client/update-rooms', rooms);
+    this.io.sockets.emit('client/update-rooms', rooms)
   }
 
   // Default
@@ -18,7 +23,6 @@ class SocketsManager {
     this.socket.on('server/ping', () => {
       console.log('ping')
       this.socket.emit('client/pong');
-      this.socket.emit('client/update-rooms', instanceRooms);
     })
     this.socket.on('disconnect', () => {
       this.socket.disconnect();
@@ -35,7 +39,7 @@ class SocketsManager {
       const room = new Room(player, playSolo)
       const rooms = instanceRooms;
       rooms.add(room);
-      this.socket.emit('client/update-rooms', rooms);
+      this.updateRooms(rooms)
       this.socket.emit('client/created-room', { uuidRoom: room.channel, player })
       this.socket.broadcast.join(room.channel);
       console.log(`user join room: ${room.channel}`)
@@ -56,14 +60,13 @@ class SocketsManager {
     this.socket.on('server/join-room', (data) => {
       console.log('join-room', data)
       const { channel, login } = data;
-      const player = new Player(login, false);
+      const player = new Player(login);
       console.log("before:", instanceRooms.get(channel).getPlayers())
       const rooms = instanceRooms;
+      rooms.addPlayer(channel, player);
       console.log("after", instanceRooms.get(channel).getPlayers())
       console.log("join", channel, login)
-      rooms.addPlayer(channel, player);
-      this.socket.emit('client/update-rooms', rooms);
-      this.io.sockets.in(channel).emit('client/update-rooms')
+      this.updateRooms(rooms)
       this.socket.emit('client/join-room', { uuidRoom: channel, player });
       this.socket.broadcast.join(channel);
       console.log(`User join channel ${channel}`)
@@ -81,8 +84,8 @@ class SocketsManager {
       console.log("after", rooms)
       rooms.startGame(uuidRoom);
       console.log('start game', data)
+      this.updateRooms(rooms)
       this.io.sockets.in(uuidRoom).emit('client/start-game')
-      this.io.sockets.emit('client/update-rooms', rooms);
     });
     
     this.socket.on('server/key-up', (data) => {
@@ -103,15 +106,8 @@ class SocketsManager {
       // get channel
       const { channel } = data;
       const rooms = instanceRooms;
-      // console.log("data", data, channel);
-      // console.log("rooms[channel]", rooms[channel]);
-      // console.log("rooms before", rooms._data[channel]);
-      const { isPlaying } = rooms._data[channel]
-      console.log(isPlaying)
-      // rooms[channel];
-      rooms.changeIsPlaying(channel, !isPlaying);
-      this.socket.emit('client/update-rooms', instanceRooms);
-      this.io.sockets.emit('client/update-rooms', instanceRooms)
+      rooms.changeIsPlaying(channel);
+      this.updateRooms(rooms)
       console.log("rooms after", rooms);
       console.log(isPlaying, channel);
       // stop timer

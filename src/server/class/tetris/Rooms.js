@@ -31,8 +31,8 @@ class Rooms {
         .filter(item => item.uuid !== uuidUser)
   }
 
-  changeIsPlaying = (channel, value) => {
-    this._data[channel].changeIsPlaying(value);
+  changeIsPlaying = (channel) => {
+    this._data[channel].changeIsPlaying();
   }
 
   get = channel =>  {

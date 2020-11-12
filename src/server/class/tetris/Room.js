@@ -28,8 +28,8 @@ class Room extends block {
 		this.isStart = true;
 	}
 
-	changeIsPlaying = (value) => {
-		this.isPlaying = value;
+	changeIsPlaying = () => {
+		this.isPlaying = !this.isPlaying;
 	}
 	getPlayers = () => {
     return this.players

@@ -39,7 +39,7 @@ const CheckBoxSolo = (props) => {
 
 const SectionGames = (props) => {
   const [open, setOpen] = useState(false);
-  const { state: {rooms} } = useContext(RoomsContext);
+  const { state: { rooms } } = useContext(RoomsContext);
   const { wantJoinGame, roomSelected, setRoomSelected } = props
 
   const handleChange = (event) => {
@@ -79,7 +79,9 @@ const SectionGames = (props) => {
                 <MenuItem
                   value={rooms[item].channel}>
                   {rooms[item].players
-                    .map((player, index) => `${player.name}${(index !== rooms[item].players.length - 1) ? ', ' : ''}`
+                    .map((player, index) => (!rooms[item].solo)
+                      ? `${player.name}${(index !== rooms[item].players.length - 1) ? ', ' : ''}`
+                      : ''
                     )
                   }
                 </MenuItem>
