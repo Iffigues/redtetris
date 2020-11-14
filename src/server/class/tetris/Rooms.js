@@ -21,15 +21,21 @@ class Rooms {
   addPlayer = (channel, player) => {
     this._data[channel].addPlayer(player);
   }
+  startGame = (channel) => {
+    this._data[channel].startGame();
+  }
 
-  deletePlayer = (uuidUser, channel) => {
-    this._data[channel] =
-      this._data[channel].player
-        .filter(item => item.uuid !== uuidUser)
+  deletePlayer = (channel, uuidUser) => {
+    console.log("channel", channel);
+    this._data[channel].removePlayer(uuidUser)
+  }
+
+  changeIsPlaying = (channel) => {
+    this._data[channel].changeIsPlaying();
   }
 
   get = channel =>  {
-    return this._data.find(elmt => elmt.channel === channel)
+    return this._data[channel]
   }
 }
 

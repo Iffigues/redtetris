@@ -11,10 +11,35 @@ import TextField from '@material-ui/core/TextField';
 import { useHistory } from 'react-router-dom'
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
+import Checkbox from '@material-ui/core/Checkbox';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+
+const CheckBoxSolo = (props) => {
+  const { wantJoinGame, playSolo, setPlaySolo } = props
+
+  const handleChange = (event) => {
+    console.log("playSolo", event.target.checked, playSolo)
+    setPlaySolo(event.target.checked);
+  };
+  if (!wantJoinGame) {
+    return (
+      <FormControlLabel
+        control={<Checkbox
+          checked={playSolo}
+          onChange={handleChange}
+          color="primary"
+          />}
+        label="Jouer en solo ?"
+      />
+    )
+  } else {
+    return ''
+  }
+}
 
 const SectionGames = (props) => {
   const [open, setOpen] = useState(false);
-  const { state: {rooms} } = useContext(RoomsContext);
+  const { state: { rooms } } = useContext(RoomsContext);
   const { wantJoinGame, roomSelected, setRoomSelected } = props
 
   const handleChange = (event) => {
@@ -54,7 +79,9 @@ const SectionGames = (props) => {
                 <MenuItem
                   value={rooms[item].channel}>
                   {rooms[item].players
-                    .map((player, index) => `${player.name}${(index !== rooms[item].players.length - 1) ? ', ' : ''}`
+                    .map((player, index) => (!rooms[item].solo)
+                      ? `${player.name}${(index !== rooms[item].players.length - 1) ? ', ' : ''}`
+                      : ''
                     )
                   }
                 </MenuItem>
@@ -74,13 +101,15 @@ const HomePage = () => {
   const { state, sendAlert } = useContext(AlertContext);
   const { sendSocket } = useContext(SocketContext);
   const [roomSelected, setRoomSelected] = useState('');
+  const [playSolo, setPlaySolo] = useState(false);
   const [login, setLogin] = useState('');
-  const [wantJoinGame, setWantJoinGame] = useState('');
+  const [wantJoinGame, setWantJoinGame] = useState(false);
   const history = useHistory()
 
   const createRoom = () => {
     if (!wantJoinGame) {
-      sendSocket('server/create-room', login)
+      console.log("playSolo", playSolo)
+      sendSocket('server/create-room', { login, playSolo })
    } else {
       sendSocket('server/join-room', { channel: roomSelected, login })
     }
@@ -89,6 +118,7 @@ const HomePage = () => {
     if (uuidRoom) {
       history.push(`/room/${uuidRoom}`)
     } else {
+      history.push('/');
     }
   }, [uuidRoom])
 
@@ -136,6 +166,11 @@ const HomePage = () => {
             setRoomSelected={setRoomSelected}
           />
           <Grid item xs={6}>
+              <CheckBoxSolo
+                wantJoinGame={wantJoinGame}
+                playSolo={playSolo}
+                setPlaySolo={setPlaySolo}
+              />
               <Button
                 variant="contained"
                 disabled={login.length === 0 || (wantJoinGame && !roomSelected)}

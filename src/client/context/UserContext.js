@@ -2,7 +2,7 @@ import createDataContext from "./createDataContext";
 
 const initialState = {
   uuidRoom: null,
-  uuidUser: null
+  player: null
 };
 
 const UserReducer = (state, payload) => {
@@ -10,8 +10,8 @@ const UserReducer = (state, payload) => {
     case "updateUuidRoom": {
       return {  ...state, uuidRoom: payload.uuidRoom };
     }
-    case "updateUuidUser":
-      return {  ...state, uuidUser: payload.uuidUser };
+    case "updatePlayer":
+      return {  ...state, player: payload.player };
     default:
       return state;
   }
@@ -20,8 +20,8 @@ const UserReducer = (state, payload) => {
 const updateUuidRoom = dispatch => uuidRoom => 
   dispatch({ type: "updateUuidRoom", uuidRoom });
 
-const updateUuidUser = dispatch => uuidUser => 
-  dispatch({ type: "updateUuidUser", uuidUser });
+const updatePlayer = dispatch => player => 
+  dispatch({ type: "updatePlayer", player });
 
 export const { Provider, Context } = createDataContext(
   //reducer :
@@ -30,7 +30,7 @@ export const { Provider, Context } = createDataContext(
   //action functions :
   {
     updateUuidRoom,
-    updateUuidUser
+    updatePlayer
   },
 
   //initialState :

@@ -3,13 +3,19 @@ import uuidv4 from 'uuid'
 
 class Room extends block {
 	
-	constructor(player, channel = uuidv4()) {
+	constructor(player, io, solo = false, channel = uuidv4()) {
 		super();
-		this.state = 0;
+		this.isStart = false;
+		this.isPlaying = false;
+		this.solo = solo;
 		this.channel = channel;
 		this.players = [player];
 	}
 	
+	removePlayer = (uuidUser) => {
+		this.players = this.players.filter(item => item.uuid !== uuidUser)
+	}
+
 	addPlayer = (player) => {
 		this.players.push(player);
 	}
@@ -22,13 +28,16 @@ class Room extends block {
 	}
 
 	startGame = () => {
-		let y = this.newBlock();
-		console.log(y)
+		this.isPlaying = true;
+		this.isStart = true;
 	}
 
+	changeIsPlaying = () => {
+		this.isPlaying = !this.isPlaying;
+	}
+	getPlayers = () => {
+    return this.players
+  }
 }
-let e = new Room();
-console.log(e);
-e.startGame();
 
 export default Room;

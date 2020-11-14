@@ -4,7 +4,7 @@ class Pieces {
 			x: this.x,
 			y: this.y,
 		};
-		this.intervalle = 1000;
+		this.interval = 1000;
 		this.srs = [[0, 1], [-1, 0]];
 		this.lrs = [[0, -1], [1, 0]];
 	}
