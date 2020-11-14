@@ -3,6 +3,7 @@ import { useContext, useState, useEffect } from 'react';
 import { withRouter } from 'react-router';
 import { Context as UserContext } from "../../context/UserContext";
 import { Context as RoomsContext } from "../../context/RoomsContext";
+import { useHistory } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles';
 import KeyBoardListener from '../../listeners/KeyBoardListener'
 import Button from '@material-ui/core/Button';
@@ -23,7 +24,25 @@ import Fade from '@material-ui/core/Fade';
       padding: theme.spacing(2, 4, 3),
     },
   }));
-  
+  const LeaveRoomButton = (props) => {
+    const { uuidRoom, player, sendSocket } = props;
+    const history = useHistory()
+
+    const leaveRoom = () => {
+      sendSocket('server/leave-room', { ...uuidRoom, uuidUser: player.uuid })
+    }
+
+    return (
+      <Button
+      variant="contained"
+      color="primary"
+      onClick={leaveRoom}
+      >
+      Quitter la partie
+      </Button>
+    )
+  }
+
   const Room = (props) => {
     const { match } = props
     const classes = useStyles();
@@ -32,14 +51,13 @@ import Fade from '@material-ui/core/Fade';
     const { sendSocket } = useContext(SocketContext);
     const [game, setGame] = useState(true);
     const { uuidRoom } = match.params;
-    console.log("match:", match.params.uuidRoom);
-    console.log("match uuidRoom:", uuidRoom);
+    const history = useHistory()
+
     KeyBoardListener(game);
-    // useEffect(() => {
-    //   return () => {
-    //     setGame(false)
-    //   };
-    // }, []);
+    if (!player || !rooms) {
+      setGame(false);
+      history.replace('/');
+    }
     const handleSetStartGame = (event) => {
       console.log(event.target)
       sendSocket('server/start-game', { uuidRoom })
@@ -48,7 +66,6 @@ import Fade from '@material-ui/core/Fade';
     const handleCloseModal = () => {
       console.log("HandleCloseModal")
     };
-
     if (!rooms[uuidRoom].isStart && (player.solo || player.admin)) {
       return (
         <Button
@@ -86,7 +103,14 @@ import Fade from '@material-ui/core/Fade';
       )
     } else {
       return (
-        <p>Gammmmme</p>
+        <div>
+          <LeaveRoomButton
+            uuidRoom={match.params}
+            player={player}
+            sendSocket={sendSocket}
+          />
+          <p>Gammmmme</p>
+        </div>
       )
     }
     // match.params.id

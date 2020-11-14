@@ -12,6 +12,10 @@ class Room extends block {
 		this.players = [player];
 	}
 	
+	removePlayer = (uuidUser) => {
+		this.players = this.players.filter(item => item.uuid !== uuidUser)
+	}
+
 	addPlayer = (player) => {
 		this.players.push(player);
 	}

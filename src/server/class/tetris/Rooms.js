@@ -25,10 +25,9 @@ class Rooms {
     this._data[channel].startGame();
   }
 
-  deletePlayer = (uuidUser, channel) => {
-    this._data[channel] =
-      this._data[channel].players
-        .filter(item => item.uuid !== uuidUser)
+  deletePlayer = (channel, uuidUser) => {
+    console.log("channel", channel);
+    this._data[channel].removePlayer(uuidUser)
   }
 
   changeIsPlaying = (channel) => {

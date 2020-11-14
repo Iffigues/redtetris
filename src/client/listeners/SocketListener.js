@@ -25,6 +25,13 @@ export default (socketClient) => {
       updatePlayer(player)
     })
 
+    socketClient.on('client/update-user', (data) => {
+      const { uuidRoom, player } = data;
+      updateUuidRoom(uuidRoom)
+      console.log("update user", player)
+      updatePlayer(player)
+    })
+
     socketClient.on('client/join-room', (data) => {
       console.log('join-room', data)
       const { uuidRoom, player } = data;

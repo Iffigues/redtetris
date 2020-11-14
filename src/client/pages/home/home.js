@@ -118,6 +118,7 @@ const HomePage = () => {
     if (uuidRoom) {
       history.push(`/room/${uuidRoom}`)
     } else {
+      history.push('/');
     }
   }, [uuidRoom])
 

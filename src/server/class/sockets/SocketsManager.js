@@ -47,15 +47,16 @@ class SocketsManager {
     });
     
     // // leave room
-    // socket.on('server/leave-room', (data) => {
-    //   console.log('leave-room', data)
-    //   const { channel, uuidUser } = data;
-    //   const rooms = instanceRooms;
-    //   rooms.deletePlayer(channel, uuidUser)
-    //   socket.leave(channel);
-    //   socket.emit('client/update-rooms', rooms);
-    //   console.log(`user leave channel: ${channel}`)
-    // });
+    socket.on('server/leave-room', (data) => {
+      console.log('leave-room', data)
+      const { uuidRoom, uuidUser } = data;
+      const rooms = instanceRooms;
+      rooms.deletePlayer(uuidRoom, uuidUser)
+      socket.leave(uuidRoom);
+      this.updateRooms(rooms, socket)
+      socket.emit('client/update-user', { uuidRoom: null, player: null })
+      console.log(`user leave channel: ${uuidRoom}`)
+    });
     
     // join room
     socket.on('server/join-room', (data) => {
