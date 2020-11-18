@@ -95,9 +95,9 @@ class SocketsManager {
     socket.on('server/key-up', (data) => {
       // KEY: 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Escape'
       console.log('key-up', data)
-      const { key } = data;
+      const { key, channel } = data;
       // get channel
-      console.log(key)
+      console.log(key, channel)
       // get game
       
       // move pieces

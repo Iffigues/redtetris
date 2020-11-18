@@ -16,7 +16,7 @@ export default (isGame) => {
           sendSocket('server/pause-resume', { channel: uuidRoom })
         } else {
           console.log('key', key);
-          sendSocket('server/key-up', { key })
+          sendSocket('server/key-up', { key, channel: uuidRoom })
         }
       }
     }
