@@ -22,11 +22,16 @@ class Pieces {
 			let abx = block.block[i].x + xx;
 			let aby = block.block[i].y + yy;
 			
-			if (abx < 0 || abx > 10 ||  aby > 20 )
+			if (abx < 0 || abx > 10 ||  aby > 19) {
+				console.log("zzz")
 				return false;
-			
-			if (this.map_game[aby][abx] != 0)
+			}
+			console.log(aby, abx);
+			if (this.map_game[aby][abx] != 0) {
+				console.log("merde");
 				return false;
+
+			}
 		}
 
 		return true

@@ -1,11 +1,13 @@
 import Block from './Piece'
+var Mutex = require('async-mutex').Mutex;
 import regeneratorRuntime from "regenerator-runtime";
 
 class Game extends Block {
 	constructor(events) {
 		super();
+		this.mutex = new Mutex();
 		this.block = null;
-		this.keyBind = [left, rigth, up, down, rotateL, rotateR];
+		this.keyBind = [this.left, this.rigth, this.up, this.down, this.rotateL, this.rotateR, this.space];
 	}
 	
 	left = () => {
@@ -24,6 +26,17 @@ class Game extends Block {
 	}
 
 	rotateR = () => {
+	}
+
+	space = async () => {
+		const release = await this.mutex.acquire();
+		try {
+		while (this.canPose(this.block, 0, 0)) 
+			this.block.y += 1;
+		this.block.y -= 1;
+		} finally {
+			release();
+		}
 	}
 
 	draw = async (blk, z) => {
@@ -53,15 +66,24 @@ class Game extends Block {
 			while (1) {
 				console.log(this.canPose(this.block, 0, 0));
 				if (!this.canPose(this.block, 0, 0)) {
-					//return null;
+					console.log(this.map_game.length);
+					return;
 				}
 				await this.sleep(1000);
-				console.log(this.canPose(this.block, 0, 0));
-				console.log(this.block);
+				const release = await this.mutex.acquire();
 				await this.draw(this.block, 1);
-				console.log(this.map_game);
-				await this.draw(this.block, 0);
-				this.block.y += 1;
+					console.log(this.map_game);
+					await this.draw(this.block, 0);
+				try {
+					console.log(this.canPose(this.block, 0, 0));
+					console.log(this.block);
+					//await this.draw(this.block, 1);
+					//console.log(this.map_game);
+					//await this.draw(this.block, 0);
+					this.block.y += 1;
+				} finally {
+					release();
+				}
 			}
 		}
 	}
