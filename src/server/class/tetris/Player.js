@@ -9,7 +9,7 @@ class Player extends Game {
 		this.score = 0;
 		this.admin = admin;
 		this.live = true;
-		//this.cb = cb
+		this.sheets = [];
 		this.map_game = [];
 		this.indestructible = 0;
 		this.time = 1000;
@@ -18,9 +18,21 @@ class Player extends Game {
 		}
 		this.block = null;
 	}
+        
+	addSheetFunc = (func) => {
+		this.addSheet = func; 
+	}
 
-	pushSheet = (a) => {
-		this.block = a;
+	pushSheet = () => {
+		this.addSheet();
+	}
+
+	startGame = () => {
+		this.start();
+	}
+
+	keyBind = (i) => {
+		this.setKey(i);
 	}
 }
 
