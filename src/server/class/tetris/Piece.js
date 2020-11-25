@@ -37,27 +37,27 @@ class Pieces {
 		return true
 	}
 
-	copyBlock = () => {
+	copyBlock = (block) => {
 		let blocker = [];
 
 		for (let i = 0; i < 4; i++)
-			blocker.push(Object.assign(Object.create(Object.getPrototypeOf(this.block[i])), this.block[i]));
+			blocker.push(Object.assign(Object.create(Object.getPrototypeOf(block[i])), block[i]));
 
 		return {
-			blk: blocker,
-			y: this.y,
-			x: this.x,
-			rotate: this.rotate,
-			field: this.field,
+			blockk: blocker,
+			y: block.y,
+			x: block.x,
+			rotate: block.rotate,
+			field: block.field,
 		};
 	}
 
-	retro = (blk) => {
-		this.x = blk.x;
-		this.y = blk.y;
-		this.rotate= blk.rotate;
-		this.field = blk.field;
-		this.block = blk.block;
+	retro = (block, blk) => {
+		block.x = blk.x;
+		block.y = blk.y;
+		block.rotate= blk.rotate;
+		block.field = blk.field;
+		block.block = blk.block;
 	}
 
 	willBePosed = (blk) => {
@@ -92,11 +92,10 @@ class Pieces {
 			}
 		}
 
-		//this.retro(blk);
 		return false;
 	}
 
-	rotate = (direction) => {
+	rotate = (block, direction) => {
 		
 		let srs;
 
@@ -111,17 +110,23 @@ class Pieces {
 			return false
 		}
 
-		let blk = this.copyBlock();
+		let blk = this.copyBlock(block);
 		
 		for (let i = 0; i < 4; i++) {
 		
-			let xs = srs[0][0] * this.block[i].x + srs[0][1] * this.block[i].y;
-			let ys = srs[1][0] * this.block[i].x + srs[1][1] * this.block[i].y;
+			let xs = srs[0][0] * block[i].x + srs[0][1] * block[i].y;
+			let ys = srs[1][0] * block[i].x + srs[1][1] * block[i].y;
 			this.block[i].x = xs;
 			this.block[i].y = ys;
 		}
 
-		return this.willBePosed(blk);
+		if (this.willBePosed(block)) {
+			return true;
+		} else{
+			this.retro(blk);
+			return false;
+		}
+
 	}
 
 	fallen = () => {

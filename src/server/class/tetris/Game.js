@@ -7,20 +7,33 @@ class Game extends Block {
 		super();
 		this.mutex = new Mutex();
 		this.block = null;
-		this.keyBind = [this.left, this.rigth, this.up, this.down, this.rotateL, this.rotateR, this.space];
+		this.keyBind = [this.left, this.rigth, this.down, this.rotateL, this.rotateR, this.space];
 	}
-	
+
+ 	setMoose = async (a, b) => {
+		const release = await this.mutex.acquire();
+		try {
+			if (a == 0) {
+				 this.block.x+= b;
+			} else {
+				this.block.y += b;
+			}
+		}finally {
+			release();
+		}
+	}
+
 	left = () => {
+		this.setMoose(0, -1);
 	}
 
 	rigth = () => {
-	}
-
-	up = () => {
+		this.setMoose(0, 1);
 	}
 
 	down = () => {
-	} 
+		this.setMoose(1, 1);
+	}
 
 	rotateL = () => {
 	}
