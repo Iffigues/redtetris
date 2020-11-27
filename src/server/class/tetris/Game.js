@@ -14,9 +14,13 @@ class Game extends Block {
 		const release = await this.mutex.acquire();
 		try {
 			if (a == 0) {
-				 this.block.x+= b;
+				this.block.x += b;
+				if (!this.willBeposed(this.block))
+					this.block.x -= b;
 			} else {
 				this.block.y += b;
+				if (!this.willBePosed(this.block))
+					this.block.y -= b;
 			}
 		}finally {
 			release();
@@ -35,10 +39,22 @@ class Game extends Block {
 		this.setMoose(1, 1);
 	}
 
-	rotateL = () => {
+	rotateL = async  () => {
+		const release = await this.mutex.acquire();
+		try {
+			this.rotate(this.block, 0);
+		} finally {
+			release();
+		}
 	}
 
-	rotateR = () => {
+	rotateR = async () => {
+		const release = await this.mutex.acquire();
+		try {
+			this.rotate(this.block, 1);
+		} finally {
+			release();
+		}
 	}
 
 	space = async () => {
@@ -72,27 +88,25 @@ class Game extends Block {
 
 	start = async () => {
 		while (1) {
-			if (this.sheets.length == 0 ) {
+			if (this.sheets.length == 0 )
 				await this.addSheet();
-			}
 			this.block = this.sheets.pop();
+			console.log(this.block);
+			await this.rotateL();
+			console.log(this.block);
+			const res = await this.mutex.acquire();
+			try {
+				if (!this.canPose(this.block, 0, 0))
+					break;
+			} finally {
+				res();
+			}
 			while (1) {
-				console.log(this.canPose(this.block, 0, 0));
-				if (!this.canPose(this.block, 0, 0)) {
-					console.log(this.map_game.length);
-					return;
-				}
-				await this.sleep(1000);
 				const release = await this.mutex.acquire();
-				await this.draw(this.block, 1);
-					console.log(this.map_game);
-					await this.draw(this.block, 0);
 				try {
-					console.log(this.canPose(this.block, 0, 0));
-					console.log(this.block);
-					//await this.draw(this.block, 1);
-					//console.log(this.map_game);
-					//await this.draw(this.block, 0);
+					if (!this.canPose(this.block, 0, 1))
+						break;
+					await this.sleep(1000);
 					this.block.y += 1;
 				} finally {
 					release();
