@@ -24,7 +24,6 @@ class Room extends block {
 	}
 
 	addSheet = async () => {
-		console.log("eee");
 		const release = await this.mutex.acquire();
 
 		try {

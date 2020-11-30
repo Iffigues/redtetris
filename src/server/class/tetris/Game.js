@@ -36,7 +36,7 @@ class Game extends Block {
 	}
 
 	down = () => {
-		this.setMoose(1, 1);
+		this.setMoose(1, 0);
 	}
 
 	rotateL = async  () => {
