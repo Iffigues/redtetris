@@ -25,6 +25,10 @@ class Rooms {
     this._data[channel].startGame();
   }
 
+  onKey = (key, channel, uuidUser) => {
+    this._data[channel].onKey(key, uuidUser);
+  }
+
   deletePlayer = (channel, uuidUser) => {
     console.log("channel", channel);
     this._data[channel].removePlayer(uuidUser)
