@@ -2,8 +2,8 @@ import uuidv4 from 'uuid'
 import Game from './Game'
 
 class Player extends Game {
-	constructor (name, admin = false) {
-		super()
+	constructor (name, admin = false, updateRoomFunction) {
+		super(updateRoomFunction)
 		this.uuid = uuidv4()
 		this.name = name
 		this.score = 0;

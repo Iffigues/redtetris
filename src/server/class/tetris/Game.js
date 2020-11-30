@@ -3,8 +3,9 @@ var Mutex = require('async-mutex').Mutex;
 import regeneratorRuntime from "regenerator-runtime";
 
 class Game extends Block {
-	constructor(events) {
+	constructor(updateRoomFunction) {
 		super();
+		this.updateRoomFunction = updateRoomFunction;
 		this.mutex = new Mutex();
 		this.block = null;
 		this.keyBind = [this.left, this.rigth, this.down, this.rotateL, this.rotateR, this.space];
