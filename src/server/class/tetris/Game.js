@@ -10,36 +10,40 @@ class Game extends Block {
 		this.keyBind = [this.left, this.rigth, this.down, this.rotateL, this.rotateR, this.space];
 	}
 
- 	setMoose = async (a, b) => {
+ 	setMoose = async (yy, xx) => {
 		const release = await this.mutex.acquire();
 		try {
-			if (a == 0) {
-				this.block.x += b;
-				if (!this.willBeposed(this.block))
-					this.block.x -= b;
-			} else {
-				this.block.y += b;
+			if (yy == 0) {
+				this.block.x += xx;
 				if (!this.willBePosed(this.block))
-					this.block.y -= b;
+					this.block.x -= xx;
+			} else {
+				this.block.y += xx;
+				if (!this.willBePosed(this.block))
+					this.block.y -= xx;
 			}
-		}finally {
+		} finally {
 			release();
 		}
 	}
 
 	left = () => {
-		this.setMoose(0, -1);
+		console.log('left');
+		this.setMoose(-1, 0);
 	}
-
+	
 	rigth = () => {
-		this.setMoose(0, 1);
-	}
-
-	down = () => {
+		console.log('rigth');
 		this.setMoose(1, 0);
 	}
-
+	
+	down = () => {
+		console.log('down');
+		this.setMoose(0, 1);
+	}
+	
 	rotateL = async  () => {
+		console.log('rotateL');
 		const release = await this.mutex.acquire();
 		try {
 			this.rotate(this.block, 0);
@@ -47,8 +51,9 @@ class Game extends Block {
 			release();
 		}
 	}
-
+	
 	rotateR = async () => {
+		console.log('rotateR');
 		const release = await this.mutex.acquire();
 		try {
 			this.rotate(this.block, 1);
@@ -56,8 +61,9 @@ class Game extends Block {
 			release();
 		}
 	}
-
+	
 	space = async () => {
+		console.log('space');
 		const release = await this.mutex.acquire();
 		try {
 		while (this.canPose(this.block, 0, 0)) 
