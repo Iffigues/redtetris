@@ -13,7 +13,7 @@ class SocketsManager {
     });
   }
 
-  updateRooms = (rooms, socket) => {
+  updateRooms = (rooms = this.rooms, socket = this.utilsIo.socket) => {
     socket.emit('client/update-rooms', rooms);
     this.io.sockets.emit('client/update-rooms', rooms)
   }
