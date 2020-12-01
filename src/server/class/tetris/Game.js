@@ -93,6 +93,22 @@ class Game extends Block {
 		return new Promise(resolve => setTimeout(resolve, ms));
 	}
 
+	moove = async () => {
+		let i = 0;
+		const release = await this.mutex.acquire();
+		ff: try {
+			if (!this.canPose(this.block, 0, 1)) {
+				i = 0;
+				break ff;
+			}
+			await this.sleep(1000);
+			this.block.y += 1;
+			} finally {
+				release();
+			}
+		return i;
+	}
+
 	start = async () => {
 		while (1) {
 			if (this.sheets.length == 0 )
@@ -109,15 +125,9 @@ class Game extends Block {
 				res();
 			}
 			while (1) {
-				const release = await this.mutex.acquire();
-				try {
-					if (!this.canPose(this.block, 0, 1))
-						break;
-					await this.sleep(1000);
-					this.block.y += 1;
-				} finally {
-					release();
-				}
+				let e = await this.moove();
+				console.log(e);
+				if (e == 0) break;
 			}
 		}
 	}

@@ -27,6 +27,12 @@ class Player extends Game {
 		this.addSheet();
 	}
 
+	destroyLine = (a) => {
+		this.indestructible += a;
+		if (this.indestructible <= 0) {
+		}
+	}
+
 	startGame = () => {
 		this.start();
 	}
