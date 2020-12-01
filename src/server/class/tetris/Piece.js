@@ -14,7 +14,7 @@ class Pieces {
 		let xx = block.x + xp;
 		let yy = block.y + yp;
 
-		if (xx < 0 || yy < 0 || xx > 10 || yy > 20)
+		if (xx < 0 || yy < 0 || xx > 10 || yy > 20 - this.indestructible)
 			return false;
 
 		for (let i = 0; i < 4; i++) {
@@ -22,7 +22,7 @@ class Pieces {
 			let abx = block.block[i].x + xx;
 			let aby = block.block[i].y + yy;
 			
-			if (abx < 0 || abx > 10 ||  aby > 19 || aby < 0) {
+			if (abx < 0 || abx > 10 ||  aby > 20 - this.indestructible || aby < 0) {
 				return false;
 			}
 			console.log(aby, abx);
@@ -118,12 +118,9 @@ class Pieces {
 			block.block[i].y = ys;
 		}
 
-		console.log(block);
 		if (this.willBePosed(block)) {
-			console.log("eee");
 			return true;
 		} else{
-			console.log("zzz");
 			block = this.retro(block, blk);
 			return false;
 		}

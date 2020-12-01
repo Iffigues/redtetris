@@ -29,22 +29,18 @@ class Game extends Block {
 	}
 
 	left = () => {
-		console.log('left');
 		this.setMoose(-1, 0);
 	}
 	
 	rigth = () => {
-		console.log('rigth');
 		this.setMoose(1, 0);
 	}
 	
 	down = () => {
-		console.log('down');
 		this.setMoose(0, 1);
 	}
 	
 	rotateL = async  () => {
-		console.log('rotateL');
 		const release = await this.mutex.acquire();
 		try {
 			this.rotate(this.block, 0);
@@ -54,7 +50,6 @@ class Game extends Block {
 	}
 	
 	rotateR = async () => {
-		console.log('rotateR');
 		const release = await this.mutex.acquire();
 		try {
 			this.rotate(this.block, 1);
@@ -64,7 +59,6 @@ class Game extends Block {
 	}
 	
 	space = async () => {
-		console.log('space');
 		const release = await this.mutex.acquire();
 		try {
 		while (this.canPose(this.block, 0, 0)) 
@@ -125,9 +119,16 @@ class Game extends Block {
 				res();
 			}
 			while (1) {
-				let e = await this.moove();
-				console.log(e);
-				if (e == 0) break;
+			const release = await this.mutex.acquire();
+			 try {
+			if (!this.canPose(this.block, 0, 1)) {
+				break ;
+			}
+			await this.sleep(1000);
+			this.block.y += 1;
+			} finally {
+				release();
+			}
 			}
 		}
 	}
