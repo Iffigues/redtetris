@@ -19,8 +19,7 @@ const boxProps = {
 
 const Board = (props) => {
   const { mapGame } = props;
-  console.log(props)
-  console.log("createGame", createGame(false))
+
   return (
       <Grid
         container
@@ -28,7 +27,7 @@ const Board = (props) => {
         justify="center"
         alignItems="flex-start"
         spacing={3}
-        style={{ backgroundColor: '#ffff', height: '100%'}}
+        style={{ backgroundColor: '#ffff', width: '100%', height: '100%'}}
       >
         <Grid item xs={8}>
           <Card {...boxProps} variant="outlined">
@@ -37,8 +36,8 @@ const Board = (props) => {
             </CardContent>
           </Card>
         </Grid>
-        <Grid item xs={4} >
-          {/* <Preview/> */}
+        <Grid item xs={4}>
+          <Preview/>
         </Grid>
       </Grid>
   );

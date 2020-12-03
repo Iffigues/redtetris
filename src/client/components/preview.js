@@ -39,7 +39,7 @@ const Preview = () => {
       <Box mb={3}>
         <Card {...boxProps} style= {{ width: '30vw', height: '65vh' }} variant="outlined">
           <CardContent>
-            <Game game={createGame(true)}/>
+            {/* <Game game={createGame(true)}/> */}
           </CardContent>
         </Card>
       </Box>

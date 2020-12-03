@@ -8,7 +8,7 @@ const Game = ({game}) => {
       <StyledStage isOtherUser={game.isOtherUser} width={game.game[0].length} height={game.game.length}>
         {game.game.map(row => 
           row.map((cell, x) => 
-            <Cell key={x} type={cell[0]}/>
+            <Cell key={x} type={cell}/>
         ))}
       </StyledStage>
     </div>

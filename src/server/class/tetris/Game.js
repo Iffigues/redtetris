@@ -75,6 +75,7 @@ class Game extends Block {
 		for (let y = 0; y < 4; y = y + 1) {
 			this.map_game[blk.y + blk.block[y].y][blk.x + blk.block[y].x] = z;
 		}
+		
 	}
 	
 	setKey = (i) => {
@@ -120,15 +121,10 @@ class Game extends Block {
 				res();
 			}
 			while (1) {
-				console.log(this.block);
+				this.draw(this.block, this.block.type);
 				if (this.updateRoomFunction) {
 					this.updateRoomFunction()
-					console.log('here');
 				}
-				// console.log(this.updateRoomFunction)
-				// this.updateRoomFunction();
-				this.draw(this.block, this.block.type);
-				console.log(this.map_game);
 				this.draw(this.block, 0);
 				const release = await this.mutex.acquire();
 				try {

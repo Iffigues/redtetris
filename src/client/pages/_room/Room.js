@@ -105,11 +105,11 @@ import Board from '../../components/board';
     } else {
       return (
         <div>
-          <LeaveRoomButton
+          {/* <LeaveRoomButton
             uuidRoom={match.params}
             player={player}
             sendSocket={sendSocket}
-          />
+          /> */}
           <Board mapGame={rooms[uuidRoom].players[player.uuid].map_game}/>
         </div>
       )
