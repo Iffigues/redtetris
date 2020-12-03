@@ -19,7 +19,7 @@ class I extends mounter {
 		this.state = false;
 		this.x = 5;
 		this.y = 1;
-		this.type = 1
+		this.type = 1;
 		this.rotate = true;
 		this.field = 1;
 		this.block = [
