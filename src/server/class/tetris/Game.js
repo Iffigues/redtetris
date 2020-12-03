@@ -39,7 +39,9 @@ class Game extends Block {
 	down = () => {
 		this.setMoose(0, 1);
 	}
-	
+
+
+
 	rotateL = async  () => {
 		const release = await this.mutex.acquire();
 		try {
@@ -108,29 +110,55 @@ class Game extends Block {
 			if (this.sheets.length == 0 )
 				await this.addSheet();
 			this.block = this.sheets.pop();
-			console.log(this.block);
 			await this.rotateL();
-			console.log(this.block);
 			const res = await this.mutex.acquire();
 			try {
-				if (!this.canPose(this.block, 0, 0))
+				if (!this.canPose(this.block, 0, 0)) {
 					break;
+				}
 			} finally {
 				res();
 			}
 			while (1) {
-			const release = await this.mutex.acquire();
-			 try {
-			if (!this.canPose(this.block, 0, 1)) {
-				break ;
-			}
-			await this.sleep(1000);
-			this.block.y += 1;
-			} finally {
-				release();
-			}
+				console.log(this.block);
+				const release = await this.mutex.acquire();
+				try {
+					if (!this.canPose(this.block, 0, 1)) {
+						this.draw(this.block, 1);
+						let oui = this.verifLine();
+						break;
+					}
+					await this.sleep(1000);
+					this.block.y += 1;
+				} finally {
+					release();
+				}
 			}
 		}
+	}
+
+	wash = (e) => {
+		this.map_game.splice(e,e);
+		this.map_game.unshift([0,0,0,0,0,0,0,0,0,0]);
+	}
+
+	verifLine = () => {
+		let arr = 0;
+		for (let i = this.map_game.length - 1; i >= 0; i--) {
+			let u = 1;
+			for (let y = 0; y < 10; y++) {
+				if (this.map_game[i][y] == 0) {
+					u = 0;
+					break;
+				}
+			}
+			if (u == 1) {
+				arr = arr + 1;
+				this.wash(i);
+				this.ferifLine();
+			}
+		}
+		return arr;
 	}
 }
 

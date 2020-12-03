@@ -14,7 +14,7 @@ class Pieces {
 		let xx = block.x + xp;
 		let yy = block.y + yp;
 
-		if (xx < 0 || yy < 0 || xx > 10 || yy > 20 - this.indestructible)
+		if (xx < 0 || yy < 0 || xx > 10 || yy >= this.map_game.length)
 			return false;
 
 		for (let i = 0; i < 4; i++) {
@@ -22,10 +22,10 @@ class Pieces {
 			let abx = block.block[i].x + xx;
 			let aby = block.block[i].y + yy;
 			
-			if (abx < 0 || abx > 10 ||  aby > 20 - this.indestructible || aby < 0) {
+			if (abx < 0 || abx > 10 ||  aby >= this.map_game.length || aby < 0) {
 				return false;
 			}
-			console.log(aby, abx);
+
 			if (this.map_game[aby][abx] != 0) {
 				return false;
 
@@ -59,7 +59,6 @@ class Pieces {
 	}
 
 	willBePosed = (blk) => {
-	console.log(blk);	
 		for (let i = 0; i < 3; i = i + 1) {
 		
 			for (let n = 0; n < 3; n = n + 1) {			
