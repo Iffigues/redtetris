@@ -10,6 +10,7 @@ import Button from '@material-ui/core/Button';
 import { SocketContext } from "../../context/SocketContext";
 import Modal from '@material-ui/core/Modal';
 import Fade from '@material-ui/core/Fade';
+import Board from '../../components/board';
 
   const useStyles = makeStyles((theme) => ({
     modal: {
@@ -109,7 +110,7 @@ import Fade from '@material-ui/core/Fade';
             player={player}
             sendSocket={sendSocket}
           />
-          <p>Gammmmme</p>
+          <Board mapGame={rooms[uuidRoom].players[player.uuid].map_game}/>
         </div>
       )
     }

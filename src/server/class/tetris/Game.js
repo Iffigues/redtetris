@@ -85,7 +85,7 @@ class Game extends Block {
 		}
 	}
 
-        sleep = (ms) => {
+	sleep = (ms) => {
 		return new Promise(resolve => setTimeout(resolve, ms));
 	}
 
@@ -107,8 +107,9 @@ class Game extends Block {
 
 	start = async () => {
 		while (1) {
-			if (this.sheets.length == 0 )
+			if (this.sheets.length === 0) {
 				await this.addSheet();
+			}
 			this.block = this.sheets.pop();
 			await this.rotateL();
 			const res = await this.mutex.acquire();
@@ -121,6 +122,12 @@ class Game extends Block {
 			}
 			while (1) {
 				console.log(this.block);
+				if (this.updateRoomFunction) {
+					this.updateRoomFunction()
+					console.log('here');
+				}
+				// console.log(this.updateRoomFunction)
+				// this.updateRoomFunction();
 				const release = await this.mutex.acquire();
 				try {
 					if (!this.canPose(this.block, 0, 1)) {

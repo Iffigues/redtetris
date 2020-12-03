@@ -23,7 +23,7 @@ export default () => {
   return (
     <div>
       <BrowserRouter>
-        <NavBar/>
+        {/* <NavBar/> */}
         <Alerts />
         <Route exact path="/" component={HomePage} />
         <Route exact path="/create-room" component={CreateRoomPage} />

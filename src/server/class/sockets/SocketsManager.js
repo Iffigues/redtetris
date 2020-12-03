@@ -36,7 +36,7 @@ class SocketsManager {
     socket.on('server/create-room', (data) => {
       console.log('create-room', data)
       const { login, playSolo } = data
-      const player = new Player(login, true, this.updateRooms);
+      const player = new Player(login, true, () => this.updateRooms());
       const room = new Room(player, playSolo)
       this.rooms.add(room);
       socket.join(room.channel);
@@ -61,7 +61,7 @@ class SocketsManager {
     socket.on('server/join-room', (data) => {
       console.log('join-room', data)
       const { channel, login } = data;
-      const player = new Player(login, this.updateRooms);
+      const player = new Player(login, () => this.updateRooms());
       console.log("before:", this.rooms.get(channel).getPlayers())
       this.rooms.addPlayer(channel, player);
       console.log("after", this.rooms.get(channel).getPlayers())

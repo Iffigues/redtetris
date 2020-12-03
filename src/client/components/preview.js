@@ -12,7 +12,7 @@ const boxProps = {
   bordercolor: 'text.primary',
   border: 1,
   borderradius: "borderRadius",
-  style: { backgroundColor: 'white', height: '100%', width: '100vw'},
+  style: { backgroundColor: 'white', width: '100vw'},
 };
 
 const Preview = () => {
@@ -28,7 +28,7 @@ const Preview = () => {
         </Card>
       </Box>
       <Box mb={3}>
-        <Card {...boxProps} style= {{ width: '30vw', height: '10vh' }} variant="outlined">
+        <Card {...boxProps} style= {{ width: '30vw', height: '5vh' }} variant="outlined">
           <CardContent>
             <Typography color="textSecondary" gutterBottom>
             SCORE
@@ -37,7 +37,7 @@ const Preview = () => {
         </Card>
       </Box>
       <Box mb={3}>
-        <Card {...boxProps} style= {{ width: '30vw', height: '100%' }} variant="outlined">
+        <Card {...boxProps} style= {{ width: '30vw', height: '65vh' }} variant="outlined">
           <CardContent>
             <Game game={createGame(true)}/>
           </CardContent>
