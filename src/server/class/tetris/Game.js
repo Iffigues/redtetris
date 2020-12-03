@@ -72,7 +72,6 @@ class Game extends Block {
 	}
 
 	draw = async (blk, z) => {
-		console.log(blk);
 		for (let y = 0; y < 4; y = y + 1) {
 			this.map_game[blk.y + blk.block[y].y][blk.x + blk.block[y].x] = z;
 		}
@@ -128,14 +127,19 @@ class Game extends Block {
 				}
 				// console.log(this.updateRoomFunction)
 				// this.updateRoomFunction();
+				this.draw(this.block, this.block.type);
+				console.log(this.map_game);
+				this.draw(this.block, 0);
 				const release = await this.mutex.acquire();
 				try {
+				
 					if (!this.canPose(this.block, 0, 1)) {
-						this.draw(this.block, 1);
-						let oui = this.verifLine();
+						this.draw(this.block, this.block.type);
+						this.verifLine();
 						break;
 					}
 					await this.sleep(1000);
+					this.draw(this.block, 0);
 					this.block.y += 1;
 				} finally {
 					release();
