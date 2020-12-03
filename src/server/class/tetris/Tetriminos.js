@@ -19,6 +19,7 @@ class I extends mounter {
 		this.state = false;
 		this.x = 5;
 		this.y = 1;
+		this.type = 1;
 		this.rotate = true;
 		this.field = 1;
 		this.block = [
@@ -36,6 +37,7 @@ class O extends mounter {
 		this.state = false;
 		this.x = 5;
 		this.y = 1;
+		this.type = 2;
 		this.rotate = false;
 		this.field = 1;
 		this.block = [
@@ -53,6 +55,7 @@ class T extends mounter {
 		this.state = false;
 		this.x = 5;
 		this.y = 1;
+		this.type = 3;
 		this.rotate = true;
 		this.field = 1;
 		this.block = [
@@ -70,6 +73,7 @@ class J extends mounter {
 		this.state = false;
 		this.x = 5;
 		this.y = 1;
+		this.type = 4;
 		this.rotate = true;
 		this.field = 1;
 		this.block = [
@@ -87,6 +91,7 @@ class L extends mounter {
 		this.state = false;
 		this.x = 5;
 		this.y = 1;
+		this.type = 5;
 		this.rotate = true;
 		this.field = 1;
 		this.block = [
@@ -105,6 +110,7 @@ class S extends mounter {
 		this.state = false;
 		this.x = 5;
 		this.y = 1;
+		this.type = 6;
 		this.rotate = true;
 		this.field = 1;
 		this.block = [
@@ -122,6 +128,7 @@ class Z extends mounter {
 		this.state = false;
 		this.x = 5;
 		this.y = 1;
+		this.type = 7;
 		this.rotate = true;
 		this.field = 1;
 		this.block = [

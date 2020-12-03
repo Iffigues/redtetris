@@ -162,7 +162,7 @@ class Game extends Block {
 			if (u == 1) {
 				arr = arr + 1;
 				this.wash(i);
-				this.ferifLine();
+				this.verifLine();
 			}
 		}
 		return arr;
