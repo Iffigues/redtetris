@@ -1,4 +1,5 @@
 import block from './Tetriminos';
+import _ from 'lodash'
 import uuidv4 from 'uuid';
 var Mutex = require('async-mutex').Mutex;
 import Player from './Player';
@@ -15,7 +16,7 @@ class Room extends block {
 		this.solo = solo;
 		this.block = new block();
 		this.channel = channel;
-		this.players = [];
+		this.players = {};
 		this.addPlayer(player);
 	}
 	
@@ -24,14 +25,11 @@ class Room extends block {
 	}
 
 	addSheet = async () => {
-		console.log("eee");
 		const release = await this.mutex.acquire();
 
 		try {
 			let sheet = this.block.newBlock();
-			this.players.forEach((elem) => {
-				elem.sheets.push(sheet);
-			});
+			_.map(this.players, elem => elem.sheets.push(sheet));
 		} finally {
 		    release();
 		}
@@ -39,7 +37,22 @@ class Room extends block {
 
 	addPlayer = (player) => {
 		player.addSheetFunc(this.addSheet);
-		this.players.push(player);
+		this.players[player.uuid] = player;
+	}
+
+	onKey = (key, uuidUser) => {
+		console.log('here, onKey Room');
+		if (key === 'ArrowUp') {
+			this.players[uuidUser].space();
+		} else if (key === 'ArrowDown') {
+			this.players[uuidUser].down();
+		} else if (key === 'ArrowLeft') {
+			this.players[uuidUser].left();
+		} else if (key === 'ArrowRight') {
+			this.players[uuidUser].rigth();
+		} else if (key === ' ') {
+			this.players[uuidUser].space();
+		}
 	}
 
 	countPlayer = () => {
@@ -52,9 +65,7 @@ class Room extends block {
 	startGame = () => {
 		this.isPlaying = true;
 		this.isStart = true;
-		this.players.forEach((elem) => {
-			elem.startGame();
-		});
+		_.map(this.players, elem => elem.startGame());
 
 	}
 
