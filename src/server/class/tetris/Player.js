@@ -29,8 +29,9 @@ class Player extends Game {
 
 	destroyLine = (a) => {
 		while (a) {
-			this.map_game.pop();
-			if (this.map_game.length <= 0) {
+			this.map_game[this.indestructible].fill(-1);
+			this.indestructible = this.indestructible + 1;
+			if (this.indestructible == 19) {
 				return;
 			}
 		}
