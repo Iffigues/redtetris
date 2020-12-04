@@ -17,9 +17,7 @@ const boxProps = {
   m: 1
 };
 
-const Board = (props) => {
-  const { mapGame } = props;
-
+const Board = ({ mapGame, mapGamePreview, isAlone }) => {
   return (
       <Grid
         container
@@ -37,7 +35,7 @@ const Board = (props) => {
           </Card>
         </Grid>
         <Grid item xs={4}>
-          <Preview/>
+          <Preview game={ { game: mapGamePreview, isOtherUser: true } } isAlone={isAlone} />
         </Grid>
       </Grid>
   );

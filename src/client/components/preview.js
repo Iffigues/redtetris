@@ -15,7 +15,24 @@ const boxProps = {
   style: { backgroundColor: 'white', width: '100vw'},
 };
 
-const Preview = () => {
+const OtherPlayerGrid = ({isAlone, mapGamePreview}) => {
+  if (!isAlone) {
+    console.log('here', isAlone);
+    return (
+      <Box mb={3}>
+        <Card {...boxProps} style= {{ width: '30vw', height: '65vh' }} variant="outlined">
+          <Grid item xs={4}>
+            <Game game={ { game: mapGamePreview, isOtherUser: true } } />
+          </Grid>
+        </Card>
+      </Box>
+    )
+  } else {
+    return '';
+  }
+}
+
+const Preview = ({mapGamePreview, isAlone}) => {
   return (
     <div>
       <Box mb={3}>
@@ -36,13 +53,7 @@ const Preview = () => {
           </CardContent>
         </Card>
       </Box>
-      <Box mb={3}>
-        <Card {...boxProps} style= {{ width: '30vw', height: '65vh' }} variant="outlined">
-          <CardContent>
-            {/* <Game game={createGame(true)}/> */}
-          </CardContent>
-        </Card>
-      </Box>
+      <OtherPlayerGrid isAlone={isAlone} mapGamePreview={mapGamePreview}/>
     </div>
   );
 }
