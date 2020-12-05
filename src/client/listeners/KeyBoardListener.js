@@ -6,7 +6,7 @@ import { Context as UserContext } from "../context/UserContext";
 export default (isGame) => {
   const { sendSocket } = useContext(SocketContext);
   const { state: { uuidRoom, player } } = useContext(UserContext);
-  const keysCode = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Escape'];
+  const keysCode = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', ' '];
 
   useEffect(() => {
     const getKeyUp = (event) => {
@@ -16,7 +16,7 @@ export default (isGame) => {
         if (key === 'Escape') {
           sendSocket('server/pause-resume', { channel: uuidRoom })
         } else {
-          console.log('key', key);
+          console.log('key', { key, channel: uuidRoom, uuidUser: player.uuid  });
           sendSocket('server/key-up', { key, channel: uuidRoom, uuidUser: player.uuid  })
         }
       }

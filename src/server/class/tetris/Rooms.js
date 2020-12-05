@@ -30,7 +30,6 @@ class Rooms {
   }
 
   deletePlayer = (channel, uuidUser) => {
-    console.log("channel", channel);
     this._data[channel].removePlayer(uuidUser)
   }
 

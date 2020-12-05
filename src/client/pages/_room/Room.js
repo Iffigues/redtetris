@@ -1,6 +1,7 @@
 import React from 'react';
 import { useContext, useState, useEffect } from 'react';
 import { withRouter } from 'react-router';
+import _ from 'lodash'
 import { Context as UserContext } from "../../context/UserContext";
 import { Context as RoomsContext } from "../../context/RoomsContext";
 import { useHistory } from 'react-router-dom'
@@ -60,7 +61,6 @@ import Board from '../../components/board';
       history.replace('/');
     }
     const handleSetStartGame = (event) => {
-      console.log(event.target)
       sendSocket('server/start-game', { uuidRoom })
     }
     
@@ -110,7 +110,12 @@ import Board from '../../components/board';
             player={player}
             sendSocket={sendSocket}
           /> */}
-          <Board mapGame={rooms[uuidRoom].players[player.uuid].map_game}/>
+          <Board
+            game={rooms[uuidRoom]}
+            mapGame={rooms[uuidRoom].players[player.uuid].map_game}
+            isAlone={Object.keys(rooms[uuidRoom].players).length === 1}
+            mapGamePreview={_.filter(rooms[uuidRoom].players, item => item.uuid !== player.uuid)[0]?.map_game}
+          />
         </div>
       )
     }
