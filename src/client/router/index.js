@@ -2,15 +2,14 @@ import React from "react";
 import { HashRouter, BrowserRouter, Route, Switch } from 'react-router-dom';
 
 // components
-import Alerts from '../components/Alerts'
+import Alerts from '../components/alerts'
 import NavBar from '../components/navBar'
 
 // pages
 import HomePage from '../pages/home/Home'
-import BoardPage from '../pages/board/Board'
 import CreateRoomPage from '../pages/create-room/CreateRoom'
 import JoinRoom from '../pages/join-room/JoinRoom'
-import Room from '../pages/_room/room'
+import Room from '../pages/_room/Room'
 
 import SocketLister from '../listeners/SocketListener'
 import { SocketContext } from "../context/SocketContext";
@@ -31,7 +30,6 @@ export default () => {
         <Route exact path="/room/:uuidRoom" render={(props) => {
           return ( <Room {...props } /> )
         }} />
-        <Route path="/board" component={BoardPage} />
       </BrowserRouter>
     </div>
   )
