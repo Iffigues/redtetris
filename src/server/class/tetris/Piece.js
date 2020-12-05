@@ -65,14 +65,14 @@ class Pieces {
 				}
 
 				if (this.canPose(blk, -n, i)) {
-					blk.x += n;
-					blk.y += -i;
+					blk.x += -n;
+					blk.y += i;
 					return true;
 				}
 
 				if (this.canPose(blk, n, -i)) {
-					blk.x += -n;
-					blk.y += i;
+					blk.x += n;
+					blk.y += -i;
 					return true;
 				}
 
