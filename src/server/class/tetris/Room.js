@@ -41,9 +41,8 @@ class Room extends block {
 	}
 
 	onKey = (key, uuidUser) => {
-		console.log('here, onKey Room');
 		if (key === 'ArrowUp') {
-			this.players[uuidUser].space();
+			this.players[uuidUser].rotateR();
 		} else if (key === 'ArrowDown') {
 			this.players[uuidUser].down();
 		} else if (key === 'ArrowLeft') {

@@ -1,3 +1,4 @@
+import _ from 'lodash'
 class Pieces {
 	constructor() {
 		this.shadow = {
@@ -10,25 +11,24 @@ class Pieces {
 	}
 
 	canPose = (block, xp, yp) => {
-		
 		let xx = block.x + xp;
 		let yy = block.y + yp;
 
-		if (xx < 0 || yy < 0 || xx > 10 || yy >= 20 - this.indestructible)
+		if (xx < 0 || yy < 0 || xx > 9 || yy >= 20 - this.indestructible) {
 			return false;
+		}
 
 		for (let i = 0; i < 4; i++) {
 		
 			let abx = block.block[i].x + xx;
 			let aby = block.block[i].y + yy;
 			
-			if (abx < 0 || abx > 10 ||  aby >= 20 - this.indestructible|| aby < 0) {
+			if (abx < 0 || abx > 9 ||  aby >= 20 - this.indestructible|| aby < 0) {
 				return false;
 			}
 
 			if (this.map_game[aby][abx] != 0) {
 				return false;
-
 			}
 		}
 
@@ -36,13 +36,8 @@ class Pieces {
 	}
 
 	copyBlock = (block) => {
-		let blocker = [];
-
-		for (let i = 0; i < 4; i++) 
-			blocker.push(Object.assign(Object.create(Object.getPrototypeOf(block.block[i])), block.block[i]));
-
 		return {
-			blockk: blocker,
+			block: _.cloneDeep(block.block),
 			y: block.y,
 			x: block.x,
 			rotate: block.rotate,
@@ -59,29 +54,29 @@ class Pieces {
 	}
 
 	willBePosed = (blk) => {
-		for (let i = 0; i < 3; i = i + 1) {
+		for (let i = 0; i < 3; i++) {
 		
-			for (let n = 0; n < 3; n = n + 1) {			
+			for (let n = 0; n < 3; n++) {
 			
-				if (this.canPose(blk, i, n)) {
+				if (this.canPose(blk, n, i)) {
 					blk.x += n;
 					blk.y += i;
 					return true;
 				}
 
-				if (this.canPose(blk, i, -n)) {
+				if (this.canPose(blk, -n, i)) {
 					blk.x += n;
 					blk.y += -i;
 					return true;
 				}
 
-				if (this.canPose(blk, -i, n)) {
+				if (this.canPose(blk, n, -i)) {
 					blk.x += -n;
 					blk.y += i;
 					return true;
 				}
 
-				if (this.canPose(blk, -i, -n)) {
+				if (this.canPose(blk, -n, -i)) {
 					blk.x += -n;
 					blk.y += -i;
 					return true;

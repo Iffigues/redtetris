@@ -61,7 +61,6 @@ import Board from '../../components/board';
       history.replace('/');
     }
     const handleSetStartGame = (event) => {
-      console.log(event.target)
       sendSocket('server/start-game', { uuidRoom })
     }
     

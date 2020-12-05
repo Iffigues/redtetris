@@ -12,32 +12,32 @@ class Game extends Block {
 	}
 
  	setMoose = async (yy, xx) => {
-		const release = await this.mutex.acquire();
-		try {
-			if (yy == 0) {
-				this.block.x += xx;
-				if (!this.willBePosed(this.block))
-					this.block.x -= xx;
-			} else {
-				this.block.y += xx;
-				if (!this.willBePosed(this.block))
-					this.block.y -= xx;
-			}
-		} finally {
+		 const release = await this.mutex.acquire();
+		 try {
+			 if (yy !== 0) {
+				 if (this.canPose(this.block, xx, yy)) {
+					 this.block.y += yy;
+				}
+			} if (xx !== 0) {
+					if (this.canPose(this.block, xx, yy)) {
+						this.block.x += xx;
+					}
+				}
+			} finally {
 			release();
 		}
 	}
 
 	left = () => {
-		this.setMoose(-1, 0);
+		this.setMoose(0, -1);
 	}
 	
 	rigth = () => {
-		this.setMoose(1, 0);
+		this.setMoose(0, 1);
 	}
 	
 	down = () => {
-		this.setMoose(0, 1);
+		this.setMoose(1, 0);
 	}
 
 

@@ -40,8 +40,6 @@ export default (socketClient) => {
     })
 
     socketClient.on('client/update-rooms', (rooms) => {
-      // console.log("update-rooms", rooms)
-      // console.log("rooms: [", rooms, "]")
       updateRooms(rooms)
     })
 
