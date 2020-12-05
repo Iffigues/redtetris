@@ -151,7 +151,7 @@ class Game extends Block {
 
 	verifLine = () => {
 		let arr = 0;
-		for (let i = this.map_game.length - 1; i >= 0; i--) {
+		for (let i = 19 - this.indestructible; i >= 0; i--) {
 			let u = 1;
 			for (let y = 0; y < 10; y++) {
 				if (this.map_game[i][y] == 0) {
