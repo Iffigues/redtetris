@@ -1,31 +1,29 @@
 import Block from './Piece'
-var Mutex = require('async-mutex').Mutex;
 import regeneratorRuntime from "regenerator-runtime";
 
 class Game extends Block {
 	constructor(updateRoomFunction) {
 		super();
 		this.updateRoomFunction = updateRoomFunction;
-		this.mutex = new Mutex();
 		this.block = null;
 		this.keyBind = [this.left, this.rigth, this.down, this.rotateL, this.rotateR, this.space];
 	}
 
+	sendMap = () => {
+		this.draw(this.block, this.block.type);
+		if (this.updateRoomFunction) this.updateRoomFunction();
+		this.draw(this.block, 0);
+	}
+
  	setMoose = async (yy, xx) => {
-		 const release = await this.mutex.acquire();
-		 try {
-			 if (yy !== 0) {
-				 if (this.canPose(this.block, xx, yy)) {
-					 this.block.y += yy;
-				}
-			} if (xx !== 0) {
-					if (this.canPose(this.block, xx, yy)) {
-						this.block.x += xx;
-					}
-				}
-			} finally {
-			release();
+		//clearInterval(this.action)
+		 if (yy !== 0) {
+			if (this.canPose(this.block, xx, yy)) this.block.y += yy;
+		} if (xx !== 0) {
+			if (this.canPose(this.block, xx, yy)) this.block.x += xx;
 		}
+		this.sendMap();
+		
 	}
 
 	left = () => {
@@ -43,7 +41,7 @@ class Game extends Block {
 
 
 	rotateL = async  () => {
-		const release = await this.mutex.acquire();
+		let release = await this.mutex.acquire();
 		try {
 			this.rotate(this.block, 0);
 		} finally {
@@ -52,7 +50,7 @@ class Game extends Block {
 	}
 	
 	rotateR = async () => {
-		const release = await this.mutex.acquire();
+		let release = await this.mutex.acquire();
 		try {
 			this.rotate(this.block, 1);
 		} finally {
@@ -61,11 +59,12 @@ class Game extends Block {
 	}
 	
 	space = async () => {
-		const release = await this.mutex.acquire();
+		let release = await this.mutex.acquire();
 		try {
-		while (this.canPose(this.block, 0, 0)) 
-			this.block.y += 1;
-		this.block.y -= 1;
+			while (this.canPose(this.block, 0, 1)) {
+				this.block.y += 1;
+				this.sendMap();
+			}
 		} finally {
 			release();
 		}
@@ -91,7 +90,7 @@ class Game extends Block {
 
 	moove = async () => {
 		let i = 0;
-		const release = await this.mutex.acquire();
+		let release = await this.mutex.acquire();
 		ff: try {
 			if (!this.canPose(this.block, 0, 1)) {
 				i = 0;
@@ -107,39 +106,20 @@ class Game extends Block {
 
 	start = async () => {
 		while (1) {
-			if (this.sheets.length === 0) {
-				await this.addSheet();
-			}
-			this.block = this.sheets.pop();
-			await this.rotateL();
-			const res = await this.mutex.acquire();
-			try {
-				if (!this.canPose(this.block, 0, 0)) {
-					break;
-				}
-			} finally {
-				res();
-			}
-			while (1) {
-				this.draw(this.block, this.block.type);
-				if (this.updateRoomFunction) {
-					this.updateRoomFunction()
-				}
-				this.draw(this.block, 0);
-				const release = await this.mutex.acquire();
-				try {
-				
+			if (this.block == null) {
+				if (this.sheets.length === 0) await this.addSheet();
+				this.block = this.sheets.pop();
+				if (!this.canPose(this.block, 0, 0)) return;;
+				this.action =  setInterval(() => {
+					this.sebdMap();	
 					if (!this.canPose(this.block, 0, 1)) {
 						this.draw(this.block, this.block.type);
 						this.verifLine();
-						break;
+						return;
 					}
-					await this.sleep(1000);
 					this.draw(this.block, 0);
 					this.block.y += 1;
-				} finally {
-					release();
-				}
+				}, 1000);;
 			}
 		}
 	}

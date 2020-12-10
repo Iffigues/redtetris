@@ -1,7 +1,6 @@
 import block from './Tetriminos';
 import _ from 'lodash'
 import uuidv4 from 'uuid';
-var Mutex = require('async-mutex').Mutex;
 import Player from './Player';
 import regeneratorRuntime from "regenerator-runtime";
 
@@ -10,7 +9,6 @@ class Room extends block {
 	
 	constructor(player, io, solo = false, channel = uuidv4()) {
 		super();
-		this.mutex = new Mutex();
 		this.isStart = false;
 		this.isPlaying = false;
 		this.solo = solo;
@@ -25,14 +23,8 @@ class Room extends block {
 	}
 
 	addSheet = async () => {
-		const release = await this.mutex.acquire();
-
-		try {
-			let sheet = this.block.newBlock();
+		let sheet = this.block.newBlock();
 			_.map(this.players, elem => elem.sheets.push(sheet));
-		} finally {
-		    release();
-		}
 	}
 
 	addPlayer = (player) => {
@@ -76,9 +68,5 @@ class Room extends block {
 	    return this.players
 	}
 }
-
-let p = new Player();
-let y = new Room(p);
-y.startGame();
 
 export default Room;

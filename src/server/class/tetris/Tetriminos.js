@@ -3,9 +3,6 @@ import random from 'random'
 class mounter {
 	constructor () {
 	}
-	timer = () => {
-		setInterval(() => {}, this.interval);
-	}
 	newCase = (x, y , pivot) => {
 		return (!Number.isInteger(x) || !Number.isInteger(y) || !typeof pivot == "boolean")
 			? false
