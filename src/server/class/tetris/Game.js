@@ -84,10 +84,6 @@ class Game extends Block {
 		}
 	}
 
-	sleep = (ms) => {
-		return new Promise(resolve => setTimeout(resolve, ms));
-	}
-
 	moove = async () => {
 		let i = 0;
 		let release = await this.mutex.acquire();
@@ -109,9 +105,12 @@ class Game extends Block {
 			if (this.block == null) {
 				if (this.sheets.length === 0) await this.addSheet();
 				this.block = this.sheets.pop();
-				if (!this.canPose(this.block, 0, 0)) return;;
+				console.log("oui");
+				if (!this.canPose(this.block, 0, 0)) return;
+				console.log("non");
 				this.action =  setInterval(() => {
-					this.sebdMap();	
+					console.log("zzz");
+					this.sendMap();	
 					if (!this.canPose(this.block, 0, 1)) {
 						this.draw(this.block, this.block.type);
 						this.verifLine();
@@ -119,7 +118,7 @@ class Game extends Block {
 					}
 					this.draw(this.block, 0);
 					this.block.y += 1;
-				}, 1000);;
+				}, 1000);
 			}
 		}
 	}
