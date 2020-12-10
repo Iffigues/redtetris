@@ -45,7 +45,6 @@ class Player extends Game {
 
 	startGame = () => {
 		this.setIsPlaying(true)
-		this.start();
 	}
 
 	changePlaying = (isPlaying) => {

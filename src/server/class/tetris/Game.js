@@ -59,18 +59,13 @@ class Game extends Block {
 	}
 
  	setMoose = (yy, xx) => {
-		//clearInterval(this.action)
-		 if (yy !== 0) {
-			if (this.canPose(this.block, xx, yy)) this.block.y += yy;
-		} if (xx !== 0) {
-			if (this.canPose(this.block, xx, yy)) this.block.x += xx;
+		if (yy !== 0 && this.canPose(this.block, xx, yy)) {
+			this.block.y += yy;
+		}
+		if (xx !== 0 && this.canPose(this.block, xx, yy)) {
+			this.block.x += xx;
 		}
 		this.sendMap();
-		
-	}
-
-	start = () => {
-		console.log("start")
 	}
 
 	move = (event) => {
@@ -130,7 +125,7 @@ class Game extends Block {
 	}
 	
 	setKey = (i) => {
-		if(typeof this.keyBind[i] === 'undefined') {
+		if (typeof this.keyBind[i] === 'undefined') {
 		} else {
 			this.keyBind[i]();
 		}
