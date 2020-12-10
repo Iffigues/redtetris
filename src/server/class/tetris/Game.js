@@ -1,12 +1,55 @@
 import Block from './Piece'
 import regeneratorRuntime from "regenerator-runtime";
 
+let timer = null;
 class Game extends Block {
 	constructor(updateRoomFunction) {
 		super();
 		this.updateRoomFunction = updateRoomFunction;
 		this.block = null;
+		this.action = null;
 		this.keyBind = [this.left, this.rigth, this.down, this.rotateL, this.rotateR, this.space];
+		this.isPlaying = false;
+		this.action = this.initActionObject();
+		this.createIntervalGame();
+	}
+
+	initActionObject = () => {
+		return {
+			'ArrowUp': () => this.rotateR(),
+			'ArrowDown': () => this.down(),
+			'ArrowLeft': () => this.left(),
+			'ArrowRight': () => this.rigth(),
+			' ': () => this.space()
+		}
+	}
+
+	createIntervalGame = () => {
+		const scope = this;
+		timer = setTimeout((scope) => {
+			if (scope.isPlaying) {
+				if (scope.block == null) {
+					if (scope.sheets.length === 0) {
+						scope.addSheet();
+					}
+					scope.block = scope.sheets.pop();
+					if (!scope.canPose(scope.block, 0, 0)) return;
+				}
+				scope.sendMap();	
+				if (!scope.canPose(scope.block, 0, 1)) {
+					scope.draw(scope.block, scope.block.type);
+					scope.verifLine();
+					return;
+				}
+				scope.draw(scope.block, 0);
+				scope.block.y += 1;
+			}
+			setTimeout(scope.createIntervalGame, 0)
+		}, 1000, scope)
+	}
+
+	setIsPlaying = (isPlaying) => {
+		this.isPlaying = isPlaying
 	}
 
 	sendMap = () => {
@@ -15,15 +58,22 @@ class Game extends Block {
 		this.draw(this.block, 0);
 	}
 
- 	setMoose = async (yy, xx) => {
-		//clearInterval(this.action)
-		 if (yy !== 0) {
-			if (this.canPose(this.block, xx, yy)) this.block.y += yy;
-		} if (xx !== 0) {
-			if (this.canPose(this.block, xx, yy)) this.block.x += xx;
+ 	setMoose = (yy, xx) => {
+		if (yy !== 0 && this.canPose(this.block, xx, yy)) {
+			this.block.y += yy;
+		}
+		if (xx !== 0 && this.canPose(this.block, xx, yy)) {
+			this.block.x += xx;
 		}
 		this.sendMap();
-		
+	}
+
+	move = (event) => {
+		if (event
+			&& Object.keys(this.action).includes(event)) {
+			this.action[event]();
+			event = null;
+		}
 	}
 
 	left = () => {
@@ -38,9 +88,7 @@ class Game extends Block {
 		this.setMoose(1, 0);
 	}
 
-
-
-	rotateL = async  () => {
+	rotateL = async () => {
 		let release = await this.mutex.acquire();
 		try {
 			this.rotate(this.block, 0);
@@ -70,56 +118,16 @@ class Game extends Block {
 		}
 	}
 
-	draw = async (blk, z) => {
+	draw = (blk, z) => {
 		for (let y = 0; y < 4; y = y + 1) {
 			this.map_game[blk.y + blk.block[y].y][blk.x + blk.block[y].x] = z;
 		}
-		
 	}
 	
 	setKey = (i) => {
-		if(typeof this.keyBind[i] === 'undefined') {
+		if (typeof this.keyBind[i] === 'undefined') {
 		} else {
 			this.keyBind[i]();
-		}
-	}
-
-	moove = async () => {
-		let i = 0;
-		let release = await this.mutex.acquire();
-		ff: try {
-			if (!this.canPose(this.block, 0, 1)) {
-				i = 0;
-				break ff;
-			}
-			await this.sleep(1000);
-			this.block.y += 1;
-			} finally {
-				release();
-			}
-		return i;
-	}
-
-	start = async () => {
-		while (1) {
-			if (this.block == null) {
-				if (this.sheets.length === 0) await this.addSheet();
-				this.block = this.sheets.pop();
-				console.log("oui");
-				if (!this.canPose(this.block, 0, 0)) return;
-				console.log("non");
-				this.action =  setInterval(() => {
-					console.log("zzz");
-					this.sendMap();	
-					if (!this.canPose(this.block, 0, 1)) {
-						this.draw(this.block, this.block.type);
-						this.verifLine();
-						return;
-					}
-					this.draw(this.block, 0);
-					this.block.y += 1;
-				}, 1000);
-			}
 		}
 	}
 
