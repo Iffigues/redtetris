@@ -15,6 +15,7 @@ class Player extends Game {
 		this.map_game = [];
 		this.indestructible = 0;
 		this.time = 1000;
+		this.isPlaying = false;
 		// Array.from(Array(GAME_HEIGHT), () => 
     //   new Array(GAME_WIDTH).fill(0)
     // )
@@ -43,7 +44,12 @@ class Player extends Game {
 	}
 
 	startGame = () => {
+		this.setIsPlaying(true)
 		this.start();
+	}
+
+	changePlaying = (isPlaying) => {
+		this.setIsPlaying(isPlaying)
 	}
 
 	keyBind = (i) => {

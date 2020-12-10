@@ -22,7 +22,7 @@ class Room extends block {
 		this.players = this.players.filter(item => item.uuid !== uuidUser)
 	}
 
-	addSheet = async () => {
+	addSheet = () => {
 		let sheet = this.block.newBlock();
 			_.map(this.players, elem => elem.sheets.push(sheet));
 	}
@@ -33,17 +33,7 @@ class Room extends block {
 	}
 
 	onKey = (key, uuidUser) => {
-		if (key === 'ArrowUp') {
-			this.players[uuidUser].rotateR();
-		} else if (key === 'ArrowDown') {
-			this.players[uuidUser].down();
-		} else if (key === 'ArrowLeft') {
-			this.players[uuidUser].left();
-		} else if (key === 'ArrowRight') {
-			this.players[uuidUser].rigth();
-		} else if (key === ' ') {
-			this.players[uuidUser].space();
-		}
+		this.players[uuidUser].move(key);
 	}
 
 	countPlayer = () => {
@@ -57,11 +47,11 @@ class Room extends block {
 		this.isPlaying = true;
 		this.isStart = true;
 		_.map(this.players, elem => elem.startGame());
-
 	}
 
 	changeIsPlaying = () => {
 		this.isPlaying = !this.isPlaying;
+		_.map(this.players, elem => elem.changePlaying(this.isPlaying));
 	}
 
 	getPlayers = () => {
