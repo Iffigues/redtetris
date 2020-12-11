@@ -10,6 +10,7 @@ class Game extends Block {
 		this.action = null;
 		this.keyBind = [this.left, this.rigth, this.down, this.rotateL, this.rotateR, this.space];
 		this.isPlaying = false;
+		this.lock = true;
 		this.action = this.initActionObject();
 		this.createIntervalGame();
 	}
@@ -29,20 +30,21 @@ class Game extends Block {
 		timer = setTimeout((scope) => {
 			if (scope.isPlaying) {
 				if (scope.block == null) {
-					if (scope.sheets.length === 0) {
-						scope.addSheet();
-					}
+					if (scope.sheets.length === 0) scope.addSheet();
 					scope.block = scope.sheets.pop();
 					if (!scope.canPose(scope.block, 0, 0)) return;
 				}
-				scope.sendMap();	
+				scope.sendMap();
+				//if (this.lock)  {
 				if (!scope.canPose(scope.block, 0, 1)) {
 					scope.draw(scope.block, scope.block.type);
 					scope.verifLine();
-					return;
+					this.block = null;
+				} else {
+					scope.draw(scope.block, 0);
+					scope.block.y += 1;
 				}
-				scope.draw(scope.block, 0);
-				scope.block.y += 1;
+			    //}
 			}
 			setTimeout(scope.createIntervalGame, 0)
 		}, 1000, scope)
@@ -69,6 +71,7 @@ class Game extends Block {
 	}
 
 	move = (event) => {
+		if (this.block == null) return;
 		if (event
 			&& Object.keys(this.action).includes(event)) {
 			this.action[event]();
@@ -89,33 +92,22 @@ class Game extends Block {
 	}
 
 	rotateL = async () => {
-		let release = await this.mutex.acquire();
-		try {
-			this.rotate(this.block, 0);
-		} finally {
-			release();
-		}
+		this.rotate(this.block, 0);
+		this.sendMap();
 	}
 	
 	rotateR = async () => {
-		let release = await this.mutex.acquire();
-		try {
-			this.rotate(this.block, 1);
-		} finally {
-			release();
-		}
+		this.rotate(this.block, 1);
+		this.sendMap();
 	}
 	
 	space = async () => {
-		let release = await this.mutex.acquire();
-		try {
-			while (this.canPose(this.block, 0, 1)) {
-				this.block.y += 1;
-				this.sendMap();
-			}
-		} finally {
-			release();
+		this.lock = false;
+		while (this.canPose(this.block, 0, 1)) {
+			this.block.y += 1;
+			this.sendMap();
 		}
+		this.lock = true;
 	}
 
 	draw = (blk, z) => {
