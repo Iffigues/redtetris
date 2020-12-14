@@ -32,10 +32,13 @@ class Game extends Block {
 				if (scope.block == null) {
 					if (scope.sheets.length === 0) scope.addSheet();
 					scope.block = scope.sheets.pop();
-					if (!scope.canPose(scope.block, 0, 0)) return;
+					if (!scope.canPose(scope.block, 0, 0)) {
+						clearInterval(this.timer);
+						this.block = null;
+						return;
+					};
 				}
 				scope.sendMap();
-				//if (this.lock)  {
 				if (!scope.canPose(scope.block, 0, 1)) {
 					scope.draw(scope.block, scope.block.type);
 					scope.verifLine();
@@ -44,7 +47,6 @@ class Game extends Block {
 					scope.draw(scope.block, 0);
 					scope.block.y += 1;
 				}
-			    //}
 			}
 			setTimeout(scope.createIntervalGame, 0)
 		}, 1000, scope)
@@ -92,13 +94,17 @@ class Game extends Block {
 	}
 
 	rotateL = async () => {
-		this.rotate(this.block, 0);
-		this.sendMap();
+		if (this.block.rotate) {
+			this.rotate(this.block, 0);
+			this.sendMap();
+		}
 	}
 	
 	rotateR = async () => {
-		this.rotate(this.block, 1);
-		this.sendMap();
+		if (this.block.rotate) {
+			this.rotate(this.block, 1);
+			this.sendMap();
+		}
 	}
 	
 	space = async () => {

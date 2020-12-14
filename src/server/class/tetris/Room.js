@@ -27,8 +27,15 @@ class Room extends block {
 			_.map(this.players, elem => elem.sheets.push(sheet));
 	}
 
+	Destroyer = (uuid) => {
+		for (const [key, value] of Object.entries(this.players)) {
+ 			 if (key != uuid) this.players[key].destroyLine();
+		}
+	}	
+
 	addPlayer = (player) => {
 		player.addSheetFunc(this.addSheet);
+		player.addDestroyFunc(this.Destroyer);
 		this.players[player.uuid] = player;
 	}
 
