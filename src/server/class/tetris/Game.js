@@ -142,7 +142,8 @@ class Game extends Block {
 	}
 
 	wash = (e) => {
-		this.map_game.splice(e, e - 1);
+		console.log(e);
+		this.map_game.splice(e, 1);
 		this.map_game.unshift([0,0,0,0,0,0,0,0,0,0]);
 	}
 
