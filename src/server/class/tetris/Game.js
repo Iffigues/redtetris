@@ -5,6 +5,7 @@ let timer = null;
 class Game extends Block {
 	constructor(updateRoomFunction) {
 		super();
+		this.end = false;
 		this.updateRoomFunction = updateRoomFunction;
 		this.block = null;
 		this.action = null;
@@ -39,13 +40,24 @@ class Game extends Block {
 					};
 				}
 				scope.sendMap();
-				if (!scope.canPose(scope.block, 0, 1)) {
-					scope.draw(scope.block, scope.block.type);
-					scope.verifLine();
-					this.block = null;
-				} else {
-					scope.draw(scope.block, 0);
-					scope.block.y += 1;
+				if (scope.end) {
+					scope.end = false;
+					if (!scope.canPose(scope.block, 0, 1)) {
+						console.log(scope.end);
+						scope.draw(scope.block, scope.block.type);
+						scope.verifLine();
+						scope.block = null;
+					}
+					
+				} 
+				if (scope.block != null) {
+					if (!scope.canPose(scope.block, 0, 1)) {
+						//scope.draw(scope.block, scope.block.type);
+						scope.end = true;
+					} else {
+						scope.draw(scope.block, 0);
+						scope.block.y += 1;
+					}
 				}
 			}
 			setTimeout(scope.createIntervalGame, 0)
@@ -130,7 +142,7 @@ class Game extends Block {
 	}
 
 	wash = (e) => {
-		this.map_game.splice(e,e);
+		this.map_game.splice(e, e - 1);
 		this.map_game.unshift([0,0,0,0,0,0,0,0,0,0]);
 	}
 
@@ -145,6 +157,7 @@ class Game extends Block {
 				}
 			}
 			if (u == 1) {
+				this.Destroy(this.uuid);
 				arr = arr + 1;
 				this.wash(i);
 				this.verifLine();
