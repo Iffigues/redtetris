@@ -29,17 +29,19 @@ class Player extends Game {
 		this.addSheet = func; 
 	}
 
+	addDestroyFunc(func) {
+		this.Destroy = func;
+	}	
+
 	pushSheet = () => {
 		this.addSheet();
 	}
 
 	destroyLine = (a) => {
-		while (a) {
 			this.map_game[this.indestructible].fill(-1);
 			this.indestructible = this.indestructible + 1;
 			if (this.indestructible == 19) {
 				return;
-			}
 		}
 	}
 
