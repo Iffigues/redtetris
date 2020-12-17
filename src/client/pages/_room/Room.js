@@ -112,9 +112,9 @@ import Board from '../../components/board';
           /> */}
           <Board
             game={rooms[uuidRoom]}
-            mapGame={rooms[uuidRoom].players[player.uuid].map_game}
+            mapGame={rooms[uuidRoom].players[player.uuid].currentMapGame}
             isAlone={Object.keys(rooms[uuidRoom].players).length === 1}
-            mapGamePreview={_.filter(rooms[uuidRoom].players, item => item.uuid !== player.uuid)[0]?.map_game}
+            mapGamePreview={_.filter(rooms[uuidRoom].players, item => item.uuid !== player.uuid)[0]?.currentMapGame}
           />
         </div>
       )

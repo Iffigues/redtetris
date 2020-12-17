@@ -1,5 +1,6 @@
 import _ from 'lodash'
-class Pieces {
+
+class Piece {
 	constructor() {
 		this.shadow = {
 			x: this.x,
@@ -19,15 +20,14 @@ class Pieces {
 		}
 
 		for (let i = 0; i < 4; i++) {
-		
 			let abx = block.block[i].x + xx;
 			let aby = block.block[i].y + yy;
 			
-			if (abx < 0 || abx > 9 ||  aby >= 20 - this.indestructible|| aby < 0) {
+			if (abx < 0 || abx > 9 ||  aby >= 20 - this.indestructible || aby < 0) {
 				return false;
 			}
 
-			if (this.map_game[aby][abx] != 0) {
+			if (this.nextMapGame[aby][abx] !== 0) {
 				return false;
 			}
 		}
@@ -83,49 +83,34 @@ class Pieces {
 				}
 			}
 		}
-
 		return false;
 	}
 
 	rotate = (block, direction) => {
-		
-		let srs;
+		if (!Number.isInteger(direction) || direction > 1 || direction < 0) return false;
 
-		if (!Number.isInteger(direction))
-			return false;
-
-		if (direction == 0) {
-			srs = this.srs;
-		} else if (direction == 1) {
-			srs = this.lrs;
-		} else {
-			return false
-		}
-
+		let srs = (direction === 0) ? this.srs : this.lrs
 		let blk = this.copyBlock(block);
 		
 		for (let i = 0; i < 4; i++) {
-		
 			let xs = srs[0][0] * block.block[i].x + srs[0][1] * block.block[i].y;
 			let ys = srs[1][0] * block.block[i].x + srs[1][1] * block.block[i].y;
 			block.block[i].x = xs;
 			block.block[i].y = ys;
 		}
 
-		if (this.willBePosed(block)) {
-			return true;
-		} else{
+		if (!this.willBePosed(block)) {
 			block = this.retro(block, blk);
 			return false;
 		}
-
+		return true;
 	}
 
 	fallen = () => {
-
-		if (this.canFall())
+		if (this.canFall()) {
 			this.y++;
+		}
 	}
 }
 
-export default Pieces;
+export default Piece;

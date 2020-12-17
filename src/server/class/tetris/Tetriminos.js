@@ -1,10 +1,8 @@
-import random from 'random'
-
 class mounter {
 	constructor () {
 	}
 	newCase = (x, y , pivot) => {
-		return (!Number.isInteger(x) || !Number.isInteger(y) || !typeof pivot == "boolean")
+		return (!Number.isInteger(x) || !Number.isInteger(y) || typeof pivot !== "boolean")
 			? false
 			: { x, y, pivot };
 		}
@@ -143,8 +141,8 @@ class Block {
 		this.blocks = [I, O, T, S, Z, J, L];
 	}
 	newBlock = () => {
-		let i = random.int(0, this.blocks.length - 1);
-		return new this.blocks[i]();
+		let index = Math.floor(Math.random() * Math.floor(this.blocks.length - 1));
+		return new this.blocks[index]();
 	}
 }
 

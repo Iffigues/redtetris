@@ -1,15 +1,15 @@
-import Block from './Piece'
+import _ from 'lodash'
+import Piece from './Piece'
 import regeneratorRuntime from "regenerator-runtime";
 
 let timer = null;
-class Game extends Block {
+class Game extends Piece {
 	constructor(updateRoomFunction) {
 		super();
 		this.end = false;
 		this.updateRoomFunction = updateRoomFunction;
 		this.block = null;
 		this.action = null;
-		this.keyBind = [this.left, this.rigth, this.down, this.rotateL, this.rotateR, this.space];
 		this.isPlaying = false;
 		this.lock = true;
 		this.action = this.initActionObject();
@@ -27,41 +27,38 @@ class Game extends Block {
 	}
 
 	createIntervalGame = () => {
-		const scope = this;
-		timer = setTimeout((scope) => {
-			if (scope.isPlaying) {
-				if (scope.block == null) {
-					if (scope.sheets.length === 0) scope.addSheet();
-					scope.block = scope.sheets.pop();
-					if (!scope.canPose(scope.block, 0, 0)) {
-						clearInterval(this.timer);
+		timer = setTimeout(() => {
+			if (this.isPlaying) {
+				if (!this.block) {
+					if (this.sheets.length === 0) this.addSheet();
+					this.block = this.sheets.pop();
+					if (!this.canPose(this.block, 0, 0)) {
+						clearInterval(timer);
 						this.block = null;
 						return;
-					};
-				}
-				scope.sendMap();
-				if (scope.end) {
-					scope.end = false;
-					if (!scope.canPose(scope.block, 0, 1)) {
-						console.log(scope.end);
-						scope.draw(scope.block, scope.block.type);
-						scope.verifLine();
-						scope.block = null;
 					}
-					
+				}
+				this.sendMap();
+				if (this.end) {
+					this.end = false;
+					if (!this.canPose(this.block, 0, 1)) {
+						console.log(this.end);
+						this.draw(this.block, this.block.type);
+						this.block = null;
+						this.verifLine();
+					}
 				} 
-				if (scope.block != null) {
-					if (!scope.canPose(scope.block, 0, 1)) {
-						//scope.draw(scope.block, scope.block.type);
-						scope.end = true;
+				if (this.block) {
+					if (!this.canPose(this.block, 0, 1)) {
+						this.end = true;
 					} else {
-						scope.draw(scope.block, 0);
-						scope.block.y += 1;
+						this.draw(this.block, 0);
+						this.block.y += 1;
 					}
 				}
 			}
-			setTimeout(scope.createIntervalGame, 0)
-		}, 1000, scope)
+			setTimeout(this.createIntervalGame, 0)
+		}, 1000)
 	}
 
 	setIsPlaying = (isPlaying) => {
@@ -70,6 +67,7 @@ class Game extends Block {
 
 	sendMap = () => {
 		this.draw(this.block, this.block.type);
+		this.currentMapGame = _.cloneDeep(this.nextMapGame);
 		if (this.updateRoomFunction) this.updateRoomFunction();
 		this.draw(this.block, 0);
 	}
@@ -85,11 +83,8 @@ class Game extends Block {
 	}
 
 	move = (event) => {
-		if (this.block == null) return;
-		if (event
-			&& Object.keys(this.action).includes(event)) {
+		if (this.block && event && Object.keys(this.action).includes(event)) {
 			this.action[event]();
-			event = null;
 		}
 	}
 
@@ -123,27 +118,20 @@ class Game extends Block {
 		this.lock = false;
 		while (this.canPose(this.block, 0, 1)) {
 			this.block.y += 1;
-			this.sendMap();
 		}
+		this.sendMap();
 		this.lock = true;
 	}
 
 	draw = (blk, z) => {
 		for (let y = 0; y < 4; y = y + 1) {
-			this.map_game[blk.y + blk.block[y].y][blk.x + blk.block[y].x] = z;
-		}
-	}
-	
-	setKey = (i) => {
-		if (typeof this.keyBind[i] === 'undefined') {
-		} else {
-			this.keyBind[i]();
+			this.nextMapGame[blk.y + blk.block[y].y][blk.x + blk.block[y].x] = z;
 		}
 	}
 
 	wash = (e) => {
-		this.map_game.splice(e, 1);
-		this.map_game.unshift([0,0,0,0,0,0,0,0,0,0]);
+		this.nextMapGame.splice(e, 1);
+		this.nextMapGame.unshift([0,0,0,0,0,0,0,0,0,0]);
 	}
 
 	verifLine = () => {
@@ -151,13 +139,13 @@ class Game extends Block {
 		for (let i = 19 - this.indestructible; i >= 0; i--) {
 			let u = 1;
 			for (let y = 0; y < 10; y++) {
-				if (this.map_game[i][y] == 0) {
+				if (this.nextMapGame[i][y] === 0) {
 					u = 0;
 					break;
 				}
 			}
-			if (u == 1) {
-				this.Destroy(this.uuid);
+			if (u === 1) {
+				this.destroyFunc(this.uuid);
 				arr = arr + 1;
 				this.wash(i);
 				this.verifLine();
