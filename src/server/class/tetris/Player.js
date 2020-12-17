@@ -1,4 +1,5 @@
 import uuidv4 from 'uuid'
+import _ from 'lodash'
 import Game from './Game'
 
 const GAME_WIDTH = 10;
@@ -12,16 +13,13 @@ class Player extends Game {
 		this.admin = admin;
 		this.live = true;
 		this.sheets = [];
-		this.map_game = [];
 		this.indestructible = 0;
 		this.time = 1000;
 		this.isPlaying = false;
-		// Array.from(Array(GAME_HEIGHT), () => 
-    //   new Array(GAME_WIDTH).fill(0)
-    // )
-		for (let i = 0; i < 20; i++) {
-			this.map_game.push([0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
-		}
+		this.currentMapGame = Array.from(Array(GAME_HEIGHT), () => 
+      new Array(GAME_WIDTH).fill(0)
+		)
+		this.nextMapGame = _.cloneDeep(this.currentMapGame);
 		this.block = null;
 	}
         
@@ -30,18 +28,18 @@ class Player extends Game {
 	}
 
 	addDestroyFunc(func) {
-		this.Destroy = func;
+		this.destroyFunc = func;
 	}	
 
 	pushSheet = () => {
 		this.addSheet();
 	}
 
-	destroyLine = (a) => {
-			this.map_game[this.indestructible].fill(-1);
-			this.indestructible = this.indestructible + 1;
-			if (this.indestructible == 19) {
-				return;
+	destroyLine = () => {
+		this.nextMapGame[this.indestructible].fill(-1);
+		this.indestructible = this.indestructible + 1;
+		if (this.indestructible === 19) {
+			return;
 		}
 	}
 
@@ -51,10 +49,6 @@ class Player extends Game {
 
 	changePlaying = (isPlaying) => {
 		this.setIsPlaying(isPlaying)
-	}
-
-	keyBind = (i) => {
-		this.setKey(i);
 	}
 }
 

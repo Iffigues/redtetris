@@ -1,18 +1,17 @@
-import block from './Tetriminos';
+import Block from './Tetriminos';
 import _ from 'lodash'
 import uuidv4 from 'uuid';
 import Player from './Player';
 import regeneratorRuntime from "regenerator-runtime";
 
 
-class Room extends block {
+class Room {
 	
 	constructor(player, io, solo = false, channel = uuidv4()) {
-		super();
 		this.isStart = false;
 		this.isPlaying = false;
 		this.solo = solo;
-		this.block = new block();
+		this.block = new Block();
 		this.channel = channel;
 		this.players = {};
 		this.addPlayer(player);
@@ -24,18 +23,20 @@ class Room extends block {
 
 	addSheet = () => {
 		let sheet = this.block.newBlock();
-			_.map(this.players, elem => elem.sheets.push(sheet));
+		_.map(this.players, elem => elem.sheets.push(sheet));
 	}
 
-	Destroyer = (uuid) => {
-		for (const [key, value] of Object.entries(this.players)) {
- 			 if (key != uuid) this.players[key].destroyLine();
-		}
+	destroyer = (uuid) => {
+		_.map(this.players, player => {
+			if (player.uuid !== uuid) {
+				player.destroyLine()
+			}
+		})
 	}	
 
 	addPlayer = (player) => {
 		player.addSheetFunc(this.addSheet);
-		player.addDestroyFunc(this.Destroyer);
+		player.addDestroyFunc(this.destroyer);
 		this.players[player.uuid] = player;
 	}
 
@@ -45,7 +46,7 @@ class Room extends block {
 
 	countPlayer = () => {
 		let i = this.players.length;
-		if (i == 4) {
+		if (i === 4) {
 			this.startGame();
 		}
 	}
@@ -62,7 +63,7 @@ class Room extends block {
 	}
 
 	getPlayers = () => {
-	    return this.players
+	  return this.players
 	}
 }
 
