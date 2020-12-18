@@ -2,6 +2,7 @@ import React from 'react'
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
+import _ from 'lodash'
 import { Context as AlertContext } from "../../context/AlertContext";
 import { Context as UserContext } from "../../context/UserContext";
 import { Context as RoomsContext } from "../../context/RoomsContext";
@@ -78,9 +79,9 @@ const SectionGames = (props) => {
               return (
                 <MenuItem
                   value={rooms[item].channel}>
-                  {rooms[item].players
-                    .map((player, index) => (!rooms[item].solo)
-                      ? `${player.name}${(index !== rooms[item].players.length - 1) ? ', ' : ''}`
+                  {_.map(rooms[item].players, (player, index) => (
+                    !rooms[item].solo)
+                      ? `${player.name}${(index !== Object.keys(rooms[item].players)[Object.keys(rooms[item].players).length - 1]) ? ', ' : ''}`
                       : ''
                     )
                   }
