@@ -5,7 +5,7 @@ import Game from './Game'
 const GAME_WIDTH = 10;
 const GAME_HEIGHT = 20;
 class Player extends Game {
-	constructor (name, admin = false, updateRoomFunction) {
+	constructor (name, updateRoomFunction, admin = false) {
 		super(updateRoomFunction)
 		this.uuid = uuidv4()
 		this.name = name
@@ -16,6 +16,7 @@ class Player extends Game {
 		this.indestructible = 0;
 		this.time = 1000;
 		this.isPlaying = false;
+		this.visitor = false;
 		this.currentMapGame = Array.from(Array(GAME_HEIGHT), () => 
       new Array(GAME_WIDTH).fill(0)
 		)
@@ -44,6 +45,7 @@ class Player extends Game {
 	}
 
 	startGame = () => {
+		this.visitor = false
 		this.setIsPlaying(true)
 	}
 

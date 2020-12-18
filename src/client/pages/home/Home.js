@@ -78,11 +78,12 @@ const SectionGames = (props) => {
             Object.keys(rooms).map((item, key) => {
               return (
                 <MenuItem
-                  value={rooms[item].channel}>
+                  value={rooms[item].channel}
+                  key={key}>
                   {_.map(rooms[item].players, (player, index) => (
-                    !rooms[item].solo)
-                      ? `${player.name}${(index !== Object.keys(rooms[item].players)[Object.keys(rooms[item].players).length - 1]) ? ', ' : ''}`
-                      : ''
+                      !rooms[item].solo)
+                        ? `${player.name}${(index !== Object.keys(rooms[item].players)[Object.keys(rooms[item].players).length - 1]) ? ', ' : ''}`
+                        : ''
                     )
                   }
                 </MenuItem>

@@ -7,7 +7,7 @@ import regeneratorRuntime from "regenerator-runtime";
 
 class Room {
 	
-	constructor(player, io, solo = false, channel = uuidv4()) {
+	constructor(player, solo = false, channel = uuidv4()) {
 		this.isStart = false;
 		this.isPlaying = false;
 		this.solo = solo;
@@ -23,7 +23,7 @@ class Room {
 
 	addSheet = () => {
 		let sheet = this.block.newBlock();
-		_.map(this.players, elem => elem.sheets.push(sheet));
+		_.map(this.players, elem => elem.sheets.push(_.cloneDeep(sheet)));
 	}
 
 	destroyer = (uuid) => {
@@ -37,10 +37,14 @@ class Room {
 	addPlayer = (player) => {
 		player.addSheetFunc(this.addSheet);
 		player.addDestroyFunc(this.destroyer);
+		if (this.isStart) {
+			player.visitor = true
+		}
 		this.players[player.uuid] = player;
 	}
 
 	onKey = (key, uuidUser) => {
+		console.log(this.players)
 		this.players[uuidUser].move(key);
 	}
 

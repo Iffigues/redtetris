@@ -89,6 +89,7 @@ class Game extends Piece {
 	}
 
 	left = () => {
+		console.log("left", this.uuid);
 		this.setMoose(0, -1);
 	}
 	

@@ -33,7 +33,7 @@ class SocketsManager {
     // Create and join room
     socket.on('server/create-room', (data) => {
       const { login, playSolo } = data
-      const player = new Player(login, true, () => this.updateRooms());
+      const player = new Player(login, () => this.updateRooms(), true);
       const room = new Room(player, playSolo)
       this.rooms.add(room);
       socket.join(room.channel);
@@ -42,7 +42,7 @@ class SocketsManager {
       socket.emit('client/created-room', { uuidRoom: room.channel, player })
     });
     
-    // // leave room
+    // leave room
     socket.on('server/leave-room', (data) => {
       const { uuidRoom, uuidUser } = data;
       this.rooms.deletePlayer(uuidRoom, uuidUser)
@@ -75,15 +75,10 @@ class SocketsManager {
     });
     
     socket.on('server/key-up', (data) => {
-      // KEY: 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Escape'
+      // KEY: 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', ' '
       const { key, channel, uuidUser } = data;
-      // get channel
+      console.log(key, channel, uuidUser)
       this.rooms.onKey(key, channel, uuidUser);
-      // get game
-      
-      // move pieces
-      
-      // is finish ?
     });
     
     socket.on('server/pause-resume', (data) => {
@@ -91,10 +86,6 @@ class SocketsManager {
       const { channel } = data;
       this.rooms.changeIsPlaying(channel);
       this.updateRooms(this.rooms, socket)
-      // console.log(isPlaying, channel);
-      // stop timer
-  
-      // send state pause
     });
   }
 

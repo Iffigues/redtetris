@@ -1,4 +1,6 @@
 import React from 'react';
+import { useContext } from 'react'
+import { Context as UserContext } from "../context/UserContext";
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Preview from './preview'
@@ -18,7 +20,32 @@ const boxProps = {
 };
 
 const Board = ({ mapGame, mapGamePreview, isAlone }) => {
-  return (
+  const { state: { player } } = useContext(UserContext);
+
+  if (player.visitor) {
+    return (
+      <div>
+        Vous regardez en tant que visiteur
+        <Grid
+          container
+          direction="row"
+          justify="center"
+          alignItems="flex-start"
+          spacing={3}
+          style={{ backgroundColor: '#ffff', width: '100%', height: '100%'}}
+          >
+          <Grid item>
+            <Card {...boxProps} variant="outlined">
+              <CardContent>
+                <Preview mapGamePreview={ { game: mapGamePreview, isOtherUser: true } } isVisitor={true} isAlone={isAlone} />
+              </CardContent>
+            </Card>
+          </Grid>
+        </Grid>
+      </div>
+    )
+  } else {
+    return (
       <Grid
         container
         direction="row"
@@ -35,10 +62,10 @@ const Board = ({ mapGame, mapGamePreview, isAlone }) => {
           </Card>
         </Grid>
         <Grid item xs={4}>
-          {console.log("mapGame:", mapGamePreview) }
-          <Preview mapGamePreview={ { game: mapGamePreview, isOtherUser: true } } isAlone={isAlone} />
+          <Preview mapGamePreview={ { game: mapGamePreview, isOtherUser: true} } isVisitor={false} isAlone={isAlone} />
         </Grid>
       </Grid>
-  );
+    );
+  }
 }
 export default Board
