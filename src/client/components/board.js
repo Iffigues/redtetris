@@ -35,7 +35,8 @@ const Board = ({ mapGame, mapGamePreview, isAlone }) => {
           </Card>
         </Grid>
         <Grid item xs={4}>
-          <Preview game={ { game: mapGamePreview, isOtherUser: true } } isAlone={isAlone} />
+          {console.log("mapGame:", mapGamePreview) }
+          <Preview mapGamePreview={ { game: mapGamePreview, isOtherUser: true } } isAlone={isAlone} />
         </Grid>
       </Grid>
   );

@@ -5,7 +5,7 @@ margin: auto;
 display: grid;
 grid-template-rows: repeat(
   ${props => props.height},
-  calc(${props => (props.isOtherUser) ? '15vw' : '25vw'} / ${props => props.width})
+  calc(${props => (props.isOtherUser) ? '15vw' : '25vw'} / ${props => (props.isOtherUser) ? props.width : props.width})
 );
 grid-template-columns: repeat(${props => props.width}, 1fr);
 grid-gap: 1px;
