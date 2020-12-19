@@ -31,7 +31,7 @@ class Game extends Piece {
 			if (this.isPlaying) {
 				if (!this.block) {
 					if (this.sheets.length === 0) this.addSheet();
-					this.block = this.sheets.pop();
+					this.block = _.cloneDeep(this.sheets.shift());
 					if (!this.canPose(this.block, 0, 0)) {
 						clearInterval(timer);
 						this.block = null;
