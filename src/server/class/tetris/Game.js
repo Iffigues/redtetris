@@ -90,7 +90,6 @@ class Game extends Piece {
 	}
 
 	left = () => {
-		console.log("left", this.uuid);
 		this.setMoose(0, -1);
 	}
 	
@@ -146,7 +145,9 @@ class Game extends Piece {
 					break;
 				}
 			}
+
 			if (u === 1) {
+				this.score = (int)((this.score + 1000) * 1.1);
 				this.destroyFunc(this.uuid);
 				arr = arr + 1;
 				this.wash(i);
