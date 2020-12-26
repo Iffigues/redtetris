@@ -147,7 +147,7 @@ class Game extends Piece {
 			}
 
 			if (u === 1) {
-				this.score = (int)((this.score + 1000) * 1.1);
+				this.score = Math.ceil((this.score + 1000) * 1.1);
 				this.destroyFunc(this.uuid);
 				arr = arr + 1;
 				this.wash(i);
