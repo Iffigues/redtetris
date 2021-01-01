@@ -114,6 +114,8 @@ import Board from '../../components/board';
             mapGame={rooms[uuidRoom].players[player.uuid].currentMapGame}
             isAlone={Object.keys(rooms[uuidRoom].players).length === 1}
             mapGamePreview={_.filter(rooms[uuidRoom].players, item => item.uuid !== player.uuid)[0]?.currentMapGame}
+            score={rooms[uuidRoom].players[player.uuid].score}
+            sheet={rooms[uuidRoom].players[player.uuid].sheets[0]}
           />
         </div>
       )

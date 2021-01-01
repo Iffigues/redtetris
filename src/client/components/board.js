@@ -19,9 +19,8 @@ const boxProps = {
   m: 1
 };
 
-const Board = ({ mapGame, mapGamePreview, isAlone }) => {
+const Board = ({ mapGame, mapGamePreview, isAlone, score, sheet }) => {
   const { state: { player } } = useContext(UserContext);
-
   if (player.visitor) {
     return (
       <div>
@@ -37,7 +36,7 @@ const Board = ({ mapGame, mapGamePreview, isAlone }) => {
           <Grid item>
             <Card {...boxProps} variant="outlined">
               <CardContent>
-                <Preview mapGamePreview={ { game: mapGamePreview, isOtherUser: true } } isVisitor={true} isAlone={isAlone} />
+                <Preview mapGamePreview={ { game: mapGamePreview, isOtherUser: true } } isVisitor={true} isAlone={isAlone} score={0} sheet={null}/>
               </CardContent>
             </Card>
           </Grid>
@@ -62,7 +61,7 @@ const Board = ({ mapGame, mapGamePreview, isAlone }) => {
           </Card>
         </Grid>
         <Grid item xs={4}>
-          <Preview mapGamePreview={ { game: mapGamePreview, isOtherUser: true} } isVisitor={false} isAlone={isAlone} />
+          <Preview mapGamePreview={ { game: mapGamePreview, isOtherUser: true} } isVisitor={false} isAlone={isAlone} score={score} sheet={sheet}/>
         </Grid>
       </Grid>
     );
