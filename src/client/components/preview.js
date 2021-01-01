@@ -34,7 +34,7 @@ const OtherPlayerGrid = ({isAlone, mapGamePreview}) => {
   }
 }
 
-const Preview = ({mapGamePreview, isAlone, isVisitor}) => {
+const Preview = ({mapGamePreview, isAlone, isVisitor, score}) => {
   return (
     <div>
       {!isVisitor && (
@@ -42,7 +42,7 @@ const Preview = ({mapGamePreview, isAlone, isVisitor}) => {
           <Card {...boxProps} style= {{ width: '30vw', height: '15vh' }} variant="outlined">
             <CardContent>
               <Typography color="textSecondary" gutterBottom>
-              PREVIEW
+                { preview }
               </Typography>
             </CardContent>
           </Card>
@@ -52,7 +52,7 @@ const Preview = ({mapGamePreview, isAlone, isVisitor}) => {
         <Card {...boxProps} style= {{ width: '30vw', height: '5vh' }} variant="outlined">
           <CardContent>
             <Typography color="textSecondary" gutterBottom>
-            SCORE
+              Score: { score }
             </Typography>
           </CardContent>
         </Card>
