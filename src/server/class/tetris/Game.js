@@ -30,8 +30,9 @@ class Game extends Piece {
 		timer = setTimeout(() => {
 			if (this.isPlaying) {
 				if (!this.block) {
-					if (this.sheets.length === 0) this.addSheet();
-					this.block = this.sheets.pop();
+					if  (this.sheets.length === 0) this.addSheet();
+					this.block = _.cloneDeep(this.sheets.shift());
+					this.addSheet();
 					if (!this.canPose(this.block, 0, 0)) {
 						clearInterval(timer);
 						this.block = null;
@@ -89,7 +90,6 @@ class Game extends Piece {
 	}
 
 	left = () => {
-		console.log("left", this.uuid);
 		this.setMoose(0, -1);
 	}
 	
@@ -145,7 +145,9 @@ class Game extends Piece {
 					break;
 				}
 			}
+
 			if (u === 1) {
+				this.score = Math.ceil((this.score + 1000) * 1.1);
 				this.destroyFunc(this.uuid);
 				arr = arr + 1;
 				this.wash(i);

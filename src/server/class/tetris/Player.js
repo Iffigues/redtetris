@@ -37,7 +37,7 @@ class Player extends Game {
 	}
 
 	destroyLine = () => {
-		this.nextMapGame[this.indestructible].fill(-1);
+		this.nextMapGame[19 - this.indestructible].fill(-1);
 		this.indestructible = this.indestructible + 1;
 		if (this.indestructible === 19) {
 			return;
