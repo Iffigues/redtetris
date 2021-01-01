@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Game from './game'
 import { createGame } from '../plugins/createGame'
+import PreviewPiece from './previewPiece';
 
 const boxProps = {
   bgcolor: 'background.paper',
@@ -34,15 +35,15 @@ const OtherPlayerGrid = ({isAlone, mapGamePreview}) => {
   }
 }
 
-const Preview = ({mapGamePreview, isAlone, isVisitor, score}) => {
+const Preview = ({mapGamePreview, isAlone, isVisitor, score, sheet}) => {
   return (
     <div>
-      {!isVisitor && (
+      {!isVisitor && sheet && (
         <Box mb={3}>
           <Card {...boxProps} style= {{ width: '30vw', height: '15vh' }} variant="outlined">
             <CardContent>
               <Typography color="textSecondary" gutterBottom>
-                { preview }
+                <PreviewPiece sheet={sheet}/>
               </Typography>
             </CardContent>
           </Card>

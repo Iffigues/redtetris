@@ -30,7 +30,8 @@ class Game extends Piece {
 		timer = setTimeout(() => {
 			if (this.isPlaying) {
 				if (!this.block) {
-					if  (this.sheets.length === 0) this.addSheet();
+					if (this.sheets.length === 0) this.addSheet();
+					console.log(123, this.sheets)
 					this.block = _.cloneDeep(this.sheets.shift());
 					this.addSheet();
 					if (!this.canPose(this.block, 0, 0)) {
