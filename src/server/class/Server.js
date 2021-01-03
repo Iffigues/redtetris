@@ -8,19 +8,27 @@ import SocketsManager from './sockets/SocketsManager';
 const logerror = debug('tetris:error'), loginfo = debug('tetris:info')
 
 class Server {
-	constructor () {
+	constructor (isTesting = false) {
 		const { host, port } = params;
 		this.app = express();
 		this.app.use(cors())
 		this.params = params;
 		this.app.use(bodyParser.json({limit: '10mb', extended: true}));
-		this.server = this.app.listen({ host, port }, () => {
-			loginfo(`tetris listen on ${this.params.url}`);
-		})
+		if (!isTesting) {
+			this.server = this.app.listen({ host, port }, () => {
+				loginfo(`tetris listen on ${this.params.url}`);
+			})
+		} else {
+			this.server = null
+		}
 		const socketsManager = new SocketsManager(this.server);
 		this.app.io = socketsManager.io;
 		this.app.socketsManager = socketsManager;
 		this.rooms = {};
+	}
+
+	setServer = (value) => {
+		this.server = value
 	}
 }
 
