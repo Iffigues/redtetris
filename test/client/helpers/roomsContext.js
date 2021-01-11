@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import Enzyme, { mount } from "enzyme";
-import { rooms } from "../helpers/data";
+import { rooms_1 } from "../helpers/data";
 import Adapter from "enzyme-adapter-react-16";
 import { Provider as RoomsProvider } from "../../../src/client/context/RoomsContext";
 import { Context as RoomsContext } from "../../../src/client/context/RoomsContext";
@@ -20,7 +20,7 @@ export const TestAppRoomsProviderWithThreeRooms = ({ children }) => (
 const CurrentRoomsSetter = ({ children }) => {
   const { updateRooms } = useContext(RoomsContext);
   useEffect(() => {
-    updateRooms(rooms);
+    updateRooms(rooms_1);
   }, []);
   return <>{children}</>;
 };
