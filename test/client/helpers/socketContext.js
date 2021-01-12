@@ -1,4 +1,4 @@
-import React from "react";
+import React,  { useContext } from "react";
 import Enzyme from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import { SocketContext } from "../../../src/client/context/SocketContext";

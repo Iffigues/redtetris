@@ -81,25 +81,28 @@ export const players_3 = [
 ]
 
 
+export const uuid_1 = uuidv4()
+const uuid_2 = uuidv4() 
+const uuid_3 = uuidv4() 
 // ROOMS
-export const rooms_1 = [
-  {
-    channel: uuidv4(),
+export const rooms_1 = {
+  [uuid_1]: {
+    channel: uuid_1,
     players: fillPlayersRoom(players_1),
     ...default_values_room
   },
-  {
-    channel: uuidv4(),
+  [uuid_2]: {
+    channel: uuid_2,
     players: fillPlayersRoom(players_2),
     ...default_values_room
   }
-]
+}
 
-export const rooms_2 = [
+export const rooms_2 = {
   ...rooms_1,
-  {
-    channel: uuidv4(),
+  [uuid_3]: {
+    channel: uuid_3,
     players: fillPlayersRoom(players_3),
     ...default_values_room
   }
-]
+}

@@ -9,7 +9,7 @@
     "client-dev": "webpack-dev-server --mode development --hot --config webpack.dev.js",
     "srv-dev": "DEBUG=tetris:* nodemon src/server/start.js",
     "srv-dist": "DEBUG=tetris:* babel src --out-dir dist",
-    "test": "jest --config ./jest.config.json --no-cache '--maxWorkers=1'",
+    "test": "jest --config ./jest.config.json --no-cache '--maxWorkers=1' --detectOpenHandles",
     "test:coverage": "npm run test -- --collect-coverage --watchAll=false",
     "test:watch": "npm run test -- --watch",
     "coverage": "NODE_ENV=test nyc --include src --all -r text -r lcov -r text --require babel-core/register mocha "

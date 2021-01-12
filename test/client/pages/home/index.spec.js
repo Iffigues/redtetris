@@ -35,7 +35,7 @@ describe("Test HomePage", () => {
     expect(input_login).toHaveValue('abcd');
   })
 
-  test("Test button disabled", () => {
+  test("Test buttons disabled", () => {
     const { container, getByTestId } = render(<Wrapper />);
     const input_login = getByTestId('loginInput');
     const btn_create_room = container.querySelector('.test--btn-create-room')
@@ -44,4 +44,19 @@ describe("Test HomePage", () => {
     fireEvent.change(input_login, { target: { value: 'abcd' } });
     expect(btn_create_room).not.toBeDisabled();
   })
+
+  test("Test if we can't join a room without rooms created", () => {
+    const { getByTestId, queryByText } = render(<Wrapper />);
+    const msg_no_rooms = "Aucune partie n'est disponible pour le moment"
+    const input_login = getByTestId('loginInput');
+    const btn_join_room = getByTestId('btnJoinRoom')
+
+    expect(btn_join_room).toBeDisabled();
+    expect(queryByText(msg_no_rooms)).toBeNull()
+    fireEvent.change(input_login, { target: { value: 'abcd' } });
+    expect(btn_join_room).not.toBeDisabled();
+    fireEvent.click(btn_join_room)
+    expect(queryByText(msg_no_rooms)).not.toBeNull()
+  })
+
 })

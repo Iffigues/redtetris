@@ -67,6 +67,8 @@ import Board from '../../components/board';
     const handleCloseModal = () => {
       console.log("HandleCloseModal")
     };
+    console.log(rooms)
+    console.log(uuidRoom)
     if (!rooms[uuidRoom].isStart && (player.solo || player.admin)) {
       return (
         <Button

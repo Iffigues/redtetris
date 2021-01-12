@@ -73,11 +73,13 @@ const SectionGames = (props) => {
           onOpen={handleOpen}
           value={roomSelected}
           onChange={handleChange}
-        >
+          data-testid='selectRoomInput'
+          >
           {
             Object.keys(rooms).map((item, key) => {
               return (
                 <MenuItem
+                  data-testid='selectRoomOptions'
                   value={rooms[item].channel}
                   key={key}>
                   {_.map(rooms[item].players, (player, index) => (
@@ -157,6 +159,7 @@ const HomePage = () => {
             <Button
               variant="contained"
               className="test--btn-join-room"
+              data-testid='btnJoinRoom'
               disabled={login.length === 0}
               onClick={() => { setWantJoinGame(!wantJoinGame) }}
               >

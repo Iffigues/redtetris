@@ -11,7 +11,7 @@ export const TestAppRoomsProvider = ({ children }) => (
   <RoomsProvider>{children}</RoomsProvider>
 );
 
-export const TestAppRoomsProviderWithThreeRooms = ({ children }) => (
+export const TestAppRoomsProviderWithRooms = ({ children }) => (
   <TestAppRoomsProvider>
     <CurrentRoomsSetter>{children}</CurrentRoomsSetter>
   </TestAppRoomsProvider>
@@ -19,8 +19,10 @@ export const TestAppRoomsProviderWithThreeRooms = ({ children }) => (
 
 const CurrentRoomsSetter = ({ children }) => {
   const { updateRooms } = useContext(RoomsContext);
+  console.log(rooms_1)
   useEffect(() => {
     updateRooms(rooms_1);
   }, []);
+  console.log("children", children)
   return <>{children}</>;
 };

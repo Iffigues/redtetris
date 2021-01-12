@@ -10,7 +10,7 @@ export const TestAppAlertProvider = ({ children }) => (
   <AlertProvider>{children}</AlertProvider>
 );
 
-export const TestAppAlertProviderWithThreeRooms = ({ children }) => (
+export const TestAppAlertProviderWithAlerts = ({ children }) => (
   <TestAppAlertProvider>
     <CurrentAlertSetter>{children}</CurrentAlertSetter>
   </TestAppAlertProvider>
