@@ -8,7 +8,7 @@ import { Context as UserContext } from "../../context/UserContext";
 import { Context as RoomsContext } from "../../context/RoomsContext";
 import { SocketContext } from "../../context/SocketContext";
 import { useContext, useEffect, useState } from 'react';
-import TextField from '@material-ui/core/TextField';
+import Input from '@material-ui/core/Input';
 import { useHistory } from 'react-router-dom'
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -119,8 +119,6 @@ const HomePage = () => {
   useEffect(() => {
     if (uuidRoom) {
       history.push(`/room/${uuidRoom}`)
-    } else {
-      history.push('/');
     }
   }, [uuidRoom])
 
@@ -139,23 +137,26 @@ const HomePage = () => {
         <Grid container spacing={3}>
           <Grid item xs={12}>
             <span>Bienvenu sur red-tetris</span>
-            <TextField
+            <Input
               value={login}
-              onInput={e => setLogin(e.target.value)}
+              onChange={e => setLogin(e.target.value)}
               variant="outlined"
-              margin="normal"
               required
               fullWidth
-              name="Login"
+              name="login"
               label="Login"
               type="Login"
               id="Login"
+              inputProps={{
+                'data-testid': 'loginInput'
+              }}
               autoComplete="current-login"
             />
           </Grid>
           <Grid item xs={6}>
             <Button
               variant="contained"
+              className="test--btn-join-room"
               disabled={login.length === 0}
               onClick={() => { setWantJoinGame(!wantJoinGame) }}
               >
@@ -166,15 +167,16 @@ const HomePage = () => {
             wantJoinGame={wantJoinGame}
             roomSelected={roomSelected}
             setRoomSelected={setRoomSelected}
-          />
+            />
           <Grid item xs={6}>
               <CheckBoxSolo
                 wantJoinGame={wantJoinGame}
                 playSolo={playSolo}
                 setPlaySolo={setPlaySolo}
-              />
+                />
               <Button
                 variant="contained"
+                className="test--btn-create-room"
                 disabled={login.length === 0 || (wantJoinGame && !roomSelected)}
                 color="primary"
                 onClick={createRoom}
