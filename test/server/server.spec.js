@@ -19,35 +19,33 @@ describe('Server tests', () => {
   afterEach(() => {
   	server.close();
   });
+  
   it('Should ping', () => {
     socketClient.emit("ping")
   });
 
   it('create room', () => {
-  	socketClient.emit("server/create-room",{})
+  	socketClient.emit("server/create-room")
   });
 
  it('leave room', () =>  {
-	 socketClient.emit("server/leave-room",{})
- 	});
+	 socketClient.emit("server/leave-room")
  });
 
 it('join room', () => {
-	soccketClient.emit("server/join-room")
-})
+	socketClient.emit("server/join-room")
+});
 
 it ('start room', () =>  {
-	socketClient('server/start-game')
-})
+	socketClient.emit('server/start-game')
+});
 
 
 it('key up', () => {
-	soccketClient('server/key-up')
-})
+	socketClient.emit('server/key-up')
+});
 
 it('pause', () => {
-	socketClient('server/pauser-resume');
+	socketClient.emit('server/pauser-resume');
 })
-
-
-
+});
