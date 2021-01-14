@@ -31,3 +31,23 @@ describe('Server tests', () => {
 	 socketClient.emit("server/leave-room",{})
  	});
  });
+
+it('join room', () => {
+	soccketClient.emit("server/join-room")
+})
+
+it ('start room', () =>  {
+	socketClient('server/start-game')
+})
+
+
+it('key up', () => {
+	soccketClient('server/key-up')
+})
+
+it('pause', () => {
+	socketClient('server/pauser-resume');
+})
+
+
+
