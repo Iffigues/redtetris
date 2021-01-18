@@ -27,7 +27,11 @@ class SocketsManager {
       socket.disconnect();
     });
   }
-  
+ 
+  hello = () => {
+  	console.log("rtrtrt");
+  }
+
   // Room listener
   roomListener = (socket) => {
     // Create and join room
