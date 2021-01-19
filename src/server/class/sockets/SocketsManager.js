@@ -21,7 +21,7 @@ class SocketsManager {
   // Default
   defaultListener = (socket) => {
     socket.on('server/ping', () => {
-		socket.emit('client/pong');
+      socket.emit('client/pong');
     })
     socket.on('disconnect', () => {
       socket.disconnect();
