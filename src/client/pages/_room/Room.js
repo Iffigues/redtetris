@@ -46,6 +46,7 @@ import Board from '../../components/board';
   }
 
   const Room = (props) => {
+    console.log(1234, props)
     const { match } = props
     const classes = useStyles();
     const { state: { player } } = useContext(UserContext);
@@ -67,8 +68,6 @@ import Board from '../../components/board';
     const handleCloseModal = () => {
       console.log("HandleCloseModal")
     };
-    console.log(rooms)
-    console.log(uuidRoom)
     if (!rooms[uuidRoom].isStart && (player.solo || player.admin)) {
       return (
         <Button

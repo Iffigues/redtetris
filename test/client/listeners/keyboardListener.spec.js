@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, unmount } from '@testing-library/react';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { MemoryRouter as Router } from 'react-router-dom';
 import Room from "../../../src/client/pages/_room/Room"
 import { TestAppAlertProviderWithAlerts } from "../helpers/alertContext";
 import { TestAppRoomsProviderWithRooms } from "../helpers/roomsContext";
@@ -15,9 +15,7 @@ describe("Test keyboard listener", () => {
       <TestAppUserProviderWithPlayer>
         <TestAppRoomsProviderWithRooms>
           <TestAppSocketProviderWithSocketClient>
-            <Router>
-              <Room match={ {params: uuid_1}} />
-            </Router>
+            <Router initialEntries={[ `/room/${uuid_1}` ]} />
           </TestAppSocketProviderWithSocketClient>
         </TestAppRoomsProviderWithRooms>
       </TestAppUserProviderWithPlayer>
@@ -25,9 +23,9 @@ describe("Test keyboard listener", () => {
   );
 
   test("Test removed listener", () => {
-    render(<Wrapper />);
-    expect(window.addEventListener).toBeCalled();
-    unmount()
+    const wr = render(<Wrapper />);
+    window.removeEventListener = jest.fn();
+    wr.unmount()
     expect(window.removeEventListener).toBeCalled();
   })
 

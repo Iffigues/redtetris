@@ -41,7 +41,6 @@ describe("Test sockets listener", () => {
     const ENDPOINT = 'localhost:3004';
     const mockSocket = io(ENDPOINT);
     render(<Wrapper />);
-    console.log(rooms)
     mockSocket.emit('client/update-rooms', { _data: rooms_2 });
     expect(mockSocket.emit).toHaveBeenCalledTimes(3)
   })
