@@ -18,17 +18,21 @@ class Server {
 			this.server = this.app.listen({ host, port }, () => {
 				loginfo(`tetris listen on ${this.params.url}`);
 			})
+			const socketsManager = new SocketsManager(this.server);
+			this.app.io = socketsManager.io;
+			this.app.socketsManager = socketsManager;
 		} else {
 			this.server = null
 		}
-		const socketsManager = new SocketsManager(this.server);
-		this.app.io = socketsManager.io;
-		this.app.socketsManager = socketsManager;
 		this.rooms = {};
 	}
-
+	
 	setServer = (value) => {
 		this.server = value
+	}
+	setSocketManager = (socketsManager) => {
+		this.app.io = socketsManager.io;
+		this.app.socketsManager = socketsManager;
 	}
 }
 
