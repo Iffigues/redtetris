@@ -37,7 +37,7 @@ describe('Server tests', () => {
 
   it.only('create room', (done) => {
     const data = { login: 'owalid', playSolo: false }
-    socketClient.on('client/update-rooms', (rooms) => {
+    socketClient.on('client/update-rooms' , (rooms) => {
       const room = rooms._data[Object.keys(rooms._data)[0]]
       const player = room.players[Object.keys(room.players)[0]]
       expect(player.name).toBe('owalid')
@@ -50,8 +50,14 @@ describe('Server tests', () => {
     socketClient.emit("server/create-room", data);
   });
 
-  it('leave room', () =>  {
-	 socketClient.emit("server/leave-room");
+  it.only('leave room', (done) =>  {
+	   const data = { login: 'owalid', playSolo: false }
+    socketClient.on('client/update-rooms', (rooms) => {
+      //const room = rooms._data[Object.keys(rooms._data)[0]]
+      	console.log(rooms.plqyer)
+		done()
+    })
+	 socketClient.emit("server/leave-room",  data);
   });
 
   it('join room', () => {
