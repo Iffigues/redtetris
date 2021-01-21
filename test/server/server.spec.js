@@ -5,6 +5,7 @@ import debug from 'debug'
 import SocketsManager from "../../src/server/class/sockets/SocketsManager";
 
 describe('Server tests', () => {
+   let channel = "";
   const { host, port, url } = params;
   let server;
   let socketClient;
@@ -40,6 +41,8 @@ describe('Server tests', () => {
     socketClient.on('client/update-rooms' , (rooms) => {
       const room = rooms._data[Object.keys(rooms._data)[0]]
       const player = room.players[Object.keys(room.players)[0]]
+		//console.log(rooms, player);
+	  channel = room.channel;
       expect(player.name).toBe('owalid')
       expect(player.isPlaying).toBe(false)
       expect(player.admin).toBe(true)
@@ -50,17 +53,14 @@ describe('Server tests', () => {
     socketClient.emit("server/create-room", data);
   });
 
-  it.only('leave room', (done) =>  {
-	   const data = { login: 'owalid', playSolo: false }
-    socketClient.on('client/update-rooms', (rooms) => {
-      //const room = rooms._data[Object.keys(rooms._data)[0]]
-      	console.log(rooms.plqyer)
-		done()
-    })
-	 socketClient.emit("server/leave-room",  data);
-  });
+ 
+
 
   it('join room', () => {
+	const data = {channel:channel, login:"bobo"}
+	 socketClient.on('client/join-room', (rooms) => {
+
+	 });
 	socketClient.emit("server/join-room");
   });
 
@@ -75,6 +75,16 @@ describe('Server tests', () => {
 
   it('pause', () => {
 	socketClient.emit('server/pauser-resume');
-  })
+  });
+
+	it.only('leave room', (done) =>  {
+	   const data = { login: 'owalid', playSolo: false }
+    socketClient.on('client/update-rooms', (rooms) => {
+      const room = rooms._data[Object.keys(rooms._data)[0]]
+      	console.log(room)
+		done()
+    })
+	 socketClient.emit("server/leave-room",  data);
+  });
 
 });
