@@ -41,7 +41,8 @@ describe('Server tests', () => {
     socketClient.on('client/update-rooms' , (rooms) => {
       const room = rooms._data[Object.keys(rooms._data)[0]]
       const player = room.players[Object.keys(room.players)[0]]
-	  channel = room.channel;
+	channel = room.channel;
+	
       expect(player.name).toBe('owalid')
       expect(player.isPlaying).toBe(false)
       expect(player.admin).toBe(true)
@@ -52,30 +53,40 @@ describe('Server tests', () => {
     socketClient.emit("server/create-room", data);
   });
 
- 
-
-
-  it.only('join room', () => {
+  it.only('join room', (done) => {
 	const data = {channel:channel, login:"bobo"}
-	 console.log(channel);
 	  socketClient.on('client/join-room', (rooms) => {
-	  console.log(rooms);		
+		done()
 	 });
 	socketClient.emit("server/join-room", data);
   });
 
-  it ('start room', () =>  {
-	socketClient.emit('server/start-game');
+  it.only('start room', (done) =>  {
+	const data = {uuidRoom:channel}
+	  socketClient.on('client/update-rooms', (rooms) => {
+		//console.log(channel);
+		console.log(rooms);
+		//console.log(rooms._data[channel].isStart)
+		done()
+	 });
+	socketClient.emit('server/start-game',data);
   });
 
-
-  it('key up', () => {
-	socketClient.emit('server/key-up');
+  it.only('key up', () => {
+	const data = {channel:channel, login:"bobo"}
+	  socketClient.on('client/update-roomis', (rooms) => {
+		done()
+	 });
+	socketClient.emit('server/key-up', data);
   });
 
-  it('pause', () => {
+  /*it.only('pause', () => {
+	const data = {channel:channel, login:"bobo"}
+	  socketClient.on('client/join-room', (rooms) => {
+		done()
+	 });
 	socketClient.emit('server/pauser-resume');
-  });
+  });*/
 
 	it.only('leave room', (done) =>  {
 	   const data = { login: 'owalid', playSolo: false }
