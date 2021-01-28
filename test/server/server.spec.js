@@ -57,7 +57,8 @@ describe('Server tests', () => {
   it.only('join room', (done) => {
 	const data = {channel:channel, login:"bobo"}
 	  socketClient.on('client/join-room', (rooms) => {
-	   	let player = rooms.player
+		console.log(rooms);
+		let player = rooms.player
 		expect(player.end).toBe(false);
 		expect(player.lock).toBe(true);
 		expect(player.name).toBe("bobo");
@@ -76,7 +77,10 @@ describe('Server tests', () => {
 	const data = {uuidRoom:channel}
 	  socketClient.on('client/update-rooms', (rooms) => {
 		let room = rooms._data[channel];
-		let player = room.players
+		let player = room.players;
+		expect(room.isStart).toBe(true);
+		expect(room.solo).toBe(false);
+		expect(room.isPlaying).toBe(true);
 		done()
 	 });
 	socketClient.emit('server/start-game',data);
