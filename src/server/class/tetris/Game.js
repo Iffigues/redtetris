@@ -12,6 +12,7 @@ class Game extends Piece {
 		this.action = null;
 		this.isPlaying = false;
 		this.lock = true;
+		this.barre = false;
 		this.action = this.initActionObject();
 		this.createIntervalGame();
 	}
@@ -121,6 +122,7 @@ class Game extends Piece {
 			this.block.y += 1;
 		}
 		this.sendMap();
+		this.block = null;
 		this.lock = true;
 	}
 
