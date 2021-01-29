@@ -1,7 +1,6 @@
 import React from 'react';
 import { render, unmount } from '@testing-library/react';
 import { MemoryRouter as Router } from 'react-router-dom';
-import Room from "../../../src/client/pages/_room/Room"
 import { TestAppAlertProviderWithAlerts } from "../helpers/alertContext";
 import { TestAppRoomsProviderWithRooms } from "../helpers/roomsContext";
 import { TestAppSocketProviderWithSocketClient } from "../helpers/socketContext";

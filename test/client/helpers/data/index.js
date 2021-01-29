@@ -87,6 +87,8 @@ const uuid_3 = uuidv4()
 // ROOMS
 export const rooms_1 = {
   [uuid_1]: {
+    isPlaying: true,
+    isStart: true,
     channel: uuid_1,
     players: fillPlayersRoom(players_1),
     ...default_values_room

@@ -19,6 +19,7 @@ export const TestAppRoomsProviderWithRooms = ({ children }) => (
 
 const CurrentRoomsSetter = ({ children }) => {
   const { updateRooms } = useContext(RoomsContext);
+  console.log("rooms_1", rooms_1)
   useEffect(() => {
     updateRooms(rooms_1);
   }, []);
