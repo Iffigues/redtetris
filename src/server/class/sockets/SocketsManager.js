@@ -26,8 +26,8 @@ class SocketsManager {
     socket.on('disconnect', () => {
       socket.disconnect();
     });
-  }
-  
+  } 
+
   // Room listener
   roomListener = (socket) => {
     // Create and join room

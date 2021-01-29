@@ -12,6 +12,7 @@ class Game extends Piece {
 		this.action = null;
 		this.isPlaying = false;
 		this.lock = true;
+		this.barre = false;
 		this.action = this.initActionObject();
 		this.createIntervalGame();
 	}
@@ -31,7 +32,6 @@ class Game extends Piece {
 			if (this.isPlaying) {
 				if (!this.block) {
 					if (this.sheets.length === 0) this.addSheet();
-					console.log(123, this.sheets)
 					this.block = _.cloneDeep(this.sheets.shift());
 					this.addSheet();
 					if (!this.canPose(this.block, 0, 0)) {
@@ -122,6 +122,7 @@ class Game extends Piece {
 			this.block.y += 1;
 		}
 		this.sendMap();
+		this.block = null;
 		this.lock = true;
 	}
 
