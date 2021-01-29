@@ -122,7 +122,10 @@ class Game extends Piece {
 			this.block.y += 1;
 		}
 		this.sendMap();
+		this.draw(this.block, this.block.type);
+		this.addSheet();
 		this.block = null;
+		this.verifLine();
 		this.lock = true;
 	}
 
