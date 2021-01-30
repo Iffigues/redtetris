@@ -1,7 +1,4 @@
 import React, { useContext, useEffect } from "react";
-import { act } from 'react-dom/test-utils';
-import Enzyme from "enzyme";
-import Adapter from "enzyme-adapter-react-16";
 import '@testing-library/jest-dom/extend-expect';
 import { render, fireEvent } from '@testing-library/react'
 import HomePage from "../../../../src/client/pages/home/Home"
@@ -9,9 +6,7 @@ import { TestAppAlertProvider } from "../../helpers/alertContext";
 import { TestAppRoomsProvider } from "../../helpers/roomsContext";
 import { TestAppSocketProvider } from "../../helpers/socketContext";
 import { TestAppUserProvider } from "../../helpers/userContext";
-import { describe, expect, test } from "@jest/globals";
-
-// Enzyme.configure({ adapter: new Adapter() });
+import { describe, expect } from "@jest/globals";
 
 describe("Test HomePage", () => {
 
@@ -27,7 +22,7 @@ describe("Test HomePage", () => {
     </TestAppAlertProvider>
   );
   
-  test("Test login input", () => {
+  it("Test login input", () => {
     const { getByTestId } = render(<Wrapper />);
     const input_login = getByTestId('loginInput');
     expect(input_login).toBeEmptyDOMElement('');
@@ -35,7 +30,7 @@ describe("Test HomePage", () => {
     expect(input_login).toHaveValue('abcd');
   })
 
-  test("Test buttons disabled", () => {
+  it("Test buttons disabled", () => {
     const { container, getByTestId } = render(<Wrapper />);
     const input_login = getByTestId('loginInput');
     const btn_create_room = container.querySelector('.test--btn-create-room')
@@ -45,7 +40,7 @@ describe("Test HomePage", () => {
     expect(btn_create_room).not.toBeDisabled();
   })
 
-  test("Test if we can't join a room without rooms created", () => {
+  it("Test if we can't join a room without rooms created", () => {
     const { getByTestId, queryByText } = render(<Wrapper />);
     const msg_no_rooms = "Aucune partie n'est disponible pour le moment"
     const input_login = getByTestId('loginInput');

@@ -18,7 +18,13 @@ class Room {
 	}
 	
 	removePlayer = (uuidUser) => {
-		this.players = this.players.filter(item => item.uuid !== uuidUser)
+		let res = {};
+		_.map(this.players, player => {
+			if (player.uuid !== uuidUser) {
+				res[player.uuid] = player
+			}
+		})
+		this.players = _.cloneDeep(res);
 	}
 
 	addSheet = () => {
@@ -44,7 +50,6 @@ class Room {
 	}
 
 	onKey = (key, uuidUser) => {
-		console.log(this.players)
 		this.players[uuidUser].move(key);
 	}
 

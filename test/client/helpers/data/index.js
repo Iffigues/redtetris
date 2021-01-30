@@ -30,6 +30,16 @@ const fillPlayersRoom = (players) => {
 
 
 // PLAYERS
+
+export const visitor_player = {
+  uuid: uuidv4(),
+  name: "Player1",
+  score: 0,
+  admin: false,
+  visitor: true,
+  ...default_values_players
+}
+
 export const players_1 = [
   {
     uuid: uuidv4(),
@@ -44,7 +54,8 @@ export const players_1 = [
     score: 0,
     admin: false,
     ...default_values_players
-  }
+  },
+  visitor_player
 ]
 export const players_2 = [
   {
