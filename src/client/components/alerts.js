@@ -7,6 +7,7 @@ const Alerts = () => {
   const {
     state: { message, type }
   } = useContext(AlertContext);
+  console.log(message, type)
   if (message && type) {
   return (
       <Alert severity={type}>{message}</Alert>

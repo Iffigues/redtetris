@@ -55,7 +55,7 @@ import Board from '../../components/board';
     const { uuidRoom } = match.params;
     const history = useHistory()
     console.log("lol")
-    console.log(rooms)
+    console.log(player)
     console.log(rooms[uuidRoom].isStart)
     console.log(rooms[uuidRoom].isPlaying)
     console.log(rooms)

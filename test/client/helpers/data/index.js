@@ -1,7 +1,12 @@
 import uuidv4 from 'uuid'
+import Player from '../../../../src/server/class/tetris/Player';
+import Room from '../../../../src/server/class/tetris/Room';
 
 
 // UTILS AND CONSTANTS
+export const player_instance = new Player('owalid123', () => {}, true);
+export const room_instance = new Room(player_instance, false);
+
 const GAME_WIDTH = 10;
 const GAME_HEIGHT = 20;
 const default_values_players = {

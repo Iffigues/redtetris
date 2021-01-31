@@ -3,7 +3,6 @@ import '@testing-library/jest-dom/extend-expect';
 import { shallow } from 'enzyme';
 import Preview from '../../../src/client/components/preview'
 
-
 describe('Preview component', () => {
 
   const Wrapper = () => {
@@ -14,5 +13,4 @@ describe('Preview component', () => {
     const wrapper = shallow(<Wrapper />);
     expect(wrapper).toMatchSnapshot();
   });
-
 });
