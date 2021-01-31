@@ -10,7 +10,7 @@ const UserReducer = (state, payload) => {
     case "updateUuidRoom": {
       return {  ...state, uuidRoom: payload.uuidRoom };
     }
-    case "updatePlayer":
+    case "updatePlayer": 
       return {  ...state, player: payload.player };
     default:
       return state;

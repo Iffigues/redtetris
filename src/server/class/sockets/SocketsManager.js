@@ -77,8 +77,8 @@ class SocketsManager {
     socket.on('server/key-up', (data) => {
       // KEY: 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', ' '
       const { key, channel, uuidUser } = data;
-      console.log(key, channel, uuidUser)
       this.rooms.onKey(key, channel, uuidUser);
+      this.updateRooms(this.rooms, socket)
     });
     
     socket.on('server/pause-resume', (data) => {

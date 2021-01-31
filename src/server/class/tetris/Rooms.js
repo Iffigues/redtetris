@@ -30,7 +30,7 @@ class Rooms {
   }
 
   deletePlayer = (channel, uuidUser) => {
-	if (this._data[channel]) this._data[channel].removePlayer(uuidUser);
+    if (this._data[channel]) this._data[channel].removePlayer(uuidUser);
   }
 
   changeIsPlaying = (channel) => {

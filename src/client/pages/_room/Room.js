@@ -54,7 +54,11 @@ import Board from '../../components/board';
     const [game, setGame] = useState(true);
     const { uuidRoom } = match.params;
     const history = useHistory()
-
+    console.log("lol")
+    console.log(player)
+    console.log(rooms[uuidRoom].isStart)
+    console.log(rooms[uuidRoom].isPlaying)
+    console.log(rooms)
     KeyBoardListener(game);
     if (!player || !rooms) {
       setGame(false);
@@ -72,6 +76,7 @@ import Board from '../../components/board';
         <Button
           variant="contained"
           onClick={handleSetStartGame}
+          data-testid='gameElmt'
         >
           Commencer la partie !
         </Button>
@@ -111,6 +116,7 @@ import Board from '../../components/board';
             sendSocket={sendSocket}
           /> */}
           <Board
+            data-testid='gameElmt'
             mapGame={rooms[uuidRoom].players[player.uuid].currentMapGame}
             isAlone={Object.keys(rooms[uuidRoom].players).length === 1}
             mapGamePreview={_.filter(rooms[uuidRoom].players, item => item.uuid !== player.uuid)[0]?.currentMapGame}

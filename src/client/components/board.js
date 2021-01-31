@@ -5,9 +5,6 @@ import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Preview from './preview'
 import Game from './game'
-import StyledTetrisWrapper from './style/styledBoard'
-import StyledTetris from './style/styledBoard'
-import { createGame } from '../plugins/createGame';
 import { Card, CardContent } from '@material-ui/core';
 
 const boxProps = {
@@ -21,11 +18,12 @@ const boxProps = {
 
 const Board = ({ mapGame, mapGamePreview, isAlone, score, sheet }) => {
   const { state: { player } } = useContext(UserContext);
-  if (player.visitor) {
+  if (player && player.visitor) {
     return (
       <div>
         Vous regardez en tant que visiteur
         <Grid
+          data-testid='gameVisitorGrid'
           container
           direction="row"
           justify="center"
@@ -46,6 +44,7 @@ const Board = ({ mapGame, mapGamePreview, isAlone, score, sheet }) => {
   } else {
     return (
       <Grid
+        data-testid='gamePlayerGrid'
         container
         direction="row"
         justify="center"

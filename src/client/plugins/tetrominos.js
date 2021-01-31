@@ -1,6 +1,3 @@
-import { colors } from "@material-ui/core";
-
-const TETROMINOS_CHAR = "IOTLJZS";
 export const TETROMINOS = {
   0: { shape: [[0]], color: '222, 242, 254'},
   1: {
@@ -56,10 +53,3 @@ export const TETROMINOS = {
     color: '250,7,5'
   }
 }
-
-
-export const getTetrominos = () => {
-  return 'L'
-}
-
-// export default {TETROMINOS, getTetrominos};

@@ -44,7 +44,6 @@ class Game extends Piece {
 				if (this.end) {
 					this.end = false;
 					if (!this.canPose(this.block, 0, 1)) {
-						console.log(this.end);
 						this.draw(this.block, this.block.type);
 						this.block = null;
 						this.verifLine();
