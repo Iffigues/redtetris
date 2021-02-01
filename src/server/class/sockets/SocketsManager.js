@@ -30,7 +30,6 @@ class SocketsManager {
 
   // Room listener
   roomListener = (socket) => {
-    // Create and join room
     socket.on('server/create-room', (data) => {
       const { login, playSolo } = data
       const player = new Player(login, () => this.updateRooms(), true);

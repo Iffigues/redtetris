@@ -14,90 +14,75 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import { makeStyles } from '@material-ui/core/styles';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
 
-const CheckBoxSolo = (props) => {
-  const { wantJoinGame, playSolo, setPlaySolo } = props
 
-  const handleChange = (event) => {
-    console.log("playSolo", event.target.checked, playSolo)
-    setPlaySolo(event.target.checked);
-  };
-  if (!wantJoinGame) {
-    return (
-      <FormControlLabel
-        control={<Checkbox
-          checked={playSolo}
-          onChange={handleChange}
-          color="primary"
-          />}
-        label="Jouer en solo ?"
-      />
-    )
-  } else {
-    return ''
-  }
+
+const useStyles = makeStyles({
+  table: {
+    minWidth: 650,
+    width: 800,
+    alignSelf: 'center'
+  },
+});
+
+function createData(name, calories, fat, carbs, protein) {
+  return { name, calories, fat, carbs, protein };
 }
 
-const SectionGames = (props) => {
-  const [open, setOpen] = useState(false);
-  const { state: { rooms } } = useContext(RoomsContext);
-  const { wantJoinGame, roomSelected, setRoomSelected } = props
+const rows = [
+  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
+  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
+  createData('Eclair', 262, 16.0, 24, 6.0),
+  createData('Cupcake', 305, 3.7, 67, 4.3),
+  createData('Gingerbread', 356, 16.0, 49, 3.9),
+];
 
-  const handleChange = (event) => {
-    setRoomSelected(event.target.value);
-  };
+const TablePlayers = () => {
+  const classes = useStyles();
 
-  const handleClose = () => {
-    setOpen(false);
-  };
+  return (
+    <div className="table-player d-flex jcnt--center fdir--column">
+      <h1 className="aself--center">Choisissez de crée une partie ou d'en rejoindre une</h1>
+      <div className="aself--center">
+      <h2>Partie en cours:</h2>
+      <TableContainer>
+        <Table className={classes.table} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell>Dessert (100g serving)</TableCell>
+              <TableCell align="right">Calories</TableCell>
+              <TableCell align="right">Fat&nbsp;(g)</TableCell>
+              <TableCell align="right">Carbs&nbsp;(g)</TableCell>
+              <TableCell align="right">Protein&nbsp;(g)</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {rows.map((row) => (
+              <TableRow key={row.name}>
+                <TableCell component="th" scope="row">
+                  {row.name}
+                </TableCell>
+                <TableCell align="right">{row.calories}</TableCell>
+                <TableCell align="right">{row.fat}</TableCell>
+                <TableCell align="right">{row.carbs}</TableCell>
+                <TableCell align="right">{row.protein}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      </div>
+    </div>
+  );
 
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
-  if (wantJoinGame) {
-    if (!rooms || Object.keys(rooms).length === 0) {
-      return (
-        <Grid item xs={6}>
-          Aucune partie n'est disponible pour le moment
-        </Grid>
-      )
-    } else {
-      return (
-        <Select
-          labelId="demo-controlled-open-select-label"
-          id="demo-controlled-open-select"
-          style={{width: '50%'}}
-          open={open}
-          onClose={handleClose}
-          onOpen={handleOpen}
-          value={roomSelected}
-          onChange={handleChange}
-          data-testid='selectRoomInput'
-          >
-          {
-            Object.keys(rooms).map((item, key) => {
-              return (
-                <MenuItem
-                  data-testid='selectRoomOptions'
-                  value={rooms[item].channel}
-                  key={key}>
-                  {_.map(rooms[item].players, (player, index) => (
-                      !rooms[item].solo)
-                        ? `${player.name}${(index !== Object.keys(rooms[item].players)[Object.keys(rooms[item].players).length - 1]) ? ', ' : ''}`
-                        : ''
-                    )
-                  }
-                </MenuItem>
-              )
-            })
-          }
-        </Select>
-      )
-    }
-  } else {
-    return '';
-  }
 }
 
 const HomePage = () => {
@@ -108,7 +93,13 @@ const HomePage = () => {
   const [playSolo, setPlaySolo] = useState(false);
   const [login, setLogin] = useState('');
   const [wantJoinGame, setWantJoinGame] = useState(false);
+  const [haveChooseLogin, setHaveChooseLogin] = useState(false);
   const history = useHistory()
+
+  const createPlayer = () => {
+    setHaveChooseLogin(true)
+    console.log(login);
+  }
 
   const createRoom = () => {
     if (!wantJoinGame) {
@@ -133,64 +124,40 @@ const HomePage = () => {
       }, 5000)
     }
     ,[])
+
   return (
     <div>
-      <Container fixed>
-        <Grid container spacing={3}>
-          <Grid item xs={12}>
-            <span>Bienvenu sur red-tetris</span>
-            <Input
-              value={login}
-              onChange={e => setLogin(e.target.value)}
-              variant="outlined"
-              required
-              fullWidth
-              name="login"
-              label="Login"
-              type="Login"
-              id="Login"
-              inputProps={{
-                'data-testid': 'loginInput'
-              }}
-              autoComplete="current-login"
+        <div className={`${!haveChooseLogin ? 'initial-form-out' : ''} inital-form d-flex jcnt--center fdir--column`}>
+          <h1 className="aself--center">Bienvenu sur Red-tetris !</h1>
+          <span className="aself--center pt-3">Veuillez entrez un login.</span>
+          <Input
+            className="aself--center mb-2 input-size"
+            value={login}
+            onChange={e => setLogin(e.target.value)}
+            variant="outlined"
+            required
+            name="login"
+            label="Login"
+            type="Login"
+            id="Login"
+            inputProps={{
+              'data-testid': 'loginInput'
+            }}
+            autoComplete="current-login"
             />
-          </Grid>
-          <Grid item xs={6}>
-            <Button
-              variant="contained"
-              className="test--btn-join-room"
-              data-testid='btnJoinRoom'
-              disabled={login.length === 0}
-              onClick={() => { setWantJoinGame(!wantJoinGame) }}
-              >
-              Rejoindre une partie !
-            </Button>
-          </Grid>
-          <SectionGames
-            wantJoinGame={wantJoinGame}
-            roomSelected={roomSelected}
-            setRoomSelected={setRoomSelected}
-            />
-          <Grid item xs={6}>
-              <CheckBoxSolo
-                wantJoinGame={wantJoinGame}
-                playSolo={playSolo}
-                setPlaySolo={setPlaySolo}
-                />
-              <Button
-                variant="contained"
-                className="test--btn-create-room"
-                disabled={login.length === 0 || (wantJoinGame && !roomSelected)}
-                color="primary"
-                onClick={createRoom}
-              >
-                { wantJoinGame ? 'Rejoindre' : 'Crée une partie' }
-              </Button>
-          </Grid>
-        </Grid>
-      </Container>
+          <Button
+            className="aself--center mt-2 test--btn-join-room"
+            variant="contained"
+            color="primary"
+            data-testid='btnJoinRoom'
+            disabled={login.length === 0}
+            onClick={createPlayer}
+            >
+            Valider
+          </Button>
+        </div>
+      { haveChooseLogin && (<TablePlayers />) }
     </div>
   )
 }
-
 export default HomePage
