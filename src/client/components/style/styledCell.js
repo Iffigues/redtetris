@@ -4,7 +4,7 @@ const styledCell = styled.div`
   width: 100%;
   height: 100%;
   background: rgba(${props => props.color}, 0.8);
-  border: ${props => (props.type === 0) ? '0px solid' : '4px solid'}
+  border: ${props => (props.type === 0 || props.type === -1 ) ? '0px solid' : '4px solid'}
   border-bottom-color: rgba(${props => props.color}, 0.1);
   border-right-color: rgba(${props => props.color}, 1);
   border-left-color: rgba(${props => props.color}, 1);

@@ -7,17 +7,17 @@ const PreviewPiece = ({sheet}) => {
   const game = { game: TETROMINOS[sheet.type].shape }
   return (
     <div>
-    <StyledPreview
-      isOtherUser={game.isOtherUser}
-      width={game.game[0].length} 
-      height={game.game.length}
-    >
-      {game.game.map(row => 
-        row.map((cell, x) => 
-          <Cell key={x} type={cell} isOtherUser={game.isOtherUser}/>
-      ))}
-    </StyledPreview>
-  </div>
+      <StyledPreview
+        isOtherUser={game.isOtherUser}
+        width={game.game[0].length} 
+        height={game.game.length}
+      >
+        {game.game.map(row => 
+          row.map((cell, x) => 
+            <Cell key={x} type={cell} isOtherUser={game.isOtherUser}/>
+        ))}
+      </StyledPreview>
+    </div>
   )
 }
 

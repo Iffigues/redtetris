@@ -6,7 +6,7 @@ import { Context as UserContext } from "../context/UserContext";
 export default (isGame) => {
   const { sendSocket } = useContext(SocketContext);
   const { state: { uuidRoom, player } } = useContext(UserContext);
-  const keysCode = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', ' '];
+  const keysCode = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', ' ', 'Escape'];
 
   useEffect(() => {
     const getKeyUp = (event) => {

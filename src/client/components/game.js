@@ -4,7 +4,7 @@ import StyledStage from './style/styledStage'
 
 const Game = ({game}) => {
   return (
-    <div>
+    <div >
       <StyledStage
         isOtherUser={game.isOtherUser}
         width={game.game[0].length} 

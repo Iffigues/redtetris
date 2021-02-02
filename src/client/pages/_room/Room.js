@@ -12,6 +12,8 @@ import { SocketContext } from "../../context/SocketContext";
 import Modal from '@material-ui/core/Modal';
 import Fade from '@material-ui/core/Fade';
 import Board from '../../components/board';
+import { Context as AlertContext } from "../../context/AlertContext";
+
 
   const useStyles = makeStyles((theme) => ({
     modal: {
@@ -51,19 +53,27 @@ import Board from '../../components/board';
     const { state: { player } } = useContext(UserContext);
     const { state: { rooms } } = useContext(RoomsContext);
     const { sendSocket } = useContext(SocketContext);
+    const { sendAlert } = useContext(AlertContext);
     const [game, setGame] = useState(true);
     const { uuidRoom } = match.params;
     const history = useHistory()
-    console.log("lol")
-    console.log(player)
-    console.log(rooms[uuidRoom].isStart)
-    console.log(rooms[uuidRoom].isPlaying)
-    console.log(rooms)
+
+    useEffect(
+      () => {
+        sendAlert(`Bienvenu sur la partie #${uuidRoom}`, 'info')
+        setTimeout(() => {
+          sendAlert()
+        }, 5000)
+      }
+    ,[])
+
     KeyBoardListener(game);
-    if (!player || !rooms) {
-      setGame(false);
-      history.replace('/');
-    }
+
+    // if (!player || !rooms) {
+    //   setGame(false);
+    //   history.replace('/');
+    // }
+
     const handleSetStartGame = (event) => {
       sendSocket('server/start-game', { uuidRoom })
     }
@@ -71,15 +81,19 @@ import Board from '../../components/board';
     const handleCloseModal = () => {
       console.log("HandleCloseModal")
     };
+
     if (!rooms[uuidRoom].isStart && (player.solo || player.admin)) {
       return (
-        <Button
-          variant="contained"
-          onClick={handleSetStartGame}
-          data-testid='gameElmt'
-        >
-          Commencer la partie !
-        </Button>
+        <div className="d-flex jcnt--center aitems--center fdir--row pt-3">
+          <Button
+            className="aself--center"
+            variant="contained"
+            onClick={handleSetStartGame}
+            data-testid='gameElmt'
+            >
+            Commencer la partie !
+          </Button>
+        </div>
       )
     } else if (!rooms[uuidRoom].isStart && !player.admin) {
       return (

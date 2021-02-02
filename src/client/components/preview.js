@@ -18,16 +18,14 @@ const boxProps = {
 const OtherPlayerGrid = ({isAlone, mapGamePreview}) => {
   if (!isAlone) {
     return (
-      <Box mb={3}>
-        <Card {...boxProps} style= {{ width: '30vw', height: '65vh' }} variant="outlined">
-          <Grid
-            style= {{ justifyContent: 'center', alignItems: 'center' }}
-            item
-          >
-            <Game game={mapGamePreview} />
-          </Grid>
-        </Card>
-      </Box>
+      <Card {...boxProps} style= {{ width: '30vw', height: '65vh' }} variant="outlined">
+        <Grid
+          style= {{ justifyContent: 'center', alignItems: 'center' }}
+          item
+        >
+          <Game game={mapGamePreview} />
+        </Grid>
+      </Card>
     )
   } else {
     return '';
@@ -36,28 +34,28 @@ const OtherPlayerGrid = ({isAlone, mapGamePreview}) => {
 
 const Preview = ({mapGamePreview, isAlone, isVisitor, score, sheet}) => {
   return (
-    <div>
+    <div className="d-flex jcnt--start fdir--column">
       {!isVisitor && sheet && (
-        <Box mb={3}>
-          <Card {...boxProps} style= {{ width: '30vw', height: '15vh' }} variant="outlined">
-            <CardContent>
-              <Typography color="textSecondary" gutterBottom>
-                <PreviewPiece sheet={sheet}/>
-              </Typography>
-            </CardContent>
-          </Card>
-        </Box>
+          <div className="aself--fstart width-100">
+            <Card className="pt-3" {...boxProps} style= {{ width: '30vw' }} variant="outlined">
+              <p className="pl-2">Prochaine piece:</p>
+              <PreviewPiece sheet={sheet}/>
+            </Card>
+          </div>
       )}
-      <Box mb={3}>
+      <div className="aself--fstart">
         <Card {...boxProps} style= {{ width: '30vw', height: '5vh' }} variant="outlined">
-          <CardContent>
-            <Typography color="textSecondary" gutterBottom>
-              Score: { score }
-            </Typography>
-          </CardContent>
+          <p className="pl-3">
+            Score: <span className="bold">{ score }</span>
+          </p>
         </Card>
-      </Box>
+      </div>
+      <div className="aself--fstart">
         <OtherPlayerGrid isAlone={isAlone} mapGamePreview={mapGamePreview}/>
+      </div>
+      <div className="aself--fstart">
+        <p>Chat...</p>
+      </div>
     </div>
   );
 }
