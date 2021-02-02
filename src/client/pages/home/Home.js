@@ -147,6 +147,7 @@ const TablePlayers = ({login}) => {
         </Table>
       </TableContainer>
       </div>
+      <FormCreateRoom login={login} />
     </div>
     )
   }
@@ -163,8 +164,9 @@ const HomePage = () => {
   }
 
   useEffect(() => {
+    console.log(uuidRoom);
     if (uuidRoom) {
-      history.push(`/room/${uuidRoom}`)
+      history.push(`/${uuidRoom}[${login}]`)
     }
   }, [uuidRoom])
 

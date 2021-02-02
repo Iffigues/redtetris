@@ -1,18 +1,18 @@
-import React from 'react';
-import { useContext, useState, useEffect } from 'react';
+// Libs
+import React, { useContext, useState, useEffect } from 'react';
 import { withRouter } from 'react-router';
-import _ from 'lodash'
-import { Context as UserContext } from "../../context/UserContext";
-import { Context as RoomsContext } from "../../context/RoomsContext";
 import { useHistory } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles';
-import KeyBoardListener from '../../listeners/KeyBoardListener'
 import Button from '@material-ui/core/Button';
-import { SocketContext } from "../../context/SocketContext";
 import Modal from '@material-ui/core/Modal';
-import Fade from '@material-ui/core/Fade';
-import Board from '../../components/board';
+import _ from 'lodash'
+
+import KeyBoardListener from '../../listeners/KeyBoardListener'
 import { Context as AlertContext } from "../../context/AlertContext";
+import { Context as UserContext } from "../../context/UserContext";
+import { Context as RoomsContext } from "../../context/RoomsContext";
+import { SocketContext } from "../../context/SocketContext";
+import Board from '../../components/board';
 
 
   const useStyles = makeStyles((theme) => ({
@@ -28,24 +28,6 @@ import { Context as AlertContext } from "../../context/AlertContext";
       padding: theme.spacing(2, 4, 3),
     },
   }));
-  const LeaveRoomButton = (props) => {
-    const { uuidRoom, player, sendSocket } = props;
-    const history = useHistory()
-
-    const leaveRoom = () => {
-      sendSocket('server/leave-room', { ...uuidRoom, uuidUser: player.uuid })
-    }
-
-    return (
-      <Button
-      variant="contained"
-      color="primary"
-      onClick={leaveRoom}
-      >
-      Quitter la partie
-      </Button>
-    )
-  }
 
   const Room = (props) => {
     const { match } = props
@@ -58,6 +40,29 @@ import { Context as AlertContext } from "../../context/AlertContext";
     const { uuidRoom } = match.params;
     const history = useHistory()
 
+    const leaveRoom = () => {
+      sendSocket('server/leave-room', { ...uuidRoom, uuidUser: player.uuid })
+    }
+
+    const resume = () => {
+      sendSocket('server/pause-resume', { channel: uuidRoom })
+    }
+
+    const handleSetStartGame = () => {
+      sendSocket('server/start-game', { uuidRoom })
+    }
+    
+    const handleCloseModal = () => {
+      console.log("HandleCloseModal")
+    };
+
+
+    useEffect(() => {
+      if (!player) {
+        history.replace('/')
+      }
+    }, [player])
+    
     useEffect(
       () => {
         sendAlert(`Bienvenu sur la partie #${uuidRoom}`, 'info')
@@ -69,18 +74,10 @@ import { Context as AlertContext } from "../../context/AlertContext";
 
     KeyBoardListener(game);
 
-    // if (!player || !rooms) {
-    //   setGame(false);
-    //   history.replace('/');
-    // }
-
-    const handleSetStartGame = (event) => {
-      sendSocket('server/start-game', { uuidRoom })
+    if (!player || !rooms) {
+      setGame(false);
+      history.replace('/');
     }
-    
-    const handleCloseModal = () => {
-      console.log("HandleCloseModal")
-    };
 
     if (!rooms[uuidRoom].isStart && (player.solo || player.admin)) {
       return (
@@ -105,7 +102,8 @@ import { Context as AlertContext } from "../../context/AlertContext";
       return (
         <div>
           <Modal
-            open
+            className="d-flex jcnt--center aitems--center fdir--row pt-3"
+            open={!rooms[uuidRoom].isPlaying}
             disablePortal
             disableEnforceFocus
             disableAutoFocus
@@ -113,22 +111,41 @@ import { Context as AlertContext } from "../../context/AlertContext";
             aria-labelledby="simple-modal-title"
             aria-describedby="simple-modal-description"
           >
-            <Fade in={rooms[uuidRoom].isPlaying}>
-              <div className={classes.paper}>
-                <h2 id="transition-modal-title">Pause</h2>
+            <div className={classes.paper}>
+              <div className="aself--center">
+                <h1 className="aself--center" id="transition-modal-title">Pause</h1>
               </div>
-            </Fade>
+              <div className="d-flex jcnt--space-ar fdir--row">
+                <div className="aself--fstart p-2">
+                  <Button
+                    id="leaveRoom"
+                    variant="contained"
+                    color="secondary"
+                    data-testid='btnCreateRoom'
+                    onClick={leaveRoom}
+                  >
+                    Quitter la partie ?
+                  </Button>
+                </div>
+                <div className="aself--fstart p-2">
+                  <Button
+                    id="resume"
+                    variant="contained"
+                    color="primary"
+                    data-testid='btnCreateRoom'
+                    onClick={resume}
+                  >
+                    Reprendre
+                  </Button>
+                </div>
+              </div>
+            </div>
           </Modal>
         </div>
       )
     } else {
       return (
         <div>
-          {/* <LeaveRoomButton
-            uuidRoom={match.params}
-            player={player}
-            sendSocket={sendSocket}
-          /> */}
           <Board
             data-testid='gameElmt'
             mapGame={rooms[uuidRoom].players[player.uuid].currentMapGame}
@@ -140,7 +157,6 @@ import { Context as AlertContext } from "../../context/AlertContext";
         </div>
       )
     }
-    // match.params.id
 }
 
 export default withRouter(Room)

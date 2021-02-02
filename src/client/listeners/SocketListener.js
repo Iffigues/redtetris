@@ -29,6 +29,7 @@ export default (socketClient) => {
       const { uuidRoom, player } = data;
       updateUuidRoom(uuidRoom)
       console.log("update user", player)
+      console.log("uuidRoom", uuidRoom)
       updatePlayer(player)
     })
 

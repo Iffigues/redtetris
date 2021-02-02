@@ -18,13 +18,13 @@ export default () => {
   SocketLister(socketClient);
   return (
     <div>
-      <BrowserRouter>
+      <HashRouter hashType="noslash">
         <Alerts />
         <Route exact path="/" component={HomePage} />
-        <Route exact path="/room/:uuidRoom" render={(props) => {
+        <Route exact path="/:uuidRoom[:login]" render={(props) => {
           return ( <Room {...props } /> )
         }} />
-      </BrowserRouter>
+      </HashRouter>
     </div>
   )
 }
