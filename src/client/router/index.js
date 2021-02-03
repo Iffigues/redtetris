@@ -7,6 +7,7 @@ import Alerts from '../components/alerts'
 // pages
 import HomePage from '../pages/home/Home'
 import Room from '../pages/_room/Room'
+import ErrorPage from '../pages/notfound/ErrorPage'
 
 import SocketLister from '../listeners/SocketListener'
 import { SocketContext } from "../context/SocketContext";
@@ -20,10 +21,13 @@ export default () => {
     <div>
       <HashRouter hashType="noslash">
         <Alerts />
-        <Route exact path="/" component={HomePage} />
-        <Route exact path="/:uuidRoom[:login]" render={(props) => {
-          return ( <Room {...props } /> )
-        }} />
+        <Switch>
+          <Route exact path="/" component={HomePage} />
+          <Route exact path="/:uuidRoom[:login]" render={(props) => {
+            return ( <Room {...props } /> )
+          }} />
+          <Route component={ErrorPage} />
+        </Switch>
       </HashRouter>
     </div>
   )

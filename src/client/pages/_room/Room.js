@@ -59,7 +59,7 @@ import Board from '../../components/board';
 
     useEffect(() => {
       if (!player) {
-        history.replace('/')
+        // history.goBack()
       }
     }, [player])
     
