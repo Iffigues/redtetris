@@ -37,6 +37,7 @@ import Board from '../../components/board';
     const { sendSocket } = useContext(SocketContext);
     const { sendAlert } = useContext(AlertContext);
     const [game, setGame] = useState(true);
+    const [song, setSong] = useState(true);
     const { uuidRoom } = match.params;
     const history = useHistory()
 
@@ -56,6 +57,11 @@ import Board from '../../components/board';
     const handleCloseModal = () => {
       console.log("HandleCloseModal")
     };
+
+    const changeSongPref = (e) => {
+      e.preventDefault()
+      setSong(!song)
+    }
 
 
     useEffect(() => {
@@ -115,6 +121,17 @@ import Board from '../../components/board';
                 <h1 className="aself--center" id="transition-modal-title">Pause</h1>
               </div>
               <div className="d-flex jcnt--space-ar fdir--row">
+                <Button
+                  id="songRoom"
+                  variant="contained"
+                  color=""
+                  data-testid='btnSong'
+                  onClick={e => changeSongPref(e)}
+                >
+                  { song ? "🔈" : "🔇"}
+                </Button>
+              </div>
+              <div className="d-flex jcnt--space-ar fdir--row">
                 <div className="aself--fstart p-2">
                   <Button
                     id="leaveRoom"
@@ -147,6 +164,7 @@ import Board from '../../components/board';
         <div className="overflow-h">
           <Board
             data-testid="gameElmt"
+            song={song}
             currentRoom={rooms[uuidRoom]}
             isEnd={rooms[uuidRoom].players[player.uuid].end}
             mapGame={rooms[uuidRoom].players[player.uuid].currentMapGame}

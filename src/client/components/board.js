@@ -84,24 +84,23 @@ const ReGame = ({ score, player, currentRoom }) => {
   )
 }
 
-const RenderGame = ({ isEnd, mapGame, currentRoom, score, player }) => {
+const RenderGame = ({ song, isEnd, mapGame, currentRoom, score, player }) => {
   if (isEnd) {
     return (
       <ReGame score={score} player={player} currentRoom={currentRoom} />
     )
   } else {
-    
     return (
       <div className="width-100">
         <Card {...boxProps} variant="outlined">
-          <Game game={ { game: mapGame, isOtherUser: false } }/>
+          <Game game={ { game: mapGame, isOtherUser: false } } song={song} />
         </Card>
       </div>
     )
   }
 }
 
-const Board = ({ currentRoom, isEnd, uuidRoom, mapGame, mapGamePreview, isAlone, score, sheet }) => {
+const Board = ({ song, currentRoom, isEnd, uuidRoom, mapGame, mapGamePreview, isAlone, score, sheet }) => {
   const { state: { player } } = useContext(UserContext);
   if (player && player.visitor) {
     return (
@@ -122,6 +121,7 @@ const Board = ({ currentRoom, isEnd, uuidRoom, mapGame, mapGamePreview, isAlone,
     return (
       <div className="d-flex jcnt--start aitems--fs fdir--row">
         <RenderGame
+          song={song}
           isEnd={isEnd}
           mapGame={mapGame}
           currentRoom={currentRoom}
