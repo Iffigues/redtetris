@@ -29,7 +29,9 @@ const FormCreateRoom = ({login}) => {
     setPlaySolo(event.target.checked);
   };
 
-  const createRoom = () => {
+  const createRoom = (e) => {
+    console.log(login, playSolo)
+    e.preventDefault()
     sendSocket('server/create-room', { login, playSolo })
   }
 
@@ -52,7 +54,7 @@ const FormCreateRoom = ({login}) => {
           variant="contained"
           color="primary"
           data-testid='btnCreateRoom'
-          onClick={createRoom}
+          onClick={e => createRoom(e)}
         >
           Crée une partie
         </Button>
@@ -74,8 +76,9 @@ const TablePlayers = ({login}) => {
   const classes = useStyles();
   console.log(rooms)
 
-  const joinRoom = (roomSelected) => {
-    // sendSocket('server/join-room', { channel: roomSelected, login })
+  const joinRoom = (e, roomSelected) => {
+    e.preventDefault();
+    sendSocket('server/join-room', { channel: roomSelected, login })
   }
 
   if (!rooms || Object.keys(rooms).length === 0) {
@@ -135,7 +138,7 @@ const TablePlayers = ({login}) => {
                     color="primary"
                     data-testid='btnJoinRoom'
                     disabled={login.length === 0}
-                    onClick={joinRoom(rooms[item].channel)}
+                    onClick={e => joinRoom(e, rooms[item].channel)}
                   >
                     Rejoindre
                   </Button>

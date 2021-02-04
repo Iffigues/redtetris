@@ -40,7 +40,8 @@ import Board from '../../components/board';
     const { uuidRoom } = match.params;
     const history = useHistory()
 
-    const leaveRoom = () => {
+    const leaveRoom = (e) => {
+      e.preventDefault()
       sendSocket('server/leave-room', { ...uuidRoom, uuidUser: player.uuid })
     }
 
@@ -59,7 +60,7 @@ import Board from '../../components/board';
 
     useEffect(() => {
       if (!player) {
-        // history.goBack()
+        history.replace('/');
       }
     }, [player])
     
@@ -77,9 +78,7 @@ import Board from '../../components/board';
     if (!player || !rooms) {
       setGame(false);
       history.replace('/');
-    }
-
-    if (!rooms[uuidRoom].isStart && (player.solo || player.admin)) {
+    } else if (!rooms[uuidRoom].isStart && (player.solo || player.admin)) {
       return (
         <div className="d-flex jcnt--center aitems--center fdir--row pt-3">
           <Button
@@ -122,7 +121,7 @@ import Board from '../../components/board';
                     variant="contained"
                     color="secondary"
                     data-testid='btnCreateRoom'
-                    onClick={leaveRoom}
+                    onClick={e => leaveRoom(e)}
                   >
                     Quitter la partie ?
                   </Button>
@@ -148,6 +147,8 @@ import Board from '../../components/board';
         <div className="overflow-h">
           <Board
             data-testid="gameElmt"
+            currentRoom={rooms[uuidRoom]}
+            isEnd={rooms[uuidRoom].players[player.uuid].end}
             mapGame={rooms[uuidRoom].players[player.uuid].currentMapGame}
             isAlone={Object.keys(rooms[uuidRoom].players).length === 1}
             mapGamePreview={_.filter(rooms[uuidRoom].players, item => item.uuid !== player.uuid)[0]?.currentMapGame}

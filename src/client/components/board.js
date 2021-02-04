@@ -1,9 +1,11 @@
-import React from 'react';
-import { useContext } from 'react'
+import React, { useState, useContext } from 'react';
+import _ from 'lodash';
+import { Button, Card, CardContent } from '@material-ui/core';
+
 import { Context as UserContext } from "../context/UserContext";
 import Preview from './preview'
 import Game from './game'
-import { Card, CardContent } from '@material-ui/core';
+import { SocketContext } from "../context/SocketContext";
 import Chat from './Chat';
 
 const boxProps = {
@@ -15,7 +17,90 @@ const boxProps = {
   m: 1
 };
 
-const Board = ({ uuidRoom, mapGame, mapGamePreview, isAlone, score, sheet }) => {
+
+const ReGame = ({ score, player, currentRoom }) => {
+  const { sendSocket } = useContext(SocketContext);
+  const [haveSendReGame, setHaveSendReGame] = useState(false);
+
+  const reGame = (e) => {
+    e.preventDefault()
+    setHaveSendReGame(true)
+    sendSocket('server/re-game', {
+      channel: currentRoom.channel,
+      uuidUser: player.uuid
+    })
+  }
+
+  const leaveRoom = (e) => {
+    e.preventDefault()
+    sendSocket('server/leave-room', {
+      channel: currentRoom.channel,
+      uuidUser: player.uuid,
+      endGame: true
+    })
+  }
+
+  return (
+    <div className="width-100 d-flex jcnt--center aitems--center fdir--column pt-3">
+      <h1 className="aself--center">Vous avez perdu 😞</h1>
+      <h1 className="aself--center">Vous avez gagné 🔥</h1>
+      <p className="aself--center">Votre score final est de: { score }</p>
+      {
+        !haveSendReGame
+        ?
+         (
+            <div className="d-flex jcnt--center aitems--center fdir--row">
+              <Button
+                className="ml-2 test--btn-join-room"
+                id="leaveRoom"
+                variant="contained"
+                color="secondary"
+                data-testid='btnLeaveGame'
+                onClick={e => leaveRoom(e)}
+              >
+                Quitter
+              </Button>
+              <Button
+                className="mr-2 test--btn-join-room"
+                id="reGame"
+                variant="contained"
+                color="primary"
+                data-testid='btnReGame'
+                onClick={e => reGame(e, currentRoom.channel)}
+              >
+                Rejouez
+              </Button>
+            </div>
+          )
+        : (
+            <div class="d-flex jcnt--center aitems--center fdir--row">
+              <p>
+                Veuillez attendre que votre adversaire accepte de rejouez
+              </p>
+            </div>
+          )
+        }
+    </div>
+  )
+}
+
+const RenderGame = ({ isEnd, mapGame, currentRoom, score, player }) => {
+  if (isEnd) {
+    return (
+      <ReGame score={score} player={player} currentRoom={currentRoom} />
+    )
+  } else {
+    return (
+      <div className="width-100">
+        <Card {...boxProps} variant="outlined">
+          <Game game={ { game: mapGame, isOtherUser: false } }/>
+        </Card>
+      </div>
+    )
+  }
+}
+
+const Board = ({ currentRoom, isEnd, uuidRoom, mapGame, mapGamePreview, isAlone, score, sheet }) => {
   const { state: { player } } = useContext(UserContext);
   if (player && player.visitor) {
     return (
@@ -35,11 +120,13 @@ const Board = ({ uuidRoom, mapGame, mapGamePreview, isAlone, score, sheet }) => 
   } else {
     return (
       <div className="d-flex jcnt--start aitems--fs fdir--row">
-        <div className="width-100">
-          <Card {...boxProps} variant="outlined">
-            <Game game={ { game: mapGame, isOtherUser: false } }/>
-          </Card>
-        </div>
+        <RenderGame
+          isEnd={isEnd}
+          mapGame={mapGame}
+          currentRoom={currentRoom}
+          score={score}
+          player={player}
+        />
         <div className="aself--str">
           <Preview
             mapGamePreview={ { game: mapGamePreview, isOtherUser: true} }

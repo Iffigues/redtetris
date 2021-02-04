@@ -19,6 +19,10 @@ class Rooms {
     }
   }
 
+  reGame = (channel, uuidUser) => {
+    this._data[channel].reGame(uuidUser)
+  }
+
   addMessage = (channel, data) => {
     this._data[channel].addMessage(data)
   }
@@ -34,8 +38,8 @@ class Rooms {
     this._data[channel].onKey(key, uuidUser);
   }
 
-  deletePlayer = (channel, uuidUser) => {
-    if (this._data[channel]) this._data[channel].removePlayer(uuidUser);
+  deletePlayer = (channel, uuidUser, endGame) => {
+    if (this._data[channel]) this._data[channel].removePlayer(uuidUser, endGame);
   }
 
   changeIsPlaying = (channel) => {

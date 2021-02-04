@@ -6,7 +6,6 @@ let timer = null;
 class Game extends Piece {
 	constructor(updateRoomFunction) {
 		super();
-		this.end = false;
 		this.updateRoomFunction = updateRoomFunction;
 		this.block = null;
 		this.action = null;
@@ -14,7 +13,7 @@ class Game extends Piece {
 		this.lock = true;
 		this.barre = false;
 		this.action = this.initActionObject();
-		this.createIntervalGame();
+		// this.createIntervalGame();
 	}
 
 	initActionObject = () => {
@@ -35,6 +34,7 @@ class Game extends Piece {
 					this.block = _.cloneDeep(this.sheets.shift());
 					this.addSheet();
 					if (!this.canPose(this.block, 0, 0)) {
+						this.end = true;
 						clearInterval(timer);
 						this.block = null;
 						return;

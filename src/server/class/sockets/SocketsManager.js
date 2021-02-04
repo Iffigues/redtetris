@@ -43,8 +43,9 @@ class SocketsManager {
     
     // leave room
     socket.on('server/leave-room', (data) => {
-      const { uuidRoom, uuidUser } = data;
-      this.rooms.deletePlayer(uuidRoom, uuidUser)
+      const { uuidRoom, uuidUser, endGame } = data;
+      endGame = endGame || false
+      this.rooms.deletePlayer(uuidRoom, uuidUser, endGame)
       socket.leave(uuidRoom);
       this.updateRooms(this.rooms, socket)
       socket.emit('client/update-user', { uuidRoom: null, player: null })
@@ -99,6 +100,12 @@ class SocketsManager {
       this.rooms.changeIsPlaying(channel);
       this.updateRooms(this.rooms, socket)
     });
+    
+    socket.on('server/re-game', (data) => {
+      const { channel, uuidUser } = data
+      this.rooms.reGame(channel, uuidUser)
+      this.updateRooms(this.rooms, socket)
+    })
   }
 
   initListener = (socket) => {
