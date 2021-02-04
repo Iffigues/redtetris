@@ -22,7 +22,7 @@ const ReGame = ({ score, player, currentRoom }) => {
   const { sendSocket } = useContext(SocketContext);
   const [haveSendReGame, setHaveSendReGame] = useState(false);
 
-  const reGame = (e) => {
+  const wantReGame = (e) => {
     e.preventDefault()
     setHaveSendReGame(true)
     sendSocket('server/re-game', {
@@ -62,11 +62,11 @@ const ReGame = ({ score, player, currentRoom }) => {
               </Button>
               <Button
                 className="mr-2 test--btn-join-room"
-                id="reGame"
+                id="wantReGame"
                 variant="contained"
                 color="primary"
                 data-testid='btnReGame'
-                onClick={e => reGame(e, currentRoom.channel)}
+                onClick={e => wantReGame(e, currentRoom.channel)}
               >
                 Rejouez
               </Button>
@@ -90,6 +90,7 @@ const RenderGame = ({ isEnd, mapGame, currentRoom, score, player }) => {
       <ReGame score={score} player={player} currentRoom={currentRoom} />
     )
   } else {
+    
     return (
       <div className="width-100">
         <Card {...boxProps} variant="outlined">

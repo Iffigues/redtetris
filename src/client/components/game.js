@@ -1,10 +1,16 @@
 import React from 'react';
 import Cell from './cell'
 import StyledStage from './style/styledStage'
+// const tetrisSong = require("../static/media/tetris.mp3");
+import tetrisSong from '../static/media/tetris.mp3';
+
+const Sound = () => <audio src={tetrisSong} autoPlay loop />;
 
 const Game = ({game}) => {
   return (
     <div>
+      <Sound />
+      
       <StyledStage
         isOtherUser={game.isOtherUser}
         width={game.game[0].length} 

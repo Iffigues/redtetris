@@ -10,7 +10,8 @@ const Chat = ({ uuidRoom }) => {
   const { state: { player } } = useContext(UserContext);
   const { state: { rooms } } = useContext(RoomsContext);
   const [message, setMessage] = useState('');
-  
+  // const [playingAudio, setplayingAudio] = useState(true);
+
   const sendMessage = (e) => {
     e.preventDefault();
     if (message !== "") {
