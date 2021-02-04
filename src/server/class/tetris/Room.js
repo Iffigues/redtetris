@@ -14,9 +14,16 @@ class Room {
 		this.block = new Block();
 		this.channel = channel;
 		this.players = {};
+		this.messages = [];
 		this.addPlayer(player);
 	}
 	
+	addMessage = (data) => {
+		this.messages.push({
+			...data
+		})
+	}
+
 	removePlayer = (uuidUser) => {
 		let res = {};
 		_.map(this.players, player => {

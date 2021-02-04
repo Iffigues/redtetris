@@ -4,6 +4,7 @@ import { Context as UserContext } from "../context/UserContext";
 import Preview from './preview'
 import Game from './game'
 import { Card, CardContent } from '@material-ui/core';
+import Chat from './Chat';
 
 const boxProps = {
   bgcolor: 'background.paper',
@@ -14,7 +15,7 @@ const boxProps = {
   m: 1
 };
 
-const Board = ({ mapGame, mapGamePreview, isAlone, score, sheet }) => {
+const Board = ({ uuidRoom, mapGame, mapGamePreview, isAlone, score, sheet }) => {
   const { state: { player } } = useContext(UserContext);
   if (player && player.visitor) {
     return (
@@ -34,11 +35,9 @@ const Board = ({ mapGame, mapGamePreview, isAlone, score, sheet }) => {
   } else {
     return (
       <div className="d-flex jcnt--start aitems--fs fdir--row">
-        <div className="aself--str width-100">
+        <div className="width-100">
           <Card {...boxProps} variant="outlined">
-            <CardContent>
-              <Game game={ { game: mapGame, isOtherUser: false } }/>
-            </CardContent>
+            <Game game={ { game: mapGame, isOtherUser: false } }/>
           </Card>
         </div>
         <div className="aself--str">
@@ -48,7 +47,13 @@ const Board = ({ mapGame, mapGamePreview, isAlone, score, sheet }) => {
             isAlone={isAlone}
             score={score}
             sheet={sheet}
+            uuidRoom={uuidRoom}
           />
+        </div>
+        <div style={{ width: '50vw' }}>
+          <Card {...boxProps} variant="outlined">
+            <Chat uuidRoom={uuidRoom} />
+          </Card>
         </div>
       </div>
     );

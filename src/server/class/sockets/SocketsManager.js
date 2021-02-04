@@ -66,6 +66,19 @@ class SocketsManager {
   
   // Game Listener
   gameListener = (socket) => {
+
+    socket.on('server/new-message', (data) => {
+      const { uuidRoom } = data
+      const date = new Date()
+      this.rooms.addMessage(uuidRoom, {
+        login: data.login,
+        uuidUser: data.id_user,
+        time: `${date.getHours()}:${date.getMinutes()}`,
+        content: data.content
+      })
+      this.updateRooms(this.rooms, socket)
+    })
+
     socket.on('server/start-game', (data) => {
       const { uuidRoom } = data;
       this.rooms.startGame(uuidRoom);

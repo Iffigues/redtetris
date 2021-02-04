@@ -18,6 +18,11 @@ class Rooms {
       this._data[item.channel].player.push(item.player);
     }
   }
+
+  addMessage = (channel, data) => {
+    this._data[channel].addMessage(data)
+  }
+
   addPlayer = (channel, player) => {
     this._data[channel].addPlayer(player);
   }

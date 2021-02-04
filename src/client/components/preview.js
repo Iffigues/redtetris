@@ -6,7 +6,6 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Game from './game'
 import PreviewPiece from './previewPiece';
-import Chat from './Chat';
 
 const boxProps = {
   bgcolor: 'background.paper',
@@ -33,7 +32,7 @@ const OtherPlayerGrid = ({isAlone, mapGamePreview}) => {
   }
 }
 
-const Preview = ({mapGamePreview, isAlone, isVisitor, score, sheet}) => {
+const Preview = ({ mapGamePreview, isAlone, isVisitor, score, sheet }) => {
   return (
     <div className="d-flex jcnt--start fdir--column">
       {!isVisitor && sheet && (
@@ -53,9 +52,6 @@ const Preview = ({mapGamePreview, isAlone, isVisitor, score, sheet}) => {
       </div>
       <div className="aself--fstart">
         <OtherPlayerGrid isAlone={isAlone} mapGamePreview={mapGamePreview}/>
-      </div>
-      <div>
-        <Chat />
       </div>
     </div>
   );

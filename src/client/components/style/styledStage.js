@@ -8,7 +8,7 @@ grid-template-rows: repeat(
   calc(${props => (props.isOtherUser) ? '15vw' : '25vw'} / ${props => (props.isOtherUser) ? props.width : props.width})
 );
 grid-template-columns: repeat(${props => props.width}, 1fr);
-grid-gap: 1px;
+grid-gap: 2px;
 border: 2px solid rgba(222, 242, 254, 0.6);
 width: 100%;
 max-width: ${props => (props.isOtherUser) ? '15vw' : '25vw'};

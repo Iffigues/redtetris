@@ -1,6 +1,7 @@
 .container--chat {
+  overflow-x: hidden;
   overflow-y: scroll;
-  height: 30vw;
+  height: 90vh;
   transform:rotateX(180deg);
                 -moz-transform:rotateX(180deg); /* Mozilla */
                 -webkit-transform:rotateX(180deg); /* Safari and Chrome */
@@ -22,6 +23,7 @@
 	padding: 0.25em 0.75em;
 	margin: 0.0625em;
   max-width: 50%;
+  width: 100px;
   
   &--me {
     color: white;
