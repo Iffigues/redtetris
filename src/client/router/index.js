@@ -2,7 +2,7 @@ import React from "react";
 import { HashRouter, BrowserRouter, Route, Switch } from 'react-router-dom';
 
 // components
-import Alerts from '../components/alerts'
+import Alerts from '../components/Alerts'
 
 // pages
 import HomePage from '../pages/home/Home'
