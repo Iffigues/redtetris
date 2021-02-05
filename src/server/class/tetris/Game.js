@@ -58,7 +58,6 @@ class Game extends Piece {
 					this.block = _.cloneDeep(this.sheets.shift());
 					this.addSheet();
 					if (!this.canPose(this.block, 0, 0)) {
-						console.log("ending game");
 						this.end = true;
 						clearInterval(timer);
 						this.block = null;
@@ -70,7 +69,6 @@ class Game extends Piece {
 				if (this.cantPose) {
 					this.cantPose = false;
 					if (!this.canPose(this.block, 0, 1)) {
-						console.log("hello world")
 						this.draw(this.block, this.block.type);
 						this.block = null;
 						this.verifLine();

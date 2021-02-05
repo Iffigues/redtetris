@@ -25,12 +25,10 @@ const FormCreateRoom = ({login}) => {
   const { sendSocket } = useContext(SocketContext);
 
   const handleChangeCheckBox = (event) => {
-    console.log("playSolo", event.target.checked, playSolo)
     setPlaySolo(event.target.checked);
   };
 
   const createRoom = (e) => {
-    console.log(login, playSolo)
     e.preventDefault()
     sendSocket('server/create-room', { login, playSolo })
   }
@@ -74,7 +72,6 @@ const TablePlayers = ({login}) => {
   const { sendSocket } = useContext(SocketContext);
   const { state: { rooms } } = useContext(RoomsContext);
   const classes = useStyles();
-  console.log(rooms)
 
   const joinRoom = (e, roomSelected) => {
     e.preventDefault();
@@ -167,7 +164,6 @@ const HomePage = () => {
   }
 
   useEffect(() => {
-    console.log(uuidRoom);
     if (uuidRoom) {
       history.push(`/${uuidRoom}[${login}]`)
     }
