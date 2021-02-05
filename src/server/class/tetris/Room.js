@@ -14,10 +14,34 @@ class Room {
 		this.block = new Block();
 		this.channel = channel;
 		this.players = {};
+		this.messages = [];
 		this.addPlayer(player);
 	}
 	
-	removePlayer = (uuidUser) => {
+	reGame = (uuidUser) => {
+		const isLast = true;
+		_.map(this.players, player => {
+			if (player.requestNewGame === false && player.uuid !== uuidUser) {
+				isLast = false;
+			}
+		})
+
+		if (isLast) {
+			_.map(this.players, player => {
+				player.initGame();
+			})
+		} else {
+			this.players[uuidUser].setRequestNewGame(true)
+		}
+	}
+
+	addMessage = (data) => {
+		this.messages.push({
+			...data
+		})
+	}
+
+	removePlayer = (uuidUser, endGame) => {
 		let res = {};
 		_.map(this.players, player => {
 			if (player.uuid !== uuidUser) {
@@ -25,6 +49,20 @@ class Room {
 			}
 		})
 		this.players = _.cloneDeep(res);
+
+		if (endGame) {
+			const isLastRequestNewGame = true;
+			_.map(this.players, player => {
+				if (player.requestNewGame === false) {
+					isLastRequestNewGame = false
+				}
+			})
+			if (isLastRequestNewGame) {
+				_.map(this.players, player => {
+					player.initGame();
+				})
+			}
+		}
 	}
 
 	addSheet = () => {

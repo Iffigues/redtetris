@@ -9,19 +9,38 @@ class Player extends Game {
 		super(updateRoomFunction)
 		this.uuid = uuidv4()
 		this.name = name
-		this.score = 0;
 		this.admin = admin;
 		this.live = true;
-		this.sheets = [];
 		this.indestructible = 0;
 		this.time = 1000;
 		this.isPlaying = false;
 		this.visitor = false;
-		this.currentMapGame = Array.from(Array(GAME_HEIGHT), () => 
-      new Array(GAME_WIDTH).fill(0)
-		)
+
+		this.currentMapGame = null
+		this.nextMapGame = null;
+		this.block = null;
+		this.sheets = null;
+		this.score = null;
+		this.end = null;
+		this.requestNewGame = null;
+		this.initGame();
+	}
+	
+	initGame = () => {
+		this.currentMapGame = _.cloneDeep(Array.from(Array(GAME_HEIGHT), () => 
+			new Array(GAME_WIDTH).fill(0)
+		))
 		this.nextMapGame = _.cloneDeep(this.currentMapGame);
 		this.block = null;
+		this.sheets = _.cloneDeep([]);
+		this.score = 0;
+		this.end = false;
+		this.requestNewGame = false;
+		this.createIntervalGame();
+	}
+
+	setRequestNewGame = (value) => {
+		this.requestNewGame = value
 	}
         
 	addSheetFunc = (func) => {

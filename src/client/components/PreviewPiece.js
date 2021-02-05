@@ -1,11 +1,13 @@
 import React from 'react';
-import Cell from './cell'
-import StyledStage from './style/styledStage'
+import { TETROMINOS } from '../plugins/tetrominos';
+import Cell from './cell';
+import StyledPreview from './style/styledPreview';
 
-const Game = ({game}) => {
+const PreviewPiece = ({sheet}) => {
+  const game = { game: TETROMINOS[sheet.type].shape }
   return (
     <div>
-      <StyledStage
+      <StyledPreview
         isOtherUser={game.isOtherUser}
         width={game.game[0].length} 
         height={game.game.length}
@@ -14,8 +16,9 @@ const Game = ({game}) => {
           row.map((cell, x) => 
             <Cell key={x} type={cell} isOtherUser={game.isOtherUser}/>
         ))}
-      </StyledStage>
+      </StyledPreview>
     </div>
-  );
+  )
 }
-export default Game
+
+export default PreviewPiece
