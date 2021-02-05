@@ -12,7 +12,7 @@ import { Context as AlertContext } from "../../context/AlertContext";
 import { Context as UserContext } from "../../context/UserContext";
 import { Context as RoomsContext } from "../../context/RoomsContext";
 import { SocketContext } from "../../context/SocketContext";
-import Board from '../../components/board';
+import Board from '../../components/Board';
 
 
 const useStyles = makeStyles((theme) => ({
