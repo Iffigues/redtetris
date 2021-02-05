@@ -31,18 +31,16 @@ const useStyles = makeStyles((theme) => ({
 
 const Room = (props) => {
   const { match } = props
+  const { uuidRoom } = match.params;
   const classes = useStyles();
+  const history = useHistory()
+  const [game, setGame] = useState(true);
+  const [song, setSong] = useState(true);
   const { state: { player } } = useContext(UserContext);
   const { state: { rooms } } = useContext(RoomsContext);
   const { sendSocket } = useContext(SocketContext);
   const { sendAlert } = useContext(AlertContext);
-  const [game, setGame] = useState(true);
-  const [song, setSong] = useState(true);
-  const { uuidRoom } = match.params;
-  const history = useHistory()
   KeyBoardListener(game);
-  
-  
 
   const leaveRoom = (e) => {
     e.preventDefault()
