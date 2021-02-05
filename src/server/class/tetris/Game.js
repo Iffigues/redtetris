@@ -13,6 +13,7 @@ class Game extends Piece {
 		this.isPlaying = false;
 		this.lock = true;
 		this.barre = false;
+		this.cantPose = false
 		this.action = this.initActionObject();
 		// this.createIntervalGame();
 	}
@@ -64,9 +65,10 @@ class Game extends Piece {
 					}
 				}
 				this.sendMap();
-				if (this.end) {
-					this.end = false;
+				if (this.cantPose) {
+					this.cantPose = false;
 					if (!this.canPose(this.block, 0, 1)) {
+						console.log("hello world")
 						this.draw(this.block, this.block.type);
 						this.block = null;
 						this.verifLine();
@@ -74,7 +76,7 @@ class Game extends Piece {
 				} 
 				if (this.block) {
 					if (!this.canPose(this.block, 0, 1)) {
-						this.end = true;
+						this.cantPose = true;
 					} else {
 						this.draw(this.block, 0);
 						this.block.y += 1;
@@ -91,8 +93,7 @@ class Game extends Piece {
 
 	sendMap = () => {
 		this.makeShadow(this.block);
-		if (this.shadow) this.draw(this.shadow, 1);
-		console.log(this.shadow);
+		if (this.shadow) this.draw(this.shadow, 8);
 		this.draw(this.block, this.block.type);
 		this.currentMapGame = _.cloneDeep(this.nextMapGame);
 		if (this.updateRoomFunction) this.updateRoomFunction();
