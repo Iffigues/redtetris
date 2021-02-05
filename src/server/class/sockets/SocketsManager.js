@@ -60,7 +60,6 @@ class SocketsManager {
       this.updateRooms(this.rooms, socket)
       socket.emit('client/update-user', { uuidRoom: null, player: null })
       if (isLast === true) this.rooms.deleteRoom(uuidRoom)
-      console.log("!!!!rooms!!!!", this.rooms)
       this.updateRooms(this.rooms, socket)
       socket.leave(uuidRoom);
     });
