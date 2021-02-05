@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Room = (props) => {
   const { match } = props
-  const { uuidRoom } = match.params;
+  const { uuidRoom, login } = match.params;
   const classes = useStyles();
   const history = useHistory()
   const [game, setGame] = useState(true);
@@ -80,7 +80,7 @@ const Room = (props) => {
     }
   ,[])
 
-  if (rooms[uuidRoom]) {
+  if (rooms && rooms[uuidRoom]) {
     if (!rooms[uuidRoom].isStart && (player.solo || player.admin)) {
       return (
         <div className="d-flex jcnt--center aitems--center fdir--row pt-3">
@@ -172,6 +172,12 @@ const Room = (props) => {
         </div>
       )
     }
+  } else {
+    return (
+      <div>
+        <p>.....</p>
+      </div>
+    )
   }
 }
 

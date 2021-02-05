@@ -75,7 +75,7 @@ const ReGame = ({ score, player, currentRoom }) => {
             </div>
           )
         : (
-            <div class="d-flex jcnt--center aitems--center fdir--row">
+            <div className="d-flex jcnt--center aitems--center fdir--row">
               <p>
                 Veuillez attendre que votre adversaire accepte de rejouez
               </p>

@@ -48,6 +48,6 @@ export default (socketClient) => {
       console.log('client/start-game')
     })
 
-    return ;
+    return () => socketClient.disconnect();
   }, [])
 }
