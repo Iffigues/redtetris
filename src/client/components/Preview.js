@@ -5,7 +5,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Game from './game'
-import PreviewPiece from './PreviewPiece;
+import PreviewPiece from './PreviewPiece';
 
 const boxProps = {
   bgcolor: 'background.paper',
