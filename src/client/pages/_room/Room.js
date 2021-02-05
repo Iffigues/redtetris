@@ -40,6 +40,9 @@ import Board from '../../components/board';
     const [song, setSong] = useState(true);
     const { uuidRoom } = match.params;
     const history = useHistory()
+    KeyBoardListener(game);
+    
+    
 
     const leaveRoom = (e) => {
       e.preventDefault()
@@ -62,14 +65,14 @@ import Board from '../../components/board';
       e.preventDefault()
       setSong(!song)
     }
-
-
+    
     useEffect(() => {
-      if (!player) {
+      if (!player || !rooms) {
+        setGame(false);
         history.replace('/');
       }
     }, [player])
-    
+
     useEffect(
       () => {
         sendAlert(`Bienvenu sur la partie #${uuidRoom}`, 'info')
@@ -79,12 +82,8 @@ import Board from '../../components/board';
       }
     ,[])
 
-    KeyBoardListener(game);
 
-    if (!player || !rooms) {
-      setGame(false);
-      history.replace('/');
-    } else if (!rooms[uuidRoom].isStart && (player.solo || player.admin)) {
+    if (!rooms[uuidRoom].isStart && (player.solo || player.admin)) {
       return (
         <div className="d-flex jcnt--center aitems--center fdir--row pt-3">
           <Button
@@ -123,12 +122,10 @@ import Board from '../../components/board';
               <div className="d-flex jcnt--space-ar fdir--row">
                 <Button
                   id="songRoom"
-                  variant="contained"
-                  color=""
                   data-testid='btnSong'
                   onClick={e => changeSongPref(e)}
                 >
-                  { song ? "🔈" : "🔇"}
+                  { song ? "🔈" : "🔇" }
                 </Button>
               </div>
               <div className="d-flex jcnt--space-ar fdir--row">

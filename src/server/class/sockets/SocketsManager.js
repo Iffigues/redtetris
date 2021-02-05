@@ -43,7 +43,7 @@ class SocketsManager {
     
     // leave room
     socket.on('server/leave-room', (data) => {
-      const { uuidRoom, uuidUser, endGame } = data;
+      let { uuidRoom, uuidUser, endGame } = data;
       endGame = endGame || false
       this.rooms.deletePlayer(uuidRoom, uuidUser, endGame)
       socket.leave(uuidRoom);

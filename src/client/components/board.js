@@ -1,4 +1,6 @@
 import React, { useState, useContext } from 'react';
+import { useHistory } from 'react-router-dom'
+
 import _ from 'lodash';
 import { Button, Card, CardContent } from '@material-ui/core';
 
@@ -147,4 +149,5 @@ const Board = ({ song, currentRoom, isEnd, uuidRoom, mapGame, mapGamePreview, is
     );
   }
 }
+
 export default Board

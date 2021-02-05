@@ -16,7 +16,7 @@ export const SocketContextProvider = ({ children }) => {
   
   return (
     <SocketContext.Provider
-    value={{socketClient, sendSocket}}
+      value={{ socketClient, sendSocket }}
     >
       { children }
     </SocketContext.Provider>
