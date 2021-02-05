@@ -34,7 +34,7 @@ class SocketsManager {
       const { login, playSolo } = data
       const player = new Player(login, () => this.updateRooms(), true);
       const room = new Room(player, playSolo)
-      this.rooms.add(room);
+      this.rooms.addRoom(room);
       socket.join(room.channel);
       socket.join(player.uuid);
       this.updateRooms(this.rooms, socket)
@@ -45,10 +45,13 @@ class SocketsManager {
     socket.on('server/leave-room', (data) => {
       let { uuidRoom, uuidUser, endGame } = data;
       endGame = endGame || false
-      this.rooms.deletePlayer(uuidRoom, uuidUser, endGame)
-      socket.leave(uuidRoom);
+      const isLast = this.rooms.deletePlayer(uuidRoom, uuidUser, endGame)
       this.updateRooms(this.rooms, socket)
       socket.emit('client/update-user', { uuidRoom: null, player: null })
+      if (isLast === true) this.rooms.deleteRoom(uuidRoom)
+      console.log("!!!!rooms!!!!", this.rooms)
+      this.updateRooms(this.rooms, socket)
+      socket.leave(uuidRoom);
     });
     
     // join room

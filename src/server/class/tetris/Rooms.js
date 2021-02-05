@@ -1,3 +1,4 @@
+import _ from 'lodash';
 // Rooms Singleton
 // instance => instance of Rooms
 // rooms => Object = key (uuid), value (instance of Room)
@@ -11,7 +12,7 @@ class Rooms {
    return Rooms.instance;
   }
 
-  add = item => {
+  addRoom = item => {
     if (!Object.keys(this._data).includes(item.channel)) {
       this._data[item.channel] = item;
     } else {
@@ -38,8 +39,16 @@ class Rooms {
     this._data[channel].onKey(key, uuidUser);
   }
 
+  deleteRoom = (channel) => {
+    delete this._data[channel]
+  }
+
   deletePlayer = (channel, uuidUser, endGame) => {
-    if (this._data[channel]) this._data[channel].removePlayer(uuidUser, endGame);
+    if (this._data[channel]) {
+      this._data[channel].removePlayer(uuidUser, endGame);
+      return Object.keys(this._data[channel].players).length === 0
+    }
+    return false;
   }
 
   changeIsPlaying = (channel) => {

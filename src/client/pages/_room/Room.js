@@ -15,74 +15,74 @@ import { SocketContext } from "../../context/SocketContext";
 import Board from '../../components/board';
 
 
-  const useStyles = makeStyles((theme) => ({
-    modal: {
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-    paper: {
-      backgroundColor: theme.palette.background.paper,
-      border: '2px solid #000',
-      boxShadow: theme.shadows[5],
-      padding: theme.spacing(2, 4, 3),
-    },
-  }));
+const useStyles = makeStyles((theme) => ({
+  modal: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  paper: {
+    backgroundColor: theme.palette.background.paper,
+    border: '2px solid #000',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+  }
+}));
 
-  const Room = (props) => {
-    const { match } = props
-    const classes = useStyles();
-    const { state: { player } } = useContext(UserContext);
-    const { state: { rooms } } = useContext(RoomsContext);
-    const { sendSocket } = useContext(SocketContext);
-    const { sendAlert } = useContext(AlertContext);
-    const [game, setGame] = useState(true);
-    const [song, setSong] = useState(true);
-    const { uuidRoom } = match.params;
-    const history = useHistory()
-    KeyBoardListener(game);
-    
-    
+const Room = (props) => {
+  const { match } = props
+  const classes = useStyles();
+  const { state: { player } } = useContext(UserContext);
+  const { state: { rooms } } = useContext(RoomsContext);
+  const { sendSocket } = useContext(SocketContext);
+  const { sendAlert } = useContext(AlertContext);
+  const [game, setGame] = useState(true);
+  const [song, setSong] = useState(true);
+  const { uuidRoom } = match.params;
+  const history = useHistory()
+  KeyBoardListener(game);
+  
+  
 
-    const leaveRoom = (e) => {
-      e.preventDefault()
-      sendSocket('server/leave-room', { ...uuidRoom, uuidUser: player.uuid })
+  const leaveRoom = (e) => {
+    e.preventDefault()
+    sendSocket('server/leave-room', { uuidRoom, uuidUser: player.uuid })
+  }
+
+  const resume = () => {
+    sendSocket('server/pause-resume', { channel: uuidRoom })
+  }
+
+  const handleSetStartGame = () => {
+    sendSocket('server/start-game', { uuidRoom })
+  }
+  
+  const handleCloseModal = () => {
+    console.log("HandleCloseModal")
+  };
+
+  const changeSongPref = (e) => {
+    e.preventDefault()
+    setSong(!song)
+  }
+  
+  useEffect(() => {
+    if (!player || !rooms || !rooms[uuidRoom]) {
+      setGame(false);
+      history.replace('/');
     }
+  }, [player])
 
-    const resume = () => {
-      sendSocket('server/pause-resume', { channel: uuidRoom })
+  useEffect(
+    () => {
+      sendAlert(`Bienvenu sur la partie #${uuidRoom}`, 'info')
+      setTimeout(() => {
+        sendAlert()
+      }, 5000)
     }
+  ,[])
 
-    const handleSetStartGame = () => {
-      sendSocket('server/start-game', { uuidRoom })
-    }
-    
-    const handleCloseModal = () => {
-      console.log("HandleCloseModal")
-    };
-
-    const changeSongPref = (e) => {
-      e.preventDefault()
-      setSong(!song)
-    }
-    
-    useEffect(() => {
-      if (!player || !rooms) {
-        setGame(false);
-        history.replace('/');
-      }
-    }, [player])
-
-    useEffect(
-      () => {
-        sendAlert(`Bienvenu sur la partie #${uuidRoom}`, 'info')
-        setTimeout(() => {
-          sendAlert()
-        }, 5000)
-      }
-    ,[])
-
-
+  if (rooms[uuidRoom]) {
     if (!rooms[uuidRoom].isStart && (player.solo || player.admin)) {
       return (
         <div className="d-flex jcnt--center aitems--center fdir--row pt-3">
@@ -174,6 +174,7 @@ import Board from '../../components/board';
         </div>
       )
     }
+  }
 }
 
 export default withRouter(Room)
