@@ -8,6 +8,7 @@ class Game extends Piece {
 		super();
 		this.updateRoomFunction = updateRoomFunction;
 		this.block = null;
+		this.timing = 1000;
 		this.shadow = null;
 		this.action = null;
 		this.isPlaying = false;
@@ -86,7 +87,7 @@ class Game extends Piece {
 				}
 			}
 			setTimeout(this.createIntervalGame, 0)
-		}, 1000)
+		}, this.timing)
 	}
 
 	setIsPlaying = (isPlaying) => {
@@ -182,6 +183,7 @@ class Game extends Piece {
 
 			if (u === 1) {
 				this.score = Math.ceil((this.score + 1000) * 1.1);
+				if (this.timing > 100) this.timing = this.timing -30;
 				this.destroyFunc(this.uuid);
 				arr = arr + 1;
 				this.wash(i);
