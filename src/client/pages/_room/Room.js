@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Room = (props) => {
   const { match } = props
-  const { uuidRoom, login } = match.params;
+  const { uuidRoom } = match.params;
   const classes = useStyles();
   const history = useHistory()
   const [game, setGame] = useState(true);
