@@ -1,13 +1,13 @@
-import React, { useState, useContext } from 'react';
-import { useHistory } from 'react-router-dom'
-
+import React, { useState, useContext, useEffect } from 'react';
 import _ from 'lodash';
-import { Button, Card, CardContent } from '@material-ui/core';
+import { Button, Card } from '@material-ui/core';
+
 
 import { Context as UserContext } from "../context/UserContext";
+import { SocketContext } from "../context/SocketContext";
+
 import Preview from './preview'
 import Game from './game'
-import { SocketContext } from "../context/SocketContext";
 import Chat from './Chat';
 
 const boxProps = {
@@ -20,6 +20,17 @@ const boxProps = {
 };
 
 
+const leaveRoom = (e, channel, uuidUser, endGame) => {
+  const { sendSocket } = useContext(SocketContext);
+  e.preventDefault()
+  sendSocket('server/leave-room', {
+    channel,
+    uuidUser,
+    endGame
+  })
+}
+
+
 const ReGame = ({ score, player, currentRoom }) => {
   const { sendSocket } = useContext(SocketContext);
   const [haveSendReGame, setHaveSendReGame] = useState(false);
@@ -30,15 +41,6 @@ const ReGame = ({ score, player, currentRoom }) => {
     sendSocket('server/re-game', {
       channel: currentRoom.channel,
       uuidUser: player.uuid
-    })
-  }
-
-  const leaveRoom = (e) => {
-    e.preventDefault()
-    sendSocket('server/leave-room', {
-      channel: currentRoom.channel,
-      uuidUser: player.uuid,
-      endGame: true
     })
   }
 
@@ -58,7 +60,7 @@ const ReGame = ({ score, player, currentRoom }) => {
                 variant="contained"
                 color="secondary"
                 data-testid='btnLeaveGame'
-                onClick={e => leaveRoom(e)}
+                onClick={e => leaveRoom(e, currentRoom.channel, player.uuid, true)}
               >
                 Quitter
               </Button>
@@ -104,18 +106,65 @@ const RenderGame = ({ song, isEnd, mapGame, currentRoom, score, player }) => {
 
 const Board = ({ song, currentRoom, isEnd, uuidRoom, mapGame, mapGamePreview, isAlone, score, sheet }) => {
   const { state: { player } } = useContext(UserContext);
+  const { sendSocket } = useContext(SocketContext);
+
+  const joinRoom = (e, channel, uuidUser) => {
+    e.preventDefault()
+    sendSocket('server/visitor-join-room', {
+      channel,
+      uuidUser
+    })
+  }
+
+  useEffect(() => {
+    if (isEnd === true) {
+      console.log("hello world")
+      sendSocket('server/end-game-visitor', { channel: uuidRoom })
+    }
+  }, [isEnd])
+
   if (player && player.visitor) {
     return (
-      <div className="d-flex jcnt--center fdir--column">
-        <div className="aself--center">
-          Vous regardez en tant que visiteur
-        </div>
-        <div className="aself--center width-100">
-          <Card {...boxProps} variant="outlined">
-            <CardContent>
-              <Preview mapGamePreview={ { game: mapGamePreview, isOtherUser: true } } isVisitor={true} isAlone={isAlone} score={0} sheet={null}/>
-            </CardContent>
-          </Card>
+      <div>
+        Vous regardez en tant que visiteur
+        <div className="d-flex jcnt--center aitems--fs fdir--row">
+          <div>
+            <Button
+              id="songRoom"
+              data-testid='btnLeave'
+              color="secondary"
+              onClick={e => leaveRoom(e, currentRoom.channel, player.uuid, false)}
+            >
+              Quitter la room { isEnd }
+            </Button>
+            {
+              isEnd &&
+              <Button
+                id="joinRoom"
+                data-testid='btnLeave'
+                color="primary"
+                onClick={e => joinRoom(e, currentRoom.channel, player.uuid)}
+              >
+                Rejoindre la partie ?
+              </Button>
+            }
+          </div>
+          <div className="width-100">
+            <Card {...boxProps} variant="outlined">
+              <Preview
+                mapGamePreview={ { game: mapGamePreview, isOtherUser: true } }
+                isVisitor={true}
+                isAlone={isAlone}
+                score={0}
+                sheet={null}
+              />
+            </Card>
+          </div>
+          <div style={{ width: '50vw' }}>
+            <Card {...boxProps} variant="outlined">
+              <Chat uuidRoom={uuidRoom} />
+            </Card>
+          </div>
         </div>
       </div>
     )

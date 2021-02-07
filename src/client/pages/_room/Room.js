@@ -40,7 +40,10 @@ const Room = (props) => {
   const { state: { rooms } } = useContext(RoomsContext);
   const { sendSocket } = useContext(SocketContext);
   const { sendAlert } = useContext(AlertContext);
-  KeyBoardListener(game);
+
+  if (player || !player || !player.visitor) {
+    KeyBoardListener(game);
+  }
 
   const leaveRoom = (e) => {
     e.preventDefault()
@@ -80,7 +83,7 @@ const Room = (props) => {
     }
   ,[])
 
-  if (rooms && rooms[uuidRoom]) {
+  if (player && rooms && rooms[uuidRoom]) {
     if (!rooms[uuidRoom].isStart && (player.solo || player.admin)) {
       return (
         <div className="d-flex jcnt--center aitems--center fdir--row pt-3">
