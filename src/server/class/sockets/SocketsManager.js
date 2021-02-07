@@ -119,6 +119,19 @@ class SocketsManager {
       this.rooms.reGame(channel, uuidUser)
       this.updateRooms(this.rooms, socket)
     })
+    
+    socket.on('server/visitor-join-room', (data) => {
+      const { channel, uuidUser } = data
+      const result = this.rooms.changeVisitorMode(channel, uuidUser)
+      socket.emit('client/update-user', { uuidRoom: channel, player: result })
+      this.updateRooms(this.rooms, socket)
+    })
+
+    socket.on('server/end-game-visitor', (data) => {
+      const { channel } = data
+      this.rooms.visitorEnd(channel)
+      this.updateRooms(this.rooms, socket)
+    })
   }
 
   initListener = (socket) => {

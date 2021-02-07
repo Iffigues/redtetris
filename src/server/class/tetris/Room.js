@@ -19,7 +19,7 @@ class Room {
 	}
 	
 	reGame = (uuidUser) => {
-		const isLast = true;
+		let isLast = true;
 		_.map(this.players, player => {
 			if (player.requestNewGame === false && player.uuid !== uuidUser) {
 				isLast = false;
@@ -35,10 +35,27 @@ class Room {
 		}
 	}
 
+	visitorEnd = () => {
+		_.map(this.players, player => {
+			if (player.visitor) player.end = true;
+		})
+	}
+
 	addMessage = (data) => {
 		this.messages.push({
 			...data
 		})
+	}
+
+	changeVisitorMode = (uuidUser) => {
+		let result;
+		_.map(this.players, player => {
+			if (player.uuid === uuidUser) {
+				player.visitor = false;
+				result = player;
+			}
+		})
+		return result;
 	}
 
 	removePlayer = (uuidUser, endGame) => {
