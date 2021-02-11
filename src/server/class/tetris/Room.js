@@ -59,13 +59,7 @@ class Room {
 	}
 
 	removePlayer = (uuidUser, endGame) => {
-		let res = {};
-		_.map(this.players, player => {
-			if (player.uuid !== uuidUser) {
-				res[player.uuid] = player
-			}
-		})
-		this.players = _.cloneDeep(res);
+    delete this.players[uuidUser]
 
 		if (endGame) {
 			const isLastRequestNewGame = true;
