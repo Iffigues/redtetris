@@ -15,6 +15,7 @@ class Player extends Game {
 		this.time = 1000;
 		this.isPlaying = false;
 		this.visitor = false;
+    this.win = false;
 
 		this.currentMapGame = null
 		this.nextMapGame = null;
