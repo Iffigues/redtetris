@@ -51,11 +51,11 @@ class Game extends Piece {
 		}
 	}
 
-	createIntervalGame = () => {
+	createIntervalGame = async () => {
 		timer = setTimeout(() => {
 			if (this.isPlaying) {
 				if (!this.block) {
-					if (this.sheets.length === 0) this.addSheet();
+					this.addSheet();
 					this.block = _.cloneDeep(this.sheets.shift());
 					this.addSheet();
 					if (!this.canPose(this.block, 0, 0)) {
