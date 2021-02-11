@@ -20,11 +20,11 @@ const boxProps = {
 };
 
 
-const leaveRoom = (e, channel, uuidUser, endGame) => {
-  const { sendSocket } = useContext(SocketContext);
+const leaveRoom = (e, sendSocket, uuidRoom, uuidUser, endGame) => {
+  console.log("hello world")
   e.preventDefault()
   sendSocket('server/leave-room', {
-    channel,
+    uuidRoom,
     uuidUser,
     endGame
   })
@@ -60,7 +60,7 @@ const ReGame = ({ score, player, currentRoom }) => {
                 variant="contained"
                 color="secondary"
                 data-testid='btnLeaveGame'
-                onClick={e => leaveRoom(e, currentRoom.channel, player.uuid, true)}
+                onClick={e => leaveRoom(e, sendSocket, currentRoom.channel, player.uuid, true)}
               >
                 Quitter
               </Button>
@@ -117,8 +117,7 @@ const Board = ({ song, currentRoom, isEnd, uuidRoom, mapGame, mapGamePreview, is
   }
 
   useEffect(() => {
-    if (isEnd === true) {
-      console.log("hello world")
+    if (isEnd === true && currentRoom) {
       sendSocket('server/end-game-visitor', { channel: uuidRoom })
     }
   }, [isEnd])
@@ -130,10 +129,10 @@ const Board = ({ song, currentRoom, isEnd, uuidRoom, mapGame, mapGamePreview, is
         <div className="d-flex jcnt--center aitems--fs fdir--row">
           <div>
             <Button
-              id="songRoom"
-              data-testid='btnLeave'
+              id="visiorLeave"
+              data-testid='btnVisiorLeave'
               color="secondary"
-              onClick={e => leaveRoom(e, currentRoom.channel, player.uuid, false)}
+              onClick={e => leaveRoom(e, sendSocket, currentRoom.channel, player.uuid, false)}
             >
               Quitter la room { isEnd }
             </Button>

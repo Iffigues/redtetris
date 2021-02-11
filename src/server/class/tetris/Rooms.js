@@ -21,7 +21,9 @@ class Rooms {
   }
   
   visitorEnd = (channel) => {
-    this._data[channel].visitorEnd()
+    if (this._data[channel]) {
+      this._data[channel].visitorEnd()
+    }
   }
 
   reGame = (channel, uuidUser) => {

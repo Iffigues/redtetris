@@ -57,11 +57,15 @@ class SocketsManager {
       let { uuidRoom, uuidUser, endGame } = data;
       endGame = endGame || false
       const isLast = this.rooms.deletePlayer(uuidRoom, uuidUser, endGame)
-      this.updateRooms(this.rooms, socket)
       socket.emit('client/update-user', { uuidRoom: null, player: null })
-      if (isLast === true) this.rooms.deleteRoom(uuidRoom)
       this.updateRooms(this.rooms, socket)
-      socket.leave(uuidRoom);
+      console.log("Hello world1111")
+      if (isLast === true) {
+        this.rooms.deleteRoom(uuidRoom)
+        this.updateRooms(this.rooms, socket)
+      }
+      console.log("Hello world2222")
+      // socket.leave(uuidUser);
     });
     
     // join room
