@@ -26,6 +26,12 @@ class Rooms {
     }
   }
 
+  playerEnd = (channel, uuidUser) => {
+    if (this._data[channel]) {
+      this._data[channel].playerEnd(uuidUser);
+    }
+  }
+
   reGame = (channel, uuidUser) => {
     this._data[channel].reGame(uuidUser)
   }

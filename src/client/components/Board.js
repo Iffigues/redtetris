@@ -21,7 +21,6 @@ const boxProps = {
 
 
 const leaveRoom = (e, sendSocket, uuidRoom, uuidUser, endGame) => {
-  console.log("hello world")
   e.preventDefault()
   sendSocket('server/leave-room', {
     uuidRoom,
@@ -35,6 +34,11 @@ const ReGame = ({ score, player, currentRoom }) => {
   const { sendSocket } = useContext(SocketContext);
   const [haveSendReGame, setHaveSendReGame] = useState(false);
 
+  let nb_players = 0
+  _.map(currentRoom.players, player => {
+    if (!player.visitor) nb_players++;
+  })
+
   const wantReGame = (e) => {
     e.preventDefault()
     setHaveSendReGame(true)
@@ -46,8 +50,22 @@ const ReGame = ({ score, player, currentRoom }) => {
 
   return (
     <div className="width-100 d-flex jcnt--center aitems--center fdir--column pt-3">
-      <h1 className="aself--center">Vous avez perdu 😞</h1>
-      <h1 className="aself--center">Vous avez gagné 🔥</h1>
+      {
+        nb_players > 1
+        ?
+          currentRoom.finalScore.map((score, index) => {
+            <p key={index}>
+              { (index + 1) === 1 ? "🥇"
+                : (index + 1) === 2 ? "🥈"
+                : (index + 1) === 3 ? "🥉"
+                : `${index} -`
+              }
+              {score.login} {score.score}
+            </p>
+          })
+        : <p>Votre score final est de {currentRoom.players[player.uuid].score}</p>
+      }
+
       <p className="aself--center">Votre score final est de: { score }</p>
       {
         !haveSendReGame
@@ -108,6 +126,7 @@ const Board = ({ song, currentRoom, isEnd, uuidRoom, mapGame, mapGamePreview, is
   const { state: { player } } = useContext(UserContext);
   const { sendSocket } = useContext(SocketContext);
 
+
   const joinRoom = (e, channel, uuidUser) => {
     e.preventDefault()
     sendSocket('server/visitor-join-room', {
@@ -118,7 +137,8 @@ const Board = ({ song, currentRoom, isEnd, uuidRoom, mapGame, mapGamePreview, is
 
   useEffect(() => {
     if (isEnd === true && currentRoom) {
-      sendSocket('server/end-game-visitor', { channel: uuidRoom })
+      // sendSocket('server/end-game-visitor', { channel: uuidRoom })
+      // sendSocket('server/end-game', { channel: uuidRoom, uuidUser: player.uuid })
     }
   }, [isEnd])
 

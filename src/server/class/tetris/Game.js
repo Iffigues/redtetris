@@ -11,9 +11,7 @@ class Game extends Piece {
 		this.timing = 1000;
 		this.shadow = null;
 		this.action = null;
-		this.isPlaying = false;
 		this.lock = true;
-		this.barre = false;
 		this.cantPose = false
 		this.action = this.initActionObject();
 		// this.createIntervalGame();
@@ -42,11 +40,12 @@ class Game extends Piece {
 
 	makeShadow = (block) => {
 		let r = this.blockCPY(block);
-		if (!this.canPose(r,0,1)) {
+		if (!this.canPose(r, 0, 1)) {
 			this.shadow = null;
 		} else {
-			while (this.canPose(r,0,1))
-				r.y = r.y + 1;
+			while (this.canPose(r, 0, 1)) {
+        r.y = r.y + 1;
+      }
 			this.shadow = r;
 		}
 	}
@@ -88,17 +87,13 @@ class Game extends Piece {
 		}, this.timing)
 	}
 
-	setIsPlaying = (isPlaying) => {
-		this.isPlaying = isPlaying
-	}
-
 	sendMap = () => {
 		this.makeShadow(this.block);
 		if (this.shadow) this.draw(this.shadow, 8);
 		this.draw(this.block, this.block.type);
 		this.currentMapGame = _.cloneDeep(this.nextMapGame);
 		if (this.updateRoomFunction) this.updateRoomFunction();
-		if (this.shadow) this.draw(this.shadow,0);
+		if (this.shadow) this.draw(this.shadow, 0);
 		this.draw(this.block, 0);
 	}
 
@@ -182,7 +177,6 @@ class Game extends Piece {
 			if (u === 1) {
 				this.score = Math.ceil((this.score + 1000) * 1.1);
 				if (this.timing > 100) {
-          console.log("here");
           this.timing = this.timing - 30;
         }
 				this.destroyFunc(this.uuid);

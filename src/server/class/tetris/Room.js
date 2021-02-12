@@ -15,8 +15,30 @@ class Room {
 		this.channel = channel;
 		this.players = {};
 		this.messages = [];
+    this.finalScore = [];
 		this.addPlayer(player);
+
 	}
+
+  playerEnd = (uuidUser) => {
+    // let isLast = false;
+    // if (!this.players[uuidUser].visitor) {
+    //   this.finalScore.push({
+    //     login: _.clone(this.players[uuidUser].name),
+    //     score: _.clone(this.players[uuidUser].score)
+    //   })
+    //   this.finalScore = _.sortBy(this.finalScore, ["score"])
+    // }
+    // _.map(this.players, player => {
+    //   console.log("player:", player.isPlaying)
+    //   if (player.end === false && player.uuid !== uuidUser) {
+    //     isLast = true;
+    //   }
+    // })
+    // if (isLast) {
+    //   this.players[uuidUser].win = true
+    // }
+  }
 	
 	reGame = (uuidUser) => {
 		let isLast = true;
@@ -27,6 +49,7 @@ class Room {
 		})
 
 		if (isLast) {
+      this.finalScore = [];
 			_.map(this.players, player => {
 				player.initGame();
 			})

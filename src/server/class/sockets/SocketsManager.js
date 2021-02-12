@@ -136,6 +136,12 @@ class SocketsManager {
       this.rooms.visitorEnd(channel)
       this.updateRooms(this.rooms, socket)
     })
+
+    socket.on('server/end-game', (data) => {
+      const { channel, uuidUser } = data
+      this.rooms.playerEnd(channel, uuidUser)
+      this.updateRooms(this.rooms, socket)
+    })
   }
 
   initListener = (socket) => {
