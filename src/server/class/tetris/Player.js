@@ -57,7 +57,7 @@ class Player extends Game {
 	}
 
 	destroyLine = () => {
-		this.nextMapGame[19 - this.indestructible].fill(-1);
+		this.nextMapGame[19 - this.indestructible].fill(-2);
 		this.indestructible = this.indestructible + 1;
 		if (this.indestructible === 19) {
 			return;
@@ -66,11 +66,11 @@ class Player extends Game {
 
 	startGame = () => {
 		this.visitor = false
-		this.setIsPlaying(true)
+    this.isPlaying = true
 	}
 
 	changePlaying = (isPlaying) => {
-		this.setIsPlaying(isPlaying)
+    this.isPlaying = isPlaying
 	}
 }
 

@@ -138,8 +138,8 @@ class SocketsManager {
     })
 
     socket.on('server/end-game', (data) => {
-      const { channel, uuidRoom } = data
-      this.rooms.playerEnd(channel, uuidRoom)
+      const { channel, uuidUser } = data
+      this.rooms.playerEnd(channel, uuidUser)
       this.updateRooms(this.rooms, socket)
     })
   }
