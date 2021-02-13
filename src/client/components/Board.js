@@ -36,7 +36,6 @@ const ReGame = ({ player, currentRoom }) => {
     setFinalScore(currentRoom.finalScore)
   }, [currentRoom.finalScore])
 
-  console.log("finalScore", finalScore)
   const wantReGame = (e) => {
     e.preventDefault()
     setHaveSendReGame(true)

@@ -10,12 +10,8 @@ class Player extends Game {
 		this.uuid = uuidv4()
 		this.name = name
 		this.admin = admin;
-		this.live = true;
 		this.indestructible = 0;
 		this.time = 1000;
-		this.isPlaying = false;
-		this.visitor = false;
-    this.win = false;
 
 		this.currentMapGame = null
 		this.nextMapGame = null;
@@ -24,6 +20,7 @@ class Player extends Game {
 		this.score = null;
 		this.end = null;
 		this.requestNewGame = null;
+    this.visitor = false;
 		this.initGame();
 	}
 	
@@ -36,8 +33,10 @@ class Player extends Game {
 		this.sheets = _.cloneDeep([]);
 		this.score = 0;
 		this.end = false;
+    this.isPlaying = false;
 		this.requestNewGame = false;
-		this.createIntervalGame();
+    this.visitor = false;
+    this.timing = 1000;
 	}
 
 	setRequestNewGame = (value) => {
@@ -65,8 +64,8 @@ class Player extends Game {
 	}
 
 	startGame = () => {
-		this.visitor = false
     this.isPlaying = true
+    this.createIntervalGame();
 	}
 
 	changePlaying = (isPlaying) => {

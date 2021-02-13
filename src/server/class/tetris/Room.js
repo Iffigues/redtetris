@@ -17,7 +17,6 @@ class Room {
 		this.messages = [];
     this.finalScore = [];
 		this.addPlayer(player);
-
 	}
 
   playerEnd = (uuidUser) => {
@@ -30,8 +29,7 @@ class Room {
       this.finalScore = _.sortBy(this.finalScore, ["score"])
     }
     _.map(this.players, player => {
-      console.log("player:", player.isPlaying)
-      if (player.end === false && player.uuid !== uuidUser) {
+      if (!player.end && player.uuid !== uuidUser) {
         isLast = true;
       }
     })
@@ -43,7 +41,7 @@ class Room {
 	reGame = (uuidUser) => {
 		let isLast = true;
 		_.map(this.players, player => {
-			if (player.requestNewGame === false && player.uuid !== uuidUser) {
+			if (!player.requestNewGame && player.uuid !== uuidUser) {
 				isLast = false;
 			}
 		})
@@ -51,8 +49,13 @@ class Room {
 		if (isLast) {
       this.finalScore = [];
 			_.map(this.players, player => {
-				player.initGame();
+        if (!player.visitor) {
+          player.initGame();
+          player.addSheetFunc(this.addSheet);
+          player.addDestroyFunc(this.destroyer);
+        }
 			})
+      this.startGame();
 		} else {
 			this.players[uuidUser].setRequestNewGame(true)
 		}
@@ -65,9 +68,7 @@ class Room {
 	}
 
 	addMessage = (data) => {
-		this.messages.push({
-			...data
-		})
+		this.messages.push({ ...data })
 	}
 
 	changeVisitorMode = (uuidUser) => {
@@ -75,6 +76,7 @@ class Room {
 		_.map(this.players, player => {
 			if (player.uuid === uuidUser) {
 				player.visitor = false;
+        player.setRequestNewGame(true);
 				result = player;
 			}
 		})
@@ -113,11 +115,12 @@ class Room {
 	}	
 
 	addPlayer = (player) => {
-		player.addSheetFunc(this.addSheet);
-		player.addDestroyFunc(this.destroyer);
-		if (this.isStart) {
-			player.visitor = true
-		}
+    if (this.isStart) {
+      player.visitor = true
+		} else {
+      player.addSheetFunc(this.addSheet);
+      player.addDestroyFunc(this.destroyer);
+    }
 		this.players[player.uuid] = player;
 	}
 
@@ -135,7 +138,11 @@ class Room {
 	startGame = () => {
 		this.isPlaying = true;
 		this.isStart = true;
-		_.map(this.players, elem => elem.startGame());
+		_.map(this.players, player => {
+      if (!player.visitor) {
+        player.startGame()
+      }
+    });
 	}
 
 	changeIsPlaying = () => {
