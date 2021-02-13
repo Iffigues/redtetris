@@ -7,11 +7,11 @@ class Game extends Piece {
 		super();
 		this.updateRoomFunction = updateRoomFunction;
 		this.block = null;
-		this.timing = 1000;
 		this.shadow = null;
 		this.action = null;
 		this.lock = true;
 		this.cantPose = false
+    this.timing = 1000
 		this.action = this.initActionObject();
 		// this.createIntervalGame();
 	}
@@ -57,9 +57,8 @@ class Game extends Piece {
 					this.block = _.cloneDeep(this.sheets.shift());
 					this.addSheet();
 					if (!this.canPose(this.block, 0, 0)) {
-            console.log("finishhhhh")
 						this.end = true;
-						clearInterval(timer);
+						clearTimeout(timer);
 						this.block = null;
 						this.updateRoomFunction();
 						return;

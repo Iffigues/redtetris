@@ -64,7 +64,6 @@ class SocketsManager {
         this.rooms.deleteRoom(uuidRoom)
         this.updateRooms(this.rooms, socket)
       }
-      console.log("Hello world2222")
       // socket.leave(uuidUser);
     });
     
@@ -81,6 +80,7 @@ class SocketsManager {
       socket.emit('client/join-room', { uuidRoom: channel, player })
       // socket.to(channel).emit('client/global/join-room', { player })
     });
+    
   }
 
   // Game Listener
@@ -127,8 +127,9 @@ class SocketsManager {
     
     socket.on('server/visitor-join-room', (data) => {
       const { channel, uuidUser } = data
-      const result = this.rooms.changeVisitorMode(channel, uuidUser)
-      socket.emit('client/update-user', { uuidRoom: channel, player: result })
+      console.log("hello world")
+      const player = this.rooms.changeVisitorMode(channel, uuidUser)
+      socket.emit('client/update-user', { uuidRoom: channel, player })
       this.updateRooms(this.rooms, socket)
     })
 
