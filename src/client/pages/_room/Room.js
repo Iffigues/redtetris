@@ -35,7 +35,7 @@ const Room = (props) => {
   const classes = useStyles();
   const history = useHistory()
   const [game, setGame] = useState(true);
-  const [song, setSong] = useState(true);
+  const [song, setSong] = useState(false);
   const { state: { player } } = useContext(UserContext);
   const { state: { rooms } } = useContext(RoomsContext);
   const { sendSocket } = useContext(SocketContext);

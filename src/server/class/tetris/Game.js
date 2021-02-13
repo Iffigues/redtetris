@@ -2,7 +2,6 @@ import _ from 'lodash'
 import Piece from './Piece'
 import regeneratorRuntime from "regenerator-runtime";
 
-let timer = null;
 class Game extends Piece {
 	constructor(updateRoomFunction) {
 		super();
@@ -51,13 +50,14 @@ class Game extends Piece {
 	}
 
 	createIntervalGame = async () => {
-		timer = setTimeout(() => {
+		const timer = setTimeout(() => {
 			if (this.isPlaying) {
 				if (!this.block) {
 					this.addSheet();
 					this.block = _.cloneDeep(this.sheets.shift());
 					this.addSheet();
 					if (!this.canPose(this.block, 0, 0)) {
+            console.log("finishhhhh")
 						this.end = true;
 						clearInterval(timer);
 						this.block = null;

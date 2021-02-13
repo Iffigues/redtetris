@@ -77,8 +77,9 @@ class SocketsManager {
       socket.emit('client/join-room', { uuidRoom: channel, player });
       socket.join(channel);
       socket.join(player.uuid);
+      this.updateRooms(this.rooms, socket)
       socket.emit('client/join-room', { uuidRoom: channel, player })
-      socket.to(channel).emit('client/global/join-room', { player })
+      // socket.to(channel).emit('client/global/join-room', { player })
     });
   }
 

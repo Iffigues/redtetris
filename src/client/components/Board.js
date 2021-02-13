@@ -1,7 +1,6 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useCallback, useState, useContext, useEffect } from 'react';
 import _ from 'lodash';
 import { Button, Card } from '@material-ui/core';
-
 
 import { Context as UserContext } from "../context/UserContext";
 import { SocketContext } from "../context/SocketContext";
@@ -19,7 +18,6 @@ const boxProps = {
   m: 1
 };
 
-
 const leaveRoom = (e, sendSocket, uuidRoom, uuidUser, endGame) => {
   e.preventDefault()
   sendSocket('server/leave-room', {
@@ -29,16 +27,16 @@ const leaveRoom = (e, sendSocket, uuidRoom, uuidUser, endGame) => {
   })
 }
 
-
-const ReGame = ({ score, player, currentRoom }) => {
+const ReGame = ({ player, currentRoom }) => {
   const { sendSocket } = useContext(SocketContext);
   const [haveSendReGame, setHaveSendReGame] = useState(false);
+  const [finalScore, setFinalScore] = useState([]);
 
-  let nb_players = 0
-  _.map(currentRoom.players, player => {
-    if (!player.visitor) nb_players++;
-  })
+  useEffect(() => {
+    setFinalScore(currentRoom.finalScore)
+  }, [currentRoom.finalScore])
 
+  console.log("finalScore", finalScore)
   const wantReGame = (e) => {
     e.preventDefault()
     setHaveSendReGame(true)
@@ -51,13 +49,13 @@ const ReGame = ({ score, player, currentRoom }) => {
   return (
     <div className="width-100 d-flex jcnt--center aitems--center fdir--column pt-3">
       {
-        nb_players > 1
+        (_.filter(currentRoom.players, player => !player.visitor).length > 1)
         ?
-          currentRoom.finalScore.map((score, index) => {
+          finalScore.map((score, index) => {
             <p key={index}>
-              { (index + 1) === 1 ? "🥇"
-                : (index + 1) === 2 ? "🥈"
-                : (index + 1) === 3 ? "🥉"
+              { (index + 1) === 1 ? "🥇 -"
+                : (index + 1) === 2 ? "🥈 -"
+                : (index + 1) === 3 ? "🥉 -"
                 : `${index} -`
               }
               {score.login} {score.score}
@@ -65,8 +63,7 @@ const ReGame = ({ score, player, currentRoom }) => {
           })
         : <p>Votre score final est de {currentRoom.players[player.uuid].score}</p>
       }
-
-      <p className="aself--center">Votre score final est de: { score }</p>
+      
       {
         !haveSendReGame
         ?
@@ -106,22 +103,6 @@ const ReGame = ({ score, player, currentRoom }) => {
   )
 }
 
-const RenderGame = ({ song, isEnd, mapGame, currentRoom, score, player }) => {
-  if (isEnd) {
-    return (
-      <ReGame score={score} player={player} currentRoom={currentRoom} />
-    )
-  } else {
-    return (
-      <div className="width-100">
-        <Card {...boxProps} variant="outlined">
-          <Game game={ { game: mapGame, isOtherUser: false } } song={song} />
-        </Card>
-      </div>
-    )
-  }
-}
-
 const Board = ({ song, currentRoom, isEnd, uuidRoom, mapGame, mapGamePreview, isAlone, score, sheet }) => {
   const { state: { player } } = useContext(UserContext);
   const { sendSocket } = useContext(SocketContext);
@@ -137,8 +118,8 @@ const Board = ({ song, currentRoom, isEnd, uuidRoom, mapGame, mapGamePreview, is
 
   useEffect(() => {
     if (isEnd === true && currentRoom) {
-      // sendSocket('server/end-game-visitor', { channel: uuidRoom })
-      // sendSocket('server/end-game', { channel: uuidRoom, uuidUser: player.uuid })
+      sendSocket('server/end-game-visitor', { channel: uuidRoom })
+      sendSocket('server/end-game', { channel: uuidRoom, uuidUser: player.uuid })
     }
   }, [isEnd])
 
@@ -190,14 +171,21 @@ const Board = ({ song, currentRoom, isEnd, uuidRoom, mapGame, mapGamePreview, is
   } else {
     return (
       <div className="d-flex jcnt--start aitems--fs fdir--row">
-        <RenderGame
-          song={song}
-          isEnd={isEnd}
-          mapGame={mapGame}
-          currentRoom={currentRoom}
-          score={score}
-          player={player}
-        />
+    
+        {
+          (isEnd)
+          ? <ReGame
+              player={player}
+              currentRoom={currentRoom}
+            />
+          : (
+              <div className="width-100">
+                <Card {...boxProps} variant="outlined">
+                  <Game game={ { game: mapGame, isOtherUser: false } } song={song} />
+                </Card>
+              </div>
+            )
+        }
         <div className="aself--str">
           <Preview
             mapGamePreview={ { game: mapGamePreview, isOtherUser: true} }
