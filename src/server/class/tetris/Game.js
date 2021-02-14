@@ -70,10 +70,9 @@ class Game extends Piece {
 				if (this.cantPose) {
 					this.cantPose = false;
 					if (!this.canPose(this.block, 0, 1)) {
-						console.log("hello world")
 						this.draw(this.block, this.block.type);
 						this.block = null;
-						this.verifLine();
+						this.destroyFunc((this.uuid, this.verifLine()));
 					}
 				} 
 				if (this.block) {
@@ -154,7 +153,7 @@ class Game extends Piece {
 		this.draw(this.block, this.block.type);
 		this.addSheet();
 		this.block = null;
-		this.verifLine();
+		this.destroyFunc((this.uuid, this.verifLine()));
 		this.lock = true;
 	}
 
@@ -181,12 +180,12 @@ class Game extends Piece {
 			}
 
 			if (u === 1) {
+				arr = arr + 1;
 				this.score = Math.ceil((this.score + 1000) * 1.1);
 				if (this.timing > 100) this.timing = this.timing -30;
-				this.destroyFunc(this.uuid);
-				arr = arr + 1;
+				//this.destroyFunc(this.uuid);
 				this.wash(i);
-				this.verifLine();
+				arr = arr + this.verifLine();
 			}
 		}
 		return arr;

@@ -55,11 +55,12 @@ class Player extends Game {
 		this.addSheet();
 	}
 
-	destroyLine = () => {
-		this.nextMapGame[19 - this.indestructible].fill(-1);
-		this.indestructible = this.indestructible + 1;
-		if (this.indestructible === 19) {
-			return;
+	destroyLine = (i) => {
+		i = i - 1;
+                while (i) {
+			this.nextMapGame[19 - this.indestructible].fill(-1);
+			this.indestructible = this.indestructible + 1;
+			i = i - 1;
 		}
 	}
 
