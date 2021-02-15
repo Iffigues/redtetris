@@ -9,9 +9,9 @@ grid-template-rows: repeat(
 );
 grid-template-columns: repeat(${props => props.width}, 1fr);
 grid-gap: 2px;
-border: 2px solid rgba(222, 242, 254, 0.6);
+border: 2px solid rgba(0, 0, 0, 0.2);
 width: 100%;
 max-width: ${props => (props.isOtherUser) ? '15vw' : '25vw'};
-background: #fffff;
+background-color: rgba(0, 0, 0, 0.2);
 `
 export default styledStage;

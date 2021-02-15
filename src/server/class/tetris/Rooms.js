@@ -19,6 +19,18 @@ class Rooms {
       this._data[item.channel].player.push(item.player);
     }
   }
+  
+  visitorEnd = (channel) => {
+    if (this._data[channel]) {
+      this._data[channel].visitorEnd()
+    }
+  }
+
+  playerEnd = (channel, uuidUser) => {
+    if (this._data[channel]) {
+      this._data[channel].playerEnd(uuidUser);
+    }
+  }
 
   reGame = (channel, uuidUser) => {
     this._data[channel].reGame(uuidUser)
@@ -49,6 +61,10 @@ class Rooms {
       return Object.keys(this._data[channel].players).length === 0
     }
     return false;
+  }
+
+  changeVisitorMode = (channel, uuidUser) => {
+    return this._data[channel].changeVisitorMode(uuidUser)
   }
 
   changeIsPlaying = (channel) => {
