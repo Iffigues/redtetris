@@ -24,3 +24,12 @@ h1 {
 .medium-text {
   font-size: 14px;
 }
+
+.text {
+  &--green {
+    color: rgb(92, 194, 92);
+  }
+  &--red {
+    color: rgb(194, 90, 90);
+  }
+}

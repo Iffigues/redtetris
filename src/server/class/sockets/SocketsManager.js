@@ -2,6 +2,7 @@ import socketIo from 'socket.io';
 import Room from '../tetris/Room';
 import instanceRooms from '../tetris/Rooms';
 import Player from '../tetris/Player';
+import _ from 'lodash'
 
 let sockets = {} //https://stackoverflow.com/questions/40816355/socket-io-send-disconnect-event-with-parameter
 class SocketsManager {
@@ -42,12 +43,23 @@ class SocketsManager {
   roomListener = (socket) => {
     socket.on('server/create-room', (data) => {
       const { login, playSolo } = data
+      const date = new Date()
       const player = new Player(login, () => this.updateRooms(), true);
       const room = new Room(player, playSolo)
       this.rooms.addRoom(room);
       sockets[socket.id] = { channel: room.channel, uuidUser: player.uuid }
       socket.join(room.channel);
       socket.join(player.uuid);
+
+
+      this.rooms.addMessage(room.channel, {
+        login: null,
+        uuidUser: -1,
+        time: `${date.getHours()}:${date.getMinutes()}`,
+        content: `${login} à rejoint la room`
+      })
+
+
       this.updateRooms(this.rooms, socket)
       socket.emit('client/created-room', { uuidRoom: room.channel, player })
     });
@@ -55,11 +67,24 @@ class SocketsManager {
     // leave room
     socket.on('server/leave-room', (data) => {
       let { uuidRoom, uuidUser, endGame } = data;
+      const date = new Date()
       endGame = endGame || false
+
+      const player = _.filter(this.rooms._data[uuidRoom].players, player => player.uuid === uuidUser)
+
+      this.rooms.addMessage(uuidRoom, {
+        login: null,
+        uuidUser: -2,
+        time: `${date.getHours()}:${date.getMinutes()}`,
+        content: `${player[0].name} à quitté la room`
+      })
+
       const isLast = this.rooms.deletePlayer(uuidRoom, uuidUser, endGame)
       socket.emit('client/update-user', { uuidRoom: null, player: null })
+
+
       this.updateRooms(this.rooms, socket)
-      console.log("Hello world1111")
+      
       if (isLast === true) {
         this.rooms.deleteRoom(uuidRoom)
         this.updateRooms(this.rooms, socket)
@@ -70,12 +95,21 @@ class SocketsManager {
     // join room
     socket.on('server/join-room', (data) => {
       const { channel, login } = data;
+      const date = new Date()
       const player = new Player(login, () => this.updateRooms());
       this.rooms.addPlayer(channel, player);
       this.updateRooms(this.rooms, socket)
       socket.emit('client/join-room', { uuidRoom: channel, player });
       socket.join(channel);
       socket.join(player.uuid);
+
+      this.rooms.addMessage(channel, {
+        login: null,
+        uuidUser: -1,
+        time: `${date.getHours()}:${date.getMinutes()}`,
+        content: `${login} à rejoint la room`
+      })
+
       this.updateRooms(this.rooms, socket)
       socket.emit('client/join-room', { uuidRoom: channel, player })
       // socket.to(channel).emit('client/global/join-room', { player })
