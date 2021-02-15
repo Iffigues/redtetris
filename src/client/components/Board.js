@@ -27,14 +27,9 @@ const leaveRoom = (e, sendSocket, uuidRoom, uuidUser, endGame) => {
   })
 }
 
-const ReGame = ({ player, currentRoom }) => {
+const ReGame = ({ finalScore, player, currentRoom }) => {
   const { sendSocket } = useContext(SocketContext);
   const [haveSendReGame, setHaveSendReGame] = useState(false);
-  const [finalScore, setFinalScore] = useState([]);
-
-  useEffect(() => {
-    setFinalScore(currentRoom.finalScore)
-  }, [currentRoom.finalScore])
 
   const wantReGame = (e) => {
     e.preventDefault()
@@ -50,7 +45,7 @@ const ReGame = ({ player, currentRoom }) => {
       {
         (_.filter(currentRoom.players, player => !player.visitor).length > 1)
         ?
-          finalScore.map((score, index) => {
+          finalScore.map((score, index) => (
             <p key={index}>
               { (index + 1) === 1 ? "🥇 -"
                 : (index + 1) === 2 ? "🥈 -"
@@ -59,7 +54,7 @@ const ReGame = ({ player, currentRoom }) => {
               }
               {score.login} {score.score}
             </p>
-          })
+          ))
         : <p>Votre score final est de {currentRoom.players[player.uuid].score}</p>
       }
       
@@ -102,7 +97,7 @@ const ReGame = ({ player, currentRoom }) => {
   )
 }
 
-const Board = ({ song, currentRoom, isEnd, uuidRoom, mapGame, mapGamePreview, isAlone, score, sheet }) => {
+const Board = ({ finalScore, song, currentRoom, isEnd, uuidRoom, mapGame, mapGamePreview, isAlone, score, sheet }) => {
   const { state: { player } } = useContext(UserContext);
   const { sendSocket } = useContext(SocketContext);
 
@@ -176,6 +171,7 @@ const Board = ({ song, currentRoom, isEnd, uuidRoom, mapGame, mapGamePreview, is
           ? <ReGame
               player={player}
               currentRoom={currentRoom}
+              finalScore={finalScore}
             />
           : (
               <div className="width-100">

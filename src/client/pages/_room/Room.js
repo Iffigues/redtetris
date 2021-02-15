@@ -7,7 +7,6 @@ import Button from '@material-ui/core/Button';
 import Modal from '@material-ui/core/Modal';
 import _ from 'lodash'
 
-import KeyBoardListener from '../../listeners/KeyBoardListener'
 import { Context as AlertContext } from "../../context/AlertContext";
 import { Context as UserContext } from "../../context/UserContext";
 import { Context as RoomsContext } from "../../context/RoomsContext";
@@ -34,16 +33,12 @@ const Room = (props) => {
   const { uuidRoom } = match.params;
   const classes = useStyles();
   const history = useHistory()
-  const [game, setGame] = useState(true);
   const [song, setSong] = useState(false);
   const { state: { player } } = useContext(UserContext);
   const { state: { rooms } } = useContext(RoomsContext);
   const { sendSocket } = useContext(SocketContext);
   const { sendAlert } = useContext(AlertContext);
 
-  if (player || !player || !player.visitor) {
-    KeyBoardListener(game);
-  }
 
   const leaveRoom = (e) => {
     e.preventDefault()
@@ -69,7 +64,6 @@ const Room = (props) => {
   
   useEffect(() => {
     if (!player || !rooms || !rooms[uuidRoom]) {
-      setGame(false);
       history.replace('/');
     }
   }, [player])
@@ -170,6 +164,7 @@ const Room = (props) => {
             mapGamePreview={_.filter(rooms[uuidRoom].players, item => item.uuid !== player.uuid)[0]?.currentMapGame}
             score={rooms[uuidRoom].players[player.uuid].score}
             sheet={rooms[uuidRoom].players[player.uuid].sheets[0]}
+            finalScore={rooms[uuidRoom].finalScore}
             uuidRoom={uuidRoom}
           />
         </div>
