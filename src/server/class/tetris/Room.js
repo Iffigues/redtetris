@@ -106,10 +106,10 @@ class Room {
 		_.map(this.players, elem => elem.sheets.push(_.cloneDeep(sheet)));
 	}
 
-	destroyer = (uuid) => {
+	destroyer = (uuid, i) => {
 		_.map(this.players, player => {
 			if (player.uuid !== uuid) {
-				player.destroyLine()
+				player.destroyLine(i)
 			}
 		})
 	}	
