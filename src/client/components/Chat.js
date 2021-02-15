@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Button, Input } from '@material-ui/core';
 
 import { Context as RoomsContext } from "../context/RoomsContext";
@@ -10,6 +10,30 @@ const Chat = ({ uuidRoom }) => {
   const { state: { player } } = useContext(UserContext);
   const { state: { rooms } } = useContext(RoomsContext);
   const [message, setMessage] = useState('');
+  const [game, setGame] = useState(true);
+  const keysCode = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', ' ', 'Escape'];
+
+  useEffect(() => {
+    const getKeyUp = (event) => {
+      const { key } = event;
+      if (keysCode.includes(key)) {
+        if (key === 'Escape') {
+          sendSocket('server/pause-resume', { channel: uuidRoom })
+        } else {
+          sendSocket('server/key-up', { key, channel: uuidRoom, uuidUser: player.uuid  })
+        }
+      }
+    }
+    if (game) {
+      document.addEventListener('keyup', getKeyUp);
+    } else {
+      document.removeEventListener('keyup', getKeyUp);
+    }
+    return () => {
+      document.removeEventListener('keyup', getKeyUp);
+    };
+  }, [game])
+
 
   const sendMessage = (e) => {
     e.preventDefault();
@@ -26,6 +50,16 @@ const Chat = ({ uuidRoom }) => {
     }
   }
 
+  useEffect(() => {
+    const inputMessage = document.getElementById('input-message')
+    inputMessage.addEventListener('focusout', (event) => {
+      setGame(true);
+    });
+    inputMessage.addEventListener('focus', (event) => {
+      setGame(false);
+    });
+  }, [])
+
 return (
   <div>
     <div id="chat" className="container--chat">
@@ -34,6 +68,7 @@ return (
             rooms && rooms[uuidRoom].messages.map(msg => {
               return (
                 <div
+                  key={msg}
                   className={`${msg.uuidUser === player.uuid
                               ? 'aself--fend bubble--me'
                               : 'aself--fstart bubble--other'}
@@ -65,7 +100,7 @@ return (
               name="message"
               label="message"
               type="message"
-              id="message"
+              id="input-message"
               inputProps={{
                 'data-testid': 'messageChat'
               }}

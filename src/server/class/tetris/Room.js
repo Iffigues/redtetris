@@ -26,7 +26,7 @@ class Room {
         login: _.clone(this.players[uuidUser].name),
         score: _.clone(this.players[uuidUser].score)
       })
-      this.finalScore = _.sortBy(this.finalScore, ["score"])
+      this.finalScore = this.finalScore.sort((a, b) => a.score + b.score);
     }
     _.map(this.players, player => {
       if (!player.end && player.uuid !== uuidUser) {
