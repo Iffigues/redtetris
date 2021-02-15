@@ -66,23 +66,35 @@ return (
       <div className="chat d-flex fdir--column">
         {
             rooms && rooms[uuidRoom].messages.map(msg => {
-              return (
-                <div
-                  key={msg}
-                  className={`${msg.uuidUser === player.uuid
-                              ? 'aself--fend bubble--me'
-                              : 'aself--fstart bubble--other'}
-                              aself--fstart
-                              pb-2
-                              bubble
-                            `}
-                >
-                  <p>
-                    <span className="bold medium-text">{ msg.login }:</span> { msg.content } <br />
-                  </p>
-                  <p className="thin small-text pt-0">{msg.time}</p>
-                </div>
-              )
+              if (!msg.login) {
+                return (
+                  <>
+                    <p key={msg}>
+                      <span className={`bold medium-text ${(msg.uuidUser === -1) ? "text--green" : "text--red"}`}>
+                        {msg.time} -- { msg.content }
+                      </span><br />
+                    </p>
+                  </>
+                )
+              } else {
+                  return (
+                    <div
+                    key={msg}
+                    className={`${msg.uuidUser === player.uuid
+                      ? 'aself--fend bubble--me'
+                      : 'aself--fstart bubble--other'}
+                      aself--fstart
+                      pb-2
+                      bubble
+                      `}
+                      >
+                    <p>
+                      <span className="bold medium-text">{ msg.login }:</span> { msg.content } <br />
+                    </p>
+                    <p className="thin small-text pt-0">{msg.time}</p>
+                  </div>
+                )
+              }
             })
           }
         </div>
