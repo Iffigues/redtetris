@@ -56,12 +56,7 @@ class Player extends Game {
 	}
 
 	destroyLine = (i) => {
-<<<<<<< HEAD
-                while (i > 1) {
-=======
-		i = i - 1;
-    while (i) {
->>>>>>> 4f45b91d23e6cc39c475bbf48258d2882b9418dc
+   		 while (i > 1) {
 			this.nextMapGame[19 - this.indestructible].fill(-1);
 			this.indestructible = this.indestructible + 1;
 			i = i - 1;
