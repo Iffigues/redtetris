@@ -15,40 +15,76 @@ class Room {
 		this.channel = channel;
 		this.players = {};
 		this.messages = [];
+    this.finalScore = [];
 		this.addPlayer(player);
 	}
+
+  playerEnd = (uuidUser) => {
+    let isLast = false;
+    if (!this.players[uuidUser].visitor) {
+      this.finalScore.push({
+        login: _.clone(this.players[uuidUser].name),
+        score: _.clone(this.players[uuidUser].score)
+      })
+      this.finalScore = _.sortBy(this.finalScore, ["score"])
+    }
+    _.map(this.players, player => {
+      if (!player.end && player.uuid !== uuidUser) {
+        isLast = true;
+      }
+    })
+    if (isLast) {
+      this.players[uuidUser].win = true
+    }
+  }
 	
 	reGame = (uuidUser) => {
-		const isLast = true;
+		let isLast = true;
 		_.map(this.players, player => {
-			if (player.requestNewGame === false && player.uuid !== uuidUser) {
+			if (!player.requestNewGame && player.uuid !== uuidUser) {
 				isLast = false;
 			}
 		})
 
 		if (isLast) {
+      this.finalScore = [];
 			_.map(this.players, player => {
-				player.initGame();
+        if (!player.visitor) {
+          player.initGame();
+          player.addSheetFunc(this.addSheet);
+          player.addDestroyFunc(this.destroyer);
+        }
 			})
+      this.startGame();
 		} else {
 			this.players[uuidUser].setRequestNewGame(true)
 		}
 	}
 
-	addMessage = (data) => {
-		this.messages.push({
-			...data
+	visitorEnd = () => {
+		_.map(this.players, player => {
+			if (player.visitor) player.end = true;
 		})
 	}
 
-	removePlayer = (uuidUser, endGame) => {
-		let res = {};
+	addMessage = (data) => {
+		this.messages.push({ ...data })
+	}
+
+	changeVisitorMode = (uuidUser) => {
+		let result;
 		_.map(this.players, player => {
-			if (player.uuid !== uuidUser) {
-				res[player.uuid] = player
+			if (player.uuid === uuidUser) {
+				player.visitor = false;
+        player.setRequestNewGame(true);
+				result = player;
 			}
 		})
-		this.players = _.cloneDeep(res);
+		return result;
+	}
+
+	removePlayer = (uuidUser, endGame) => {
+    delete this.players[uuidUser]
 
 		if (endGame) {
 			const isLastRequestNewGame = true;
@@ -79,11 +115,12 @@ class Room {
 	}	
 
 	addPlayer = (player) => {
-		player.addSheetFunc(this.addSheet);
-		player.addDestroyFunc(this.destroyer);
-		if (this.isStart) {
-			player.visitor = true
-		}
+    if (this.isStart) {
+      player.visitor = true
+		} else {
+      player.addSheetFunc(this.addSheet);
+      player.addDestroyFunc(this.destroyer);
+    }
 		this.players[player.uuid] = player;
 	}
 
@@ -101,7 +138,11 @@ class Room {
 	startGame = () => {
 		this.isPlaying = true;
 		this.isStart = true;
-		_.map(this.players, elem => elem.startGame());
+		_.map(this.players, player => {
+      if (!player.visitor) {
+        player.startGame()
+      }
+    });
 	}
 
 	changeIsPlaying = () => {

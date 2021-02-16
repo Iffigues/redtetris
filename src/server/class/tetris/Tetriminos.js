@@ -141,7 +141,7 @@ class Block {
 		this.blocks = [I, O, T, S, Z, J, L];
 	}
 	newBlock = () => {
-		let index = Math.floor(Math.random() * Math.floor(this.blocks.length - 1));
+		let index = Math.floor(Math.random() * Math.floor(this.blocks.length));
 		return new this.blocks[index]();
 	}
 }

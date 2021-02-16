@@ -18,23 +18,18 @@ export default (socketClient) => {
     socketClient.on('client/pong', () => { console.log("pong") })
 
     socketClient.on('client/created-room', (data) => {
-      console.log('created-room', data)
       const { uuidRoom, player } = data;
       updateUuidRoom(uuidRoom)
-      console.log("player", player)
       updatePlayer(player)
     })
 
     socketClient.on('client/update-user', (data) => {
       const { uuidRoom, player } = data;
       updateUuidRoom(uuidRoom)
-      console.log("update user", player)
-      console.log("uuidRoom", uuidRoom)
       updatePlayer(player)
     })
 
     socketClient.on('client/join-room', (data) => {
-      console.log('join-room', data)
       const { uuidRoom, player } = data;
       updateUuidRoom(uuidRoom)
       updatePlayer(player)
@@ -48,6 +43,6 @@ export default (socketClient) => {
       console.log('client/start-game')
     })
 
-    return ;
+    return () => socketClient.disconnect();
   }, [])
 }

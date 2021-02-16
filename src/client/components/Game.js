@@ -3,10 +3,10 @@ import Cell from './cell'
 import StyledStage from './style/styledStage'
 import tetrisSong from '../static/media/tetris.mp3';
 
-const Sound = () => <audio src={tetrisSong} autoPlay loop />;
+const Sound = () => <audio src={tetrisSong} volume={0.1} autoPlay loop />;
 
-const Game = ({song, game}) => {
-  return (
+const Game = ({ song, game }) =>
+  (
     <div>
       { song && <Sound /> }
       <StyledStage
@@ -21,5 +21,5 @@ const Game = ({song, game}) => {
       </StyledStage>
     </div>
   );
-}
+
 export default Game

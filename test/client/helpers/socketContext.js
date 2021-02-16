@@ -20,7 +20,6 @@ export const TestAppSocketProviderWithSocketClient = ({ children }) => {
 };
 
 const SocketListenerSetterComp = ({ children }) => {
-  // console.log(1111, children)
   const { socketClient } = useContext(SocketContext);
   SocketListener(socketClient);
   return <>{children}</>;

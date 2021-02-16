@@ -35,12 +35,15 @@ const Room = (props) => {
   const classes = useStyles();
   const history = useHistory()
   const [game, setGame] = useState(true);
-  const [song, setSong] = useState(true);
+  const [song, setSong] = useState(false);
   const { state: { player } } = useContext(UserContext);
   const { state: { rooms } } = useContext(RoomsContext);
   const { sendSocket } = useContext(SocketContext);
   const { sendAlert } = useContext(AlertContext);
-  KeyBoardListener(game);
+
+  if (player || !player || !player.visitor) {
+    KeyBoardListener(game);
+  }
 
   const leaveRoom = (e) => {
     e.preventDefault()
@@ -80,7 +83,7 @@ const Room = (props) => {
     }
   ,[])
 
-  if (rooms[uuidRoom]) {
+  if (player && rooms && rooms[uuidRoom]) {
     if (!rooms[uuidRoom].isStart && (player.solo || player.admin)) {
       return (
         <div className="d-flex jcnt--center aitems--center fdir--row pt-3">
@@ -172,6 +175,12 @@ const Room = (props) => {
         </div>
       )
     }
+  } else {
+    return (
+      <div>
+        <p>.....</p>
+      </div>
+    )
   }
 }
 

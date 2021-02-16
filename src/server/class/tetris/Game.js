@@ -2,19 +2,16 @@ import _ from 'lodash'
 import Piece from './Piece'
 import regeneratorRuntime from "regenerator-runtime";
 
-let timer = null;
 class Game extends Piece {
 	constructor(updateRoomFunction) {
 		super();
 		this.updateRoomFunction = updateRoomFunction;
 		this.block = null;
-		this.timing = 1000;
 		this.shadow = null;
 		this.action = null;
-		this.isPlaying = false;
 		this.lock = true;
-		this.barre = false;
 		this.cantPose = false
+    this.timing = 1000
 		this.action = this.initActionObject();
 		// this.createIntervalGame();
 	}
@@ -42,17 +39,18 @@ class Game extends Piece {
 
 	makeShadow = (block) => {
 		let r = this.blockCPY(block);
-		if (!this.canPose(r,0,1)) {
+		if (!this.canPose(r, 0, 1)) {
 			this.shadow = null;
 		} else {
-			while (this.canPose(r,0,1))
-				r.y = r.y + 1;
+			while (this.canPose(r, 0, 1)) {
+        r.y = r.y + 1;
+      }
 			this.shadow = r;
 		}
 	}
 
 	createIntervalGame = async () => {
-		timer = setTimeout(() => {
+		const timer = setTimeout(() => {
 			if (this.isPlaying) {
 				if (!this.block) {
 					this.addSheet();
@@ -60,7 +58,7 @@ class Game extends Piece {
 					this.addSheet();
 					if (!this.canPose(this.block, 0, 0)) {
 						this.end = true;
-						clearInterval(timer);
+						clearTimeout(timer);
 						this.block = null;
 						this.updateRoomFunction();
 						return;
@@ -88,17 +86,13 @@ class Game extends Piece {
 		}, this.timing)
 	}
 
-	setIsPlaying = (isPlaying) => {
-		this.isPlaying = isPlaying
-	}
-
 	sendMap = () => {
 		this.makeShadow(this.block);
 		if (this.shadow) this.draw(this.shadow, 8);
 		this.draw(this.block, this.block.type);
 		this.currentMapGame = _.cloneDeep(this.nextMapGame);
 		if (this.updateRoomFunction) this.updateRoomFunction();
-		if (this.shadow) this.draw(this.shadow,0);
+		if (this.shadow) this.draw(this.shadow, 0);
 		this.draw(this.block, 0);
 	}
 
