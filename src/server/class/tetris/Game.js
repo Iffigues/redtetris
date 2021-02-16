@@ -70,7 +70,7 @@ class Game extends Piece {
 					if (!this.canPose(this.block, 0, 1)) {
 						this.draw(this.block, this.block.type);
 						this.block = null;
-						this.destroyFunc((this.uuid, this.verifLine()));
+						this.destroyFunc(this.uuid, this.verifLine());
 					}
 				} 
 				if (this.block) {
@@ -147,7 +147,7 @@ class Game extends Piece {
 		this.draw(this.block, this.block.type);
 		this.addSheet();
 		this.block = null;
-		this.destroyFunc((this.uuid, this.verifLine()));
+		this.destroyFunc(this.uuid, this.verifLine());
 		this.lock = true;
 	}
 
