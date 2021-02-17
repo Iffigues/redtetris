@@ -14,14 +14,10 @@ const boxProps = {
 const OtherPlayerGrid = ({ isAlone, mapGamePreview }) => {
   if (!isAlone) {
     return (
-      <Card {...boxProps} style= {{ width: '30vw', height: '65vh' }} variant="outlined">
-        <Grid
-          style= {{ justifyContent: 'center', alignItems: 'center' }}
-          item
-        >
-          <Game game={mapGamePreview} />
-        </Grid>
-      </Card>
+      <Game
+        game={mapGamePreview.currentMapGame}
+        isOtherUser={true}
+      />
     )
   } else {
     return '';

@@ -97,7 +97,7 @@ const ReGame = ({ finalScore, player, currentRoom }) => {
   )
 }
 
-const Board = ({ finalScore, song, currentRoom, isEnd, uuidRoom, mapGame, mapGamePreview, isAlone, score, sheet }) => {
+const Board = ({ finalScore, song, currentRoom, isEnd, uuidRoom, mapGame, mapsGamePreview, isAlone, score, sheet }) => {
   const { state: { player } } = useContext(UserContext);
   const { sendSocket } = useContext(SocketContext);
 
@@ -146,7 +146,7 @@ const Board = ({ finalScore, song, currentRoom, isEnd, uuidRoom, mapGame, mapGam
           <div className="width-100">
             <Card {...boxProps} variant="outlined">
               <Preview
-                mapGamePreview={ { game: mapGamePreview, isOtherUser: true } }
+                mapsGamePreview={mapsGamePreview}
                 isVisitor={true}
                 isAlone={isAlone}
                 score={0}
@@ -176,14 +176,18 @@ const Board = ({ finalScore, song, currentRoom, isEnd, uuidRoom, mapGame, mapGam
           : (
               <div className="width-100">
                 <Card {...boxProps} variant="outlined">
-                  <Game game={ { game: mapGame, isOtherUser: false } } song={song} />
+                  <Game
+                    game={mapGame}
+                    song={song}
+                    isOtherUser={false}
+                  />
                 </Card>
               </div>
             )
         }
         <div className="aself--str">
           <Preview
-            mapGamePreview={ { game: mapGamePreview, isOtherUser: true} }
+            mapsGamePreview={mapsGamePreview}
             isVisitor={false}
             isAlone={isAlone}
             score={score}
