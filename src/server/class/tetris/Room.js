@@ -15,6 +15,7 @@ class Room {
 		this.channel = channel;
 		this.players = {};
 		this.messages = [];
+    this.arrPlayer = [];
     this.finalScore = [];
 		this.addPlayer(player);
 	}
@@ -33,15 +34,11 @@ class Room {
         isLast = true;
       }
     })
-    if (isLast) {
-      this.players[uuidUser].win = true
-    }
   }
 	
 	reGame = (uuidUser) => {
 		let isLast = true;
-    const arrPlayer = []
-    arrPlayer.push(uuidUser)
+    this.arrPlayer.push(uuidUser)
 		_.map(this.players, player => {
       if (player.uuid !== uuidUser && !player.requestNewGame) {
         isLast = false;
@@ -51,18 +48,22 @@ class Room {
 		if (isLast) {
       this.finalScore = [];
       let index = 0
-      arrPlayer.map(uuid_player => {
-        if (index >= 2) {
+      console.log("arrPlayer", this.arrPlayer)
+      this.arrPlayer.map(uuid_player => {
+        console.log("=====index=====", index)
+        if (index > 2) {
+          console.log("VISITOOOOOR", this.players[uuid_player])
           this.players[uuid_player].initGame();
-          this.players[uuid_player].visitor = true
-        } else if (!this.players[uuid_player].visitor) {
+          this.players[uuid_player].setVisitor(true);
+        } else {
           this.players[uuid_player].initGame();
           this.players[uuid_player].addSheetFunc(this.addSheet);
           this.players[uuid_player].addDestroyFunc(this.destroyer);
-          index++
+          index++;
         }
       })
       this.startGame();
+      this.arrPlayer = []
 		} else {
 			this.players[uuidUser].setRequestNewGame(true)
 		}
