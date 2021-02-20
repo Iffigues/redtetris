@@ -12,7 +12,6 @@ const boxProps = {
 };
 
 const Preview = ({ mapsGamePreview, isAlone, isVisitor, score, sheet }) => {
-  console.log("mapsGamePreview ====>>>>", mapsGamePreview)
   return (
     <>
       <div className="d-flex jcnt--start fdir--column">

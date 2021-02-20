@@ -101,9 +101,6 @@ const Board = ({ finalScore, song, currentRoom, isEnd, uuidRoom, mapGame, mapsGa
   const { state: { player } } = useContext(UserContext);
   const { sendSocket } = useContext(SocketContext);
 
-  console.log("...........player.........", player)
-
-
   const joinRoom = (e, channel, uuidUser) => {
     e.preventDefault()
     sendSocket('server/visitor-join-room', {

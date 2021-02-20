@@ -75,7 +75,6 @@ describe('Server tests', () => {
       expect(player.lock).toBe(true);
       expect(player.name).toBe("bobo");
       expect(player.admin).toBe(false);
-      expect(player.live).toBe(true);
       expect(player.score).toBe(0);
       expect(player.block).toBe(null);
       expect(player.visitor).toBe(false);
