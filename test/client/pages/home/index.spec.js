@@ -34,24 +34,23 @@ describe("Test HomePage", () => {
     const { container, getByTestId } = render(<Wrapper />);
     const input_login = getByTestId('loginInput');
     const btn_create_room = container.querySelector('.test--btn-create-room')
-
+    
     expect(btn_create_room).toBeDisabled();
     fireEvent.change(input_login, { target: { value: 'abcd' } });
     expect(btn_create_room).not.toBeDisabled();
   })
-
+  
   it("Test if we can't join a room without rooms created", () => {
-    const { getByTestId, queryByText } = render(<Wrapper />);
-    const msg_no_rooms = "Aucune partie n'est disponible pour le moment"
+    const { container, getByTestId } = render(<Wrapper />);
+    const table_room = container.querySelector('.test--table-rooms')
     const input_login = getByTestId('loginInput');
-    const btn_join_room = getByTestId('btnJoinRoom')
+    const btn_create_room = container.querySelector('.test--btn-create-room')
 
-    expect(btn_join_room).toBeDisabled();
-    expect(queryByText(msg_no_rooms)).toBeNull()
+    expect(btn_create_room).toBeDisabled();
     fireEvent.change(input_login, { target: { value: 'abcd' } });
-    expect(btn_join_room).not.toBeDisabled();
-    fireEvent.click(btn_join_room)
-    expect(queryByText(msg_no_rooms)).not.toBeNull()
+    expect(btn_create_room).not.toBeDisabled();
+    fireEvent.click(btn_create_room)
+    expect(table_room).toBeNull()
   })
 
 })

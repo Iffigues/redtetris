@@ -34,7 +34,7 @@ describe("Test sockets listener", () => {
     const ENDPOINT = 'localhost:3004';
     const mockSocket = io(ENDPOINT);
     render(<Wrapper />);
-    expect(mockSocket.emit).toHaveBeenCalledTimes(1)
+    expect(mockSocket.emit).toHaveBeenCalledTimes(0)
   })
 
   test("Test client/update-rooms", () => {
@@ -42,7 +42,7 @@ describe("Test sockets listener", () => {
     const mockSocket = io(ENDPOINT);
     render(<Wrapper />);
     mockSocket.emit('client/update-rooms', { _data: rooms_2 });
-    expect(mockSocket.emit).toHaveBeenCalledTimes(3)
+    expect(mockSocket.emit).toHaveBeenCalledTimes(1)
   })
 
 })

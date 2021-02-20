@@ -101,6 +101,8 @@ const Board = ({ finalScore, song, currentRoom, isEnd, uuidRoom, mapGame, mapsGa
   const { state: { player } } = useContext(UserContext);
   const { sendSocket } = useContext(SocketContext);
 
+  console.log("...........player.........", player)
+
 
   const joinRoom = (e, channel, uuidUser) => {
     e.preventDefault()
@@ -117,7 +119,7 @@ const Board = ({ finalScore, song, currentRoom, isEnd, uuidRoom, mapGame, mapsGa
     }
   }, [isEnd])
 
-  if ((player && player.visitor) || (Object.keys(currentRoom.players).includes(player.uuid) && currentRoom.players[player.uuid] && currentRoom.players[player.uuid].visitor)) {
+  if ((player && player.visitor) || (player && Object.keys(currentRoom).includes('players') && Object.keys(currentRoom.players).includes(player.uuid) && currentRoom.players[player.uuid] && currentRoom.players[player.uuid].visitor)) {
     return (
       <div>
         Vous regardez en tant que visiteur
