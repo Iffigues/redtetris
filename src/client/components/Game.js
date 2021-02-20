@@ -8,7 +8,7 @@ const Sound = () => <audio src={tetrisSong} volume={0.1} autoPlay loop />;
 const Game = ({ song, game, isOtherUser }) => {
  return (
     <div>
-      { song && <Sound /> }
+      { song && isNotTest && <Sound /> }
       <StyledStage
         isOtherUser={isOtherUser}
         width={game[0].length} 
