@@ -31,7 +31,6 @@ describe('Board component', () => {
   test('Can mount', () => {
     const CurrentPlayerSetter = ({ children }) => {
       const { updatePlayer } = useContext(UserContext);
-      console.log(667, updatePlayer)
       useEffect(() => {
         updatePlayer(visitor_player);
       }, [])
