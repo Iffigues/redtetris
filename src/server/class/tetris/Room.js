@@ -120,7 +120,7 @@ class Room {
 	}	
 
 	addPlayer = (player) => {
-s    if (this.isStart || this.solo || Object.keys(this.players).length >= 3) {
+    if (this.isStart || this.solo || Object.keys(this.players).length >= 3) {
       player.visitor = true
     } else {
       player.addSheetFunc(this.addSheet);
