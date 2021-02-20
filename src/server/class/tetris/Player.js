@@ -10,7 +10,6 @@ class Player extends Game {
 		this.uuid = uuidv4()
 		this.name = name
 		this.admin = admin;
-		this.indestructible = 0;
 		this.time = 1000;
 
 		this.currentMapGame = null
@@ -37,6 +36,7 @@ class Player extends Game {
 		this.requestNewGame = false;
     this.visitor = false;
     this.timing = 1000;
+    this.indestructible = 0;
 	}
 
   setVisitor = (value) => {

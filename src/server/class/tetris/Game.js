@@ -13,7 +13,6 @@ class Game extends Piece {
 		this.cantPose = false
     this.timing = 1000
 		this.action = this.initActionObject();
-		// this.createIntervalGame();
 	}
 
 	initActionObject = () => {
@@ -177,7 +176,6 @@ class Game extends Piece {
 				arr = arr + 1;
 				this.score = Math.ceil((this.score + 1000) * 1.1);
 				if (this.timing > 100) this.timing = this.timing -30;
-				//this.destroyFunc(this.uuid);
 				this.wash(i);
 				arr = arr + this.verifLine();
 			}
