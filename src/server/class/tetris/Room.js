@@ -1,9 +1,6 @@
-import Block from './Tetriminos';
 import _ from 'lodash'
+import Block from './Tetriminos';
 import uuidv4 from 'uuid';
-import Player from './Player';
-import regeneratorRuntime from "regenerator-runtime";
-
 
 class Room {
 	
