@@ -157,6 +157,9 @@ class SocketsManager {
       const { channel, uuidUser } = data
       this.rooms.reGame(channel, uuidUser)
       this.updateRooms(this.rooms, socket)
+      _.map(this.rooms._data[channel].players, player => 
+        socket.to(player.uuid).emit('client/update-user', { uuidRoom: channel, player: player })
+      )
     })
     
     socket.on('server/visitor-join-room', (data) => {
