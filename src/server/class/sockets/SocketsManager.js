@@ -164,7 +164,6 @@ class SocketsManager {
     
     socket.on('server/visitor-join-room', (data) => {
       const { channel, uuidUser } = data
-      console.log("hello world")
       const player = this.rooms.changeVisitorMode(channel, uuidUser)
       socket.emit('client/update-user', { uuidRoom: channel, player })
       this.updateRooms(this.rooms, socket)

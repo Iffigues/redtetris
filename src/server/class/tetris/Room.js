@@ -48,11 +48,8 @@ class Room {
 		if (isLast) {
       this.finalScore = [];
       let index = 0
-      console.log("arrPlayer", this.arrPlayer)
       this.arrPlayer.map(uuid_player => {
-        console.log("=====index=====", index)
         if (index > 2) {
-          console.log("VISITOOOOOR", this.players[uuid_player])
           this.players[uuid_player].initGame();
           this.players[uuid_player].setVisitor(true);
         } else {
@@ -123,8 +120,7 @@ class Room {
 	}	
 
 	addPlayer = (player) => {
-    console.log("nb players", Object.keys(this.players).length)
-    if (this.isStart || this.solo || Object.keys(this.players).length >= 3) {
+s    if (this.isStart || this.solo || Object.keys(this.players).length >= 3) {
       player.visitor = true
     } else {
       player.addSheetFunc(this.addSheet);
