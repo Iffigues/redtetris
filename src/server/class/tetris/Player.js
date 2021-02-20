@@ -39,6 +39,10 @@ class Player extends Game {
     this.timing = 1000;
 	}
 
+  setVisitor = (value) => {
+    this.visitor = value
+  }
+
 	setRequestNewGame = (value) => {
 		this.requestNewGame = value
 	}

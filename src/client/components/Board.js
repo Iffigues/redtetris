@@ -117,7 +117,7 @@ const Board = ({ finalScore, song, currentRoom, isEnd, uuidRoom, mapGame, mapsGa
     }
   }, [isEnd])
 
-  if (player && player.visitor) {
+  if ((player && player.visitor) || (Object.keys(currentRoom.players).includes(player.uuid) && currentRoom.players[player.uuid] && currentRoom.players[player.uuid].visitor)) {
     return (
       <div>
         Vous regardez en tant que visiteur

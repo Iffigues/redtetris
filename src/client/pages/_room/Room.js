@@ -161,7 +161,7 @@ const Room = (props) => {
             isEnd={rooms[uuidRoom].players[player.uuid].end}
             mapGame={rooms[uuidRoom].players[player.uuid].currentMapGame}
             isAlone={Object.keys(rooms[uuidRoom].players).length === 1}
-            mapsGamePreview={_.filter(rooms[uuidRoom].players, item => item.uuid !== player.uuid)}
+            mapsGamePreview={_.filter(rooms[uuidRoom].players, item => item.uuid !== player.uuid && !item.visitor)}
             score={rooms[uuidRoom].players[player.uuid].score}
             sheet={rooms[uuidRoom].players[player.uuid].sheets[0]}
             finalScore={rooms[uuidRoom].finalScore}

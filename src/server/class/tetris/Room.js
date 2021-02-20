@@ -15,6 +15,7 @@ class Room {
 		this.channel = channel;
 		this.players = {};
 		this.messages = [];
+    this.arrPlayer = [];
     this.finalScore = [];
 		this.addPlayer(player);
 	}
@@ -26,36 +27,43 @@ class Room {
         login: _.clone(this.players[uuidUser].name),
         score: _.clone(this.players[uuidUser].score)
       })
-      this.finalScore = this.finalScore.sort((a, b) => a.score + b.score);
+      this.finalScore = this.finalScore.sort((a, b) => a.score < b.score);
     }
     _.map(this.players, player => {
       if (!player.end && player.uuid !== uuidUser) {
         isLast = true;
       }
     })
-    if (isLast) {
-      this.players[uuidUser].win = true
-    }
   }
 	
 	reGame = (uuidUser) => {
 		let isLast = true;
+    this.arrPlayer.push(uuidUser)
 		_.map(this.players, player => {
-			if (!player.requestNewGame && player.uuid !== uuidUser) {
-				isLast = false;
-			}
+      if (player.uuid !== uuidUser && !player.requestNewGame) {
+        isLast = false;
+      }
 		})
 
 		if (isLast) {
       this.finalScore = [];
-			_.map(this.players, player => {
-        if (!player.visitor) {
-          player.initGame();
-          player.addSheetFunc(this.addSheet);
-          player.addDestroyFunc(this.destroyer);
+      let index = 0
+      console.log("arrPlayer", this.arrPlayer)
+      this.arrPlayer.map(uuid_player => {
+        console.log("=====index=====", index)
+        if (index > 2) {
+          console.log("VISITOOOOOR", this.players[uuid_player])
+          this.players[uuid_player].initGame();
+          this.players[uuid_player].setVisitor(true);
+        } else {
+          this.players[uuid_player].initGame();
+          this.players[uuid_player].addSheetFunc(this.addSheet);
+          this.players[uuid_player].addDestroyFunc(this.destroyer);
+          index++;
         }
-			})
+      })
       this.startGame();
+      this.arrPlayer = []
 		} else {
 			this.players[uuidUser].setRequestNewGame(true)
 		}
@@ -115,13 +123,14 @@ class Room {
 	}	
 
 	addPlayer = (player) => {
-    if (this.isStart) {
+    console.log("nb players", Object.keys(this.players).length)
+    if (this.isStart || this.solo || Object.keys(this.players).length >= 3) {
       player.visitor = true
-		} else {
+    } else {
       player.addSheetFunc(this.addSheet);
       player.addDestroyFunc(this.destroyer);
     }
-		this.players[player.uuid] = player;
+    this.players[player.uuid] = player;
 	}
 
 	onKey = (key, uuidUser) => {
