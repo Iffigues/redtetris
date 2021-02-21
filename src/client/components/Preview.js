@@ -11,8 +11,7 @@ const boxProps = {
   style: { backgroundColor: 'white', width: '100vw'},
 };
 
-const Preview = ({ mapsGamePreview, isAlone, isVisitor, score, sheet }) => {
-  return (
+const Preview = ({ mapsGamePreview, isAlone, isVisitor, score, sheet }) => 
     <>
       <div className="d-flex jcnt--start fdir--column">
         {!isVisitor && sheet && (
@@ -44,6 +43,5 @@ const Preview = ({ mapsGamePreview, isAlone, isVisitor, score, sheet }) => {
         }
       </div>
     </>
-  );
-}
+    
 export default Preview

@@ -171,6 +171,7 @@ const Room = (props) => {
       )
     }
   } else {
+    history.replace('/');
     return (
       <div>
         <p>.....</p>

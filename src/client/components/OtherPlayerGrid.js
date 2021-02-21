@@ -11,17 +11,13 @@ const boxProps = {
   style: { backgroundColor: 'white', width: '100vw'},
 };
 
-const OtherPlayerGrid = ({ isAlone, mapGamePreview }) => {
-  if (!isAlone) {
-    return (
-      <Game
-        game={mapGamePreview.currentMapGame}
-        isOtherUser={true}
-      />
-    )
-  } else {
-    return '';
-  }
-}
+const OtherPlayerGrid = ({ isAlone, mapGamePreview }) => 
+  (!isAlone) ? (
+    <Game
+      game={mapGamePreview.currentMapGame}
+      isOtherUser={true}
+    />
+  )
+  : '';
 
 export default OtherPlayerGrid
