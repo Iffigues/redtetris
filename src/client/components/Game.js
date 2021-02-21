@@ -5,15 +5,15 @@ import tetrisSong from '../static/media/tetris.mp3';
 
 const Sound = () => <audio src={tetrisSong} volume={0.1} autoPlay loop />;
 
-const Game = ({ song, game, isOtherUser }) => 
+const Game = ({ song, mapGame, isOtherUser }) => 
   <div>
     { song && isNotTest && <Sound /> }
     <StyledStage
       isOtherUser={isOtherUser}
-      width={game[0].length} 
-      height={game.length}
+      width={mapGame[0].length} 
+      height={mapGame.length}
       >
-      {game.map(row => 
+      {mapGame.map(row => 
         row.map((cell, x) => 
           <Cell
             key={x}

@@ -60,7 +60,7 @@ const Board = ({ finalScore, song, currentRoom, isEnd, uuidRoom, mapGame, mapsGa
           : (<div className="width-100">
                 <Card {...boxProps} variant="outlined">
                   <Game
-                    game={mapGame}
+                    mapGame={mapGame}
                     song={song}
                     isOtherUser={false}
                   />
@@ -85,7 +85,7 @@ const Board = ({ finalScore, song, currentRoom, isEnd, uuidRoom, mapGame, mapsGa
         </div>
       </div>
     );
-    
+
   }
 }
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import Game from './game'
+import Game from './Game'
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 
@@ -14,7 +14,7 @@ const boxProps = {
 const OtherPlayerGrid = ({ isAlone, mapGamePreview }) => 
   (!isAlone) ? (
     <Game
-      game={mapGamePreview.currentMapGame}
+      mapGame={mapGamePreview.currentMapGame}
       isOtherUser={true}
     />
   )
