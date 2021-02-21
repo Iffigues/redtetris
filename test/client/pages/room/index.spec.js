@@ -1,12 +1,9 @@
 import { MemoryRouter as Router, Route } from 'react-router-dom';
-import { uuid_1, visitor_player } from '../../helpers/data';
+import { uuid_1, visitor_player, rooms_1 } from '../../helpers/data';
 import React, { useContext, useEffect } from "react";
-import { act } from 'react-dom/test-utils';
-import Enzyme, { shallow, mount } from "enzyme";
+import Enzyme, { shallow } from "enzyme";
+import { render } from '@testing-library/react'
 import Adapter from "enzyme-adapter-react-16";
-import '@testing-library/jest-dom/extend-expect';
-import { render, fireEvent } from '@testing-library/react'
-import HomePage from "../../../../src/client/pages/home/Home"
 import Room from '../../../../src/client/pages/_room/Room'
 import { TestAppAlertProvider } from "../../helpers/alertContext";
 import { TestAppRoomsProvider } from "../../helpers/roomsContext";
@@ -15,8 +12,6 @@ import { TestAppUserProvider } from "../../helpers/userContext";
 import { describe, expect, test } from "@jest/globals";
 import { Context as RoomsContext } from "../../../../src/client/context/RoomsContext";
 import { Context as UserContext } from "../../../../src/client/context/UserContext";
-
-
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -70,23 +65,27 @@ describe("Test Room", () => {
       return <>{children}</>;
     };
 
-    const mountWithRouter = node => mount(<Router>{node}</Router>);
+    const mountWithRouter = node => render(<Router>{node}</Router>);
 
     const Wrapper = () => (
+      <TestAppAlertProvider>
         <TestAppUserProvider>
           <CurrentPlayerSetter>
             <TestAppRoomsProvider>
               <CurrentRoomsSetter>
-            <TestAppSocketProvider>
-                <Room />
-            </TestAppSocketProvider>
+                <TestAppSocketProvider>
+                  <Room />
+                </TestAppSocketProvider>
               </CurrentRoomsSetter>
             </TestAppRoomsProvider>
           </CurrentPlayerSetter>
         </TestAppUserProvider>
+      </TestAppAlertProvider>
     );
 
     const wrapper = mountWithRouter(<Wrapper />);
     expect(wrapper).not.toBeNull()
   })
+
+  
 })

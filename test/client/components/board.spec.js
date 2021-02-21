@@ -1,11 +1,17 @@
 import React, { useContext, useEffect } from "react";
+import _ from 'lodash'
 import '@testing-library/jest-dom/extend-expect';
 import Enzyme, { mount, shallow } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import Board from '../../../src/client/components/board'
+import { render } from '@testing-library/react'
 import { Context as UserContext } from "../../../src/client/context/UserContext";
+import { Context as RoomsContext } from "../../../src/client/context/RoomsContext";
 import { TestAppUserProvider } from "../helpers/userContext";
-import { player_instance, room_instance, visitor_player } from '../helpers/data'
+import { player_instance, room_instance, visitor_player, rooms_1 } from '../helpers/data'
+import { TestAppSocketProvider } from "../helpers/socketContext";
+import { TestAppRoomsProvider } from "../helpers/roomsContext";
+
 
 Enzyme.configure({ adapter: new Adapter() });
 describe('Board component', () => {
@@ -36,20 +42,40 @@ describe('Board component', () => {
       }, [])
       return <>{children}</>;
     };
+
+    const CurrentRoomsSetter = ({ children }) => {
+      const { updateRooms } = useContext(RoomsContext);
+      useEffect(() => {
+        updateRooms(rooms_1);
+      }, []);
+      return <>{children}</>;
+    };
+
     const Wr = () => (
-      <TestAppUserProvider>
-        <CurrentPlayerSetter>
-          <Board
-            mapGame={room_instance.players[player_instance.uuid].currentMapGame}
-            mapGamePreview={room_instance.players[player_instance.uuid].currentMapGame}
-            isAlone={true}
-            score={10}
-            sheet={room_instance.players[player_instance.uuid].sheets[0]}
-          />
-        </CurrentPlayerSetter>
-      </TestAppUserProvider>
+      <TestAppSocketProvider>
+        <TestAppUserProvider>
+          <CurrentPlayerSetter>
+            <TestAppRoomsProvider>
+              <CurrentRoomsSetter>
+                <Board
+                  song={false}
+                  currentRoom={room_instance}
+                  isEnd={room_instance.players[player_instance.uuid].end}
+                  mapGame={room_instance.players[player_instance.uuid].currentMapGame}
+                  isAlone={Object.keys(room_instance.players).length === 1}
+                  mapsGamePreview={_.filter(room_instance.players, item => item.uuid !== player_instance.uuid && !item.visitor)}
+                  score={room_instance.players[player_instance.uuid].score}
+                  sheet={room_instance.players[player_instance.uuid].sheets[0]}
+                  finalScore={room_instance.finalScore}
+                  uuidRoom={room_instance.channel}
+                />
+              </CurrentRoomsSetter>
+            </TestAppRoomsProvider>
+          </CurrentPlayerSetter>
+        </TestAppUserProvider>
+      </TestAppSocketProvider>
     )
-    mount(<Wr />);
+    render(<Wr />);
   })
 
 });

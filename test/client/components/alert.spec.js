@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import '@testing-library/jest-dom/extend-expect';
 import Enzyme, { mount } from "enzyme";
+import { render } from '@testing-library/react'
 import Adapter from "enzyme-adapter-react-16";
 import Alerts from '../../../src/client/components/alerts'
 import { Context as AlertContext } from "../../../src/client/context/AlertContext";
@@ -27,7 +28,7 @@ describe('Alert component', () => {
   )
 
   it('Is exists', () => {
-    mount(<Wrapper />);
+    render(<Wrapper />);
   });
 
 });

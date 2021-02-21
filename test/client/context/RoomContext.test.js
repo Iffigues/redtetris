@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from "react";
 import Enzyme, { mount } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import { rooms_2 } from "../helpers/data";
+import { render } from '@testing-library/react'
 import { Context as RoomsContext } from "../../../src/client/context/RoomsContext";
 import { TestAppRoomsProvider } from "../helpers/RoomsContext";
 import { describe, expect, test } from "@jest/globals";
@@ -24,7 +25,7 @@ describe("Test RoomContext", () => {
         <RoomsUpdaterComp />
       </TestAppRoomsProvider>
     );
-    mount(<Wrapper />);
+    render(<Wrapper />);
     expect(contextValue.rooms).toBe(rooms_2);
   })
 })

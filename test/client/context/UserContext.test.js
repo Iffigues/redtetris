@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from "react";
 import Enzyme, { mount } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import { players_2 } from "../helpers/data";
+import { render } from '@testing-library/react'
 import { Context as UserContext } from "../../../src/client/context/UserContext";
 import { TestAppUserProvider } from "../helpers/userContext";
 import { describe, expect, test } from "@jest/globals";
@@ -24,7 +25,7 @@ describe("Test userContext functions", () => {
         <UuidUpdaterComp />
       </TestAppUserProvider>
     );
-    mount(<Wrapper />);
+    render(<Wrapper />);
     expect(contextValue.uuidRoom).toBe("112233445566778899");
   })
 
@@ -43,7 +44,7 @@ describe("Test userContext functions", () => {
         <PlayerUpdaterComp />
       </TestAppUserProvider>
     );
-    mount(<Wrapper />);
+    render(<Wrapper />);
     expect(contextValue.player).toBe(players_2[0]);
   })
 })

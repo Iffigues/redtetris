@@ -2,7 +2,7 @@ import React,  { useContext } from 'react';
 import io, { serverSocket, cleanUp } from 'socket.io-client';
 import { render, fireEvent } from '@testing-library/react';
 import HomePage from "../../../src/client/pages/home/Home"
-import { rooms_1, rooms_2 } from "../helpers/data";
+import { player_instance, rooms_1, rooms_2, room_instance } from "../helpers/data";
 import { Context as RoomsContext } from "../../../src/client/context/RoomsContext";
 import { TestAppAlertProvider } from "../helpers/alertContext";
 import { TestAppRoomsProvider } from "../helpers/roomsContext";
@@ -34,7 +34,7 @@ describe("Test sockets listener", () => {
     const ENDPOINT = 'localhost:3004';
     const mockSocket = io(ENDPOINT);
     render(<Wrapper />);
-    expect(mockSocket.emit).toHaveBeenCalledTimes(1)
+    expect(mockSocket.emit).toHaveBeenCalledTimes(0)
   })
 
   test("Test client/update-rooms", () => {
@@ -42,6 +42,28 @@ describe("Test sockets listener", () => {
     const mockSocket = io(ENDPOINT);
     render(<Wrapper />);
     mockSocket.emit('client/update-rooms', { _data: rooms_2 });
+    expect(mockSocket.emit).toHaveBeenCalledTimes(1)
+  })
+
+  test("Test client/join-room", () => {
+    const ENDPOINT = 'localhost:3004';
+    const mockSocket = io(ENDPOINT);
+    render(<Wrapper />);
+    mockSocket.emit('client/join-room', {
+        uuidRoom: room_instance.channel,
+        player: player_instance
+    });
+    expect(mockSocket.emit).toHaveBeenCalledTimes(2)
+  })
+
+  test("Test client/update-user", () => {
+    const ENDPOINT = 'localhost:3004';
+    const mockSocket = io(ENDPOINT);
+    render(<Wrapper />);
+    mockSocket.emit('client/update-user',  {
+        uuidRoom: room_instance.channel,
+        player: player_instance
+    });
     expect(mockSocket.emit).toHaveBeenCalledTimes(3)
   })
 

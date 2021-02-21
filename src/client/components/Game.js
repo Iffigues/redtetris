@@ -5,26 +5,23 @@ import tetrisSong from '../static/media/tetris.mp3';
 
 const Sound = () => <audio src={tetrisSong} volume={0.1} autoPlay loop />;
 
-const Game = ({ song, game, isOtherUser }) => {
- return (
-    <div>
-      { song && <Sound /> }
-      <StyledStage
-        isOtherUser={isOtherUser}
-        width={game[0].length} 
-        height={game.length}
-        >
-        {game.map(row => 
-          row.map((cell, x) => 
-            <Cell
-              key={x}
-              type={cell}
-              isOtherUser={isOtherUser}
-            />
-          ))}
-      </StyledStage>
-    </div>
-  );
-}
+const Game = ({ song, mapGame, isOtherUser }) => 
+  <div>
+    { song && isNotTest && <Sound /> }
+    <StyledStage
+      isOtherUser={isOtherUser}
+      width={mapGame[0].length} 
+      height={mapGame.length}
+      >
+      {mapGame.map(row => 
+        row.map((cell, x) => 
+          <Cell
+            key={x}
+            type={cell}
+            isOtherUser={isOtherUser}
+          />
+        ))}
+    </StyledStage>
+  </div>
   
 export default Game

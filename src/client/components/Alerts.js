@@ -4,15 +4,13 @@ import { Context as AlertContext } from "../context/AlertContext";
 import { useContext } from 'react';
 
 const Alerts = () => {
-  const {
-    state: { message, type }
-  } = useContext(AlertContext);
-  if (message && type) {
+  const { state: { message, type } } = useContext(AlertContext);
+  
   return (
+    (message && type) ?
       <Alert severity={type}>{message}</Alert>
-      )
-  }
-  return null;
+      : null
+  )
 }
 
 export default Alerts

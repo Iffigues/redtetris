@@ -93,7 +93,7 @@ const TablePlayers = ({login}) => {
     )
   } else {
     return (
-      <div className="table-player d-flex jcnt--center fdir--column">
+      <div className="table-player d-flex jcnt--center fdir--column test--table-rooms">
       <h1 className="aself--center">Choisissez de crée une partie ou d'en rejoindre une</h1>
       <div className="aself--center">
       <h2>Partie en cours:</h2>
@@ -190,7 +190,7 @@ const HomePage = () => {
             autoComplete="current-login"
             />
           <Button
-            className="aself--center mt-2 test--btn-join-room"
+            className="aself--center mt-2 test--btn-create-room"
             variant="contained"
             color="primary"
             data-testid='btnLogin'
