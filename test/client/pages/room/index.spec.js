@@ -81,9 +81,11 @@ describe("Test Room", () => {
           </CurrentPlayerSetter>
         </TestAppUserProvider>
       </TestAppAlertProvider>
-  );
+    );
 
     const wrapper = mountWithRouter(<Wrapper />);
     expect(wrapper).not.toBeNull()
   })
+
+  
 })
