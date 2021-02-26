@@ -7,7 +7,7 @@ import Preview from './Preview'
 import Chat from './Chat';
 
 
-const VisitorView = ({ currentRoom, player, mapsGamePreview, isAlone, isEnd, boxProps }) => {
+const VisitorView = ({ uuidRoom, currentRoom, player, mapsGamePreview, isAlone, isEnd, boxProps }) => {
 
   const leaveRoom = (e, sendSocket, uuidRoom, uuidUser, endGame) => {
     e.preventDefault()

@@ -68,13 +68,15 @@ return (
             rooms && rooms[uuidRoom].messages.map(msg => {
               if (!msg.login) {
                 return (
-                  <>
-                    <p key={msg}>
+                  <div
+                    key={msg}
+                  >
+                    <p>
                       <span className={`bold medium-text ${(msg.uuidUser === -1) ? "text--green" : "text--red"}`}>
                         {msg.time} -- { msg.content }
                       </span><br />
                     </p>
-                  </>
+                  </div>
                 )
               } else {
                   return (
