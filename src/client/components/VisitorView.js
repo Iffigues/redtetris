@@ -1,13 +1,13 @@
 
 import React from 'react';
 import _ from 'lodash';
-import { Card } from '@material-ui/core';
+import { Button, Card } from '@material-ui/core';
 
 import Preview from './Preview'
 import Chat from './Chat';
 
 
-const VisitorView = ({ currentRoom, player, mapsGamePreview, isAlone }) => {
+const VisitorView = ({ currentRoom, player, mapsGamePreview, isAlone, isEnd, boxProps }) => {
 
   const leaveRoom = (e, sendSocket, uuidRoom, uuidUser, endGame) => {
     e.preventDefault()
