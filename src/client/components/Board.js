@@ -9,6 +9,7 @@ import Preview from './Preview'
 import Game from './Game'
 import Chat from './Chat';
 import ReGame from './ReGame';
+import VisitorView from './VisitorView';
 
 const boxProps = {
   bgcolor: 'background.paper',
@@ -38,7 +39,10 @@ const Board = ({ finalScore, song, currentRoom, isEnd, uuidRoom, mapGame, mapsGa
             && currentRoom.players[player.uuid]
             && currentRoom.players[player.uuid].visitor)) {
 
-    return <VisitorView 
+    return <VisitorView
+              uuidRoom={uuidRoom}
+              boxProps={boxProps}
+              isEnd={isEnd}
               currentRoom={currentRoom}
               player={player}
               mapsGamePreview={mapsGamePreview}
