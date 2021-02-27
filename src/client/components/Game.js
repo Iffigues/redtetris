@@ -5,7 +5,7 @@ import tetrisSong from '../static/media/tetris.mp3';
 
 const Sound = () => <audio src={tetrisSong} volume={0.1} autoPlay loop />;
 
-const Game = ({ song, mapGame, isOtherUser }) => 
+const Game = ({ song, mapGame, isOtherUser }) =>
   <div>
     { song && isNotTest && <Sound /> }
     <StyledStage
