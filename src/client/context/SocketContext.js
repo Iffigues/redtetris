@@ -1,11 +1,12 @@
 import React, { createContext } from "react"
-import { params } from "../../../params"
 import socketIOClient from "socket.io-client"
+require('dotenv').config() 
 
 export const SocketContext = createContext();
 
 export const SocketContextProvider = ({ children }) => {
-  const socketClient = socketIOClient(params.url);  
+  console.log("process.env.API_URL", process.env.API_URL)
+  const socketClient = socketIOClient(process.env.API_URL);  
   const sendSocket = (type, data = false) => {
     socketClient.emit(type, data);
   }

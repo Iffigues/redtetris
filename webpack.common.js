@@ -1,5 +1,10 @@
+const Dotenv = require('dotenv-webpack');
+
 module.exports = {
   entry: "./src/index.js",
+  plugins: [
+    new Dotenv()
+  ],
   module: {
     rules: [
       {
@@ -51,5 +56,8 @@ module.exports = {
         use: "js-yaml-loader"
       }
     ]
+  },
+  node: {
+    fs: 'empty'
   }
 };
