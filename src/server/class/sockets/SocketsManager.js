@@ -26,7 +26,7 @@ class SocketsManager {
       socket.emit('client/pong');
     })
     socket.on('disconnect', () => {
-      if (Object.keys(sockets).includes(socket.id)) {
+      if (process.env.NODE_ENV !== "test" && Object.keys(sockets).includes(socket.id)) {
         const { uuidUser, channel } = sockets[socket.id]
         const isLast = this.rooms.deletePlayer(channel, uuidUser, false)
         this.updateRooms(this.rooms, socket)
@@ -47,7 +47,9 @@ class SocketsManager {
       const player = new Player(login, () => this.updateRooms(), true);
       const room = new Room(player, playSolo)
       this.rooms.addRoom(room);
-      sockets[socket.id] = { channel: room.channel, uuidUser: player.uuid }
+      if (process.env.NODE_ENV !== "test") {
+        sockets[socket.id] = { channel: room.channel, uuidUser: player.uuid }
+      }
       socket.join(room.channel);
       socket.join(player.uuid);
 

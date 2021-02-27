@@ -8,7 +8,7 @@ const Alerts = () => {
   
   return (
     (message && type) ?
-      <Alert severity={type}>{message}</Alert>
+      <Alert className="test--alert" severity={type}>{message}</Alert>
       : null
   )
 }

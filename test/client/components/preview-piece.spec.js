@@ -18,7 +18,7 @@ describe('PreviewPiece component', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
-  test('Can mount', () => {
+  it('Can mount', () => {
     const Wr = () => (
       <PreviewPiece
         sheet={ {type: 1}}

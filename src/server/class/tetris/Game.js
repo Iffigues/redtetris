@@ -20,7 +20,7 @@ class Game extends Piece {
 			'ArrowUp': () => this.rotateR(),
 			'ArrowDown': () => this.down(),
 			'ArrowLeft': () => this.left(),
-			'ArrowRight': () => this.rigth(),
+			'ArrowRight': () => this.right(),
 			' ': () => this.space()
 		}
 	}
@@ -48,7 +48,8 @@ class Game extends Piece {
 		}
 	}
 
-	createIntervalGame = async () => {
+	createIntervalGame = () => {
+    console.log("createInterval hello world")
 		const timer = setTimeout(() => {
 			if (this.isPlaying) {
 				if (!this.block) {
@@ -115,7 +116,7 @@ class Game extends Piece {
 		this.setMoose(0, -1);
 	}
 	
-	rigth = () => {
+	right = () => {
 		this.setMoose(0, 1);
 	}
 	
@@ -123,21 +124,21 @@ class Game extends Piece {
 		this.setMoose(1, 0);
 	}
 
-	rotateL = async () => {
+	rotateL = () => {
 		if (this.block.rotate) {
 			this.rotate(this.block, 0);
 			this.sendMap();
 		}
 	}
 	
-	rotateR = async () => {
+	rotateR = () => {
 		if (this.block.rotate) {
 			this.rotate(this.block, 1);
 			this.sendMap();
 		}
 	}
 	
-	space = async () => {
+	space = () => {
 		this.lock = false;
 		while (this.canPose(this.block, 0, 1)) {
 			this.block.y += 1;

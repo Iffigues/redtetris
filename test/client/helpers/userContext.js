@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import Enzyme, { mount } from "enzyme";
-import { players_1, uuid_1, visitor_player } from "../helpers/data";
+import { player_instance1, room1 } from "../helpers/data";
 import Adapter from "enzyme-adapter-react-16";
 import { Provider as UserProvider } from "../../../src/client/context/UserContext";
 import { Context as UserContext } from "../../../src/client/context/UserContext";
@@ -26,8 +26,8 @@ export const TestAppUserProviderWithPlayerVisitor = ({ children }) => (
 const CurrentUserSetter = ({ children }) => {
   const { updateUuidRoom, updatePlayer } = useContext(UserContext);
   useEffect(() => {
-    updateUuidRoom(uuid_1);
-    updatePlayer(players_1[0]);
+    updateUuidRoom(room1.channel);
+    updatePlayer(player_instance1);
   }, []);
   return <>{children}</>;
 };
@@ -35,8 +35,8 @@ const CurrentUserSetter = ({ children }) => {
 const CurrentUserVisitorSetter = ({ children }) => {
   const { updateUuidRoom, updatePlayer } = useContext(UserContext);
   useEffect(() => {
-    updateUuidRoom(visitor_player.uuid);
-    updatePlayer(visitor_player);
+    updateUuidRoom(room1.channel);
+    updatePlayer(player_visitor_instance);
   }, []);
   return <>{children}</>;
 };

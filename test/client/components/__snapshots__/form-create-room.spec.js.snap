@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FormCreateRoom component Is exists 1`] = `
+<FormCreateRoom
+  login="toto"
+/>
+`;

@@ -5,7 +5,7 @@ import Game from './Game'
 const GAME_WIDTH = 10;
 const GAME_HEIGHT = 20;
 class Player extends Game {
-	constructor (name, updateRoomFunction, admin = false) {
+	constructor (name, updateRoomFunction, admin = false, visitor = false) {
 		super(updateRoomFunction)
 		this.uuid = uuidv4()
 		this.name = name
@@ -19,7 +19,7 @@ class Player extends Game {
 		this.score = null;
 		this.end = null;
 		this.requestNewGame = null;
-    this.visitor = false;
+    this.visitor = visitor;
 		this.initGame();
 	}
 	

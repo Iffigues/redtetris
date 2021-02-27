@@ -39,20 +39,24 @@ const Board = ({ finalScore, song, currentRoom, isEnd, uuidRoom, mapGame, mapsGa
             && currentRoom.players[player.uuid]
             && currentRoom.players[player.uuid].visitor)) {
 
-    return <VisitorView
-              uuidRoom={uuidRoom}
-              boxProps={boxProps}
-              isEnd={isEnd}
-              currentRoom={currentRoom}
-              player={player}
-              mapsGamePreview={mapsGamePreview}
-              isAlone={isAlone}
-            />
+    return (
+      <div className="test--visitor-player">
+        <VisitorView
+          uuidRoom={uuidRoom}
+          boxProps={boxProps}
+          isEnd={isEnd}
+          currentRoom={currentRoom}
+          player={player}
+          mapsGamePreview={mapsGamePreview}
+          isAlone={isAlone}
+          />
+      </div>
+    )
 
   } else {
 
     return (
-      <div className="d-flex jcnt--start aitems--fs fdir--row">
+      <div className="d-flex jcnt--start aitems--fs fdir--row test--player">
     
         {
           (isEnd)

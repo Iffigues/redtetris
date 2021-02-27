@@ -7,14 +7,19 @@ const initialState = {
 const RoomsReducer = (state, payload) => {
   switch (payload.type) {
     case "updateRooms":
-      return {  ...state, rooms: payload.rooms };
+      return { ...state, rooms: payload.rooms };
     default:
       return state;
   }
 };
 
-const updateRooms = dispatch => rooms =>
-  dispatch({ type: "updateRooms", rooms: rooms._data });
+const updateRooms = dispatch => rooms => {
+  if (Object.keys(rooms).includes("_data")) {
+    dispatch({ type: "updateRooms", rooms: rooms._data });
+  } else {
+    dispatch({ type: "updateRooms", rooms: rooms });
+  }
+}
 
 export const { Provider, Context } = createDataContext(
   //reducer :
