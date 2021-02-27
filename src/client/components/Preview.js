@@ -15,7 +15,7 @@ const Preview = ({ mapsGamePreview, isAlone, isVisitor, score, sheet }) =>
     <>
       <div className="d-flex jcnt--start fdir--column">
         {!isVisitor && sheet && (
-            <div className="aself--fstart width-100">
+            <div className="aself--fstart width-100 test--container-not-visitor">
               <Card className="pt-3" {...boxProps} style= {{ width: '30vw' }} variant="outlined">
                 <p className="pl-2">Prochaine piece:</p>
                 <PreviewPiece sheet={sheet}/>

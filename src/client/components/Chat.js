@@ -120,7 +120,7 @@ return (
               }}
               />
             <Button
-              className="aself--center mt-2 test--btn-join-room"
+              className="aself--center mt-2 test--btn-submit-message"
               color="primary"
               data-testid='btnLogin'
               disabled={message.length === 0}

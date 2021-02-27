@@ -67,4 +67,12 @@ describe("Test sockets listener", () => {
     expect(mockSocket.emit).toHaveBeenCalledTimes(3)
   })
 
+  test("Test client/start-game", () => {
+    const ENDPOINT = 'localhost:3004';
+    const mockSocket = io(ENDPOINT);
+    render(<Wrapper />);
+    mockSocket.emit('client/start-game');
+    expect(mockSocket.emit).toHaveBeenCalledTimes(4)
+  })
+
 })

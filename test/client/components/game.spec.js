@@ -21,7 +21,7 @@ describe('Alert component', () => {
   test('Can mount', () => {
     const Wr = () => (
       <Game
-        game={room_instance.players[player_instance.uuid].currentMapGame}
+        mapGame={room_instance.players[player_instance.uuid].currentMapGame}
         song={false}
         isOtherUser={false}
       />
