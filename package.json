@@ -4,14 +4,15 @@
   "author": "redpelicans",
   "license": "MIT",
   "scripts": {
-    "eslint": "eslint src",
-    "client-dist": "NODE_ENV=production webpack --progress --colors",
+    "client-dist": "NODE_ENV=production npm run sass && webpack --config webpack.prod.js --progress --colors",
     "client-dev": "webpack-dev-server --mode development --hot --config webpack.dev.js",
     "srv-dev": "DEBUG=tetris:* nodemon src/server/start.js",
-    "srv-dist": "DEBUG=tetris:* babel src --out-dir dist",
+    "srv-dist": "NODE_ENV=production DEBUG=tetris:* babel src --out-dir dist",
+    "sass": "sass --style=compressed src/client/styles/main.scss:public/assets/styles/main.css",
     "test": "NODE_ENV=test jest --config ./jest.config.json --no-cache '--maxWorkers=1' --detectOpenHandles",
+    "test:watch": "NODE_ENV=test npm run test -- --watch --silent",
     "coverage": "NODE_ENV=test npm run test -- --coverage --silent",
-    "test:watch": "NODE_ENV=test npm run test -- --watch --silent"
+    "eslint": "eslint src"
   },
   "dependencies": {
     "@babel/plugin-transform-runtime": "^7.12.15",
@@ -23,6 +24,7 @@
     "core-js": "^3.8.3",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
+    "dotenv-webpack": "^6.0.2",
     "es6-promise": "^4.2.8",
     "eslint-config-airbnb": "^18.2.1",
     "express": "^4.17.1",
@@ -35,6 +37,7 @@
     "react-dom": "^17.0.1",
     "react-hot-loader": "^4.12.21",
     "react-router-dom": "^5.2.0",
+    "sass": "^1.32.8",
     "socket.io": "^2.3.0",
     "styled-components": "^5.1.1"
   },
