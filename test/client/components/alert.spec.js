@@ -11,24 +11,37 @@ Enzyme.configure({ adapter: new Adapter() });
 
 describe('Alert component', () => {
 
-  const CurrentAlertSetter = ({ children }) => {
-    const { sendAlert } = useContext(AlertContext);
-    useEffect(() => {
-      sendAlert('It\'s little test', 'info');
-    }, [])
-    return <>{children}</>;
-  };
-
-  const Wrapper = () => (
-    <TestAppAlertProvider>
-      <CurrentAlertSetter>
-        <Alerts />
-      </CurrentAlertSetter>
-    </TestAppAlertProvider>
-  )
-
-  it('Is exists', () => {
+  
+  test('Is exists', () => {
+    const CurrentAlertSetter = ({ children }) => {
+      const { sendAlert } = useContext(AlertContext);
+      useEffect(() => {
+        sendAlert('It\'s little test', 'info');
+      }, [])
+      return <>{children}</>;
+    };
+  
+    const Wrapper = () => (
+      <TestAppAlertProvider>
+        <CurrentAlertSetter>
+          <Alerts />
+        </CurrentAlertSetter>
+      </TestAppAlertProvider>
+    )
+  
     render(<Wrapper />);
   });
+
+  test('Have alert', () => {
+  
+    const Wrapper = () => (
+      <TestAppAlertProvider>
+        <Alerts />
+      </TestAppAlertProvider>
+    )
+    const { container } = render(<Wrapper />);
+    const container_not_visitor = container.querySelector('.test--alert')
+    expect(container_not_visitor).toBeNull()
+  })
 
 });

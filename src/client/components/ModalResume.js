@@ -42,7 +42,7 @@ const ModalResume = ({ setSong, isPlaying, song, player, uuidRoom }) => {
   }
 
   return (
-    <div>
+    <div className="test--modal-resume">
       <Modal
         className="d-flex jcnt--center aitems--center fdir--row pt-3"
         open={isPlaying}

@@ -5,7 +5,10 @@ import Room from '../../../../src/server/class/tetris/Room';
 
 // UTILS AND CONSTANTS
 export const player_instance = new Player('owalid123', () => {}, true);
-export const room_instance = new Room(player_instance, false);
+export const player_visitor_instance = new Player('owalid_visitor', () => {}, true, true);
+const r = new Room(player_instance, false);
+r.addPlayer(player_visitor_instance);
+export const room_instance = r;
 
 const GAME_WIDTH = 10;
 const GAME_HEIGHT = 20;

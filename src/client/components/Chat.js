@@ -69,6 +69,7 @@ return (
               if (!msg.login) {
                 return (
                   <div
+                    className="test--message-base"
                     key={msg}
                   >
                     <p>
@@ -81,15 +82,16 @@ return (
               } else {
                   return (
                     <div
-                    key={msg}
-                    className={`${msg.uuidUser === player.uuid
-                      ? 'aself--fend bubble--me'
-                      : 'aself--fstart bubble--other'}
-                      aself--fstart
-                      pb-2
-                      bubble
+                      key={msg}
+                      className={`${msg.uuidUser === player.uuid
+                        ? 'aself--fend bubble--me'
+                        : 'aself--fstart bubble--other'}
+                        aself--fstart
+                        pb-2
+                        bubble
+                        test--message-user
                       `}
-                      >
+                    >
                     <p>
                       <span className="bold medium-text">{ msg.login }:</span> { msg.content } <br />
                     </p>

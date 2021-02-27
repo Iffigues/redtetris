@@ -13,10 +13,6 @@ export default (socketClient) => {
   } = useContext(RoomsContext);
 
   useEffect(() => {
-    socketClient.on('client/ping', () => { console.log("ping") })
-
-    socketClient.on('client/pong', () => { console.log("pong") })
-
     socketClient.on('client/created-room', (data) => {
       const { uuidRoom, player } = data;
       updateUuidRoom(uuidRoom)

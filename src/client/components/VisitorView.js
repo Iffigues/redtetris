@@ -1,15 +1,17 @@
 
-import React from 'react';
+import React, { useContext } from 'react';
 import _ from 'lodash';
 import { Button, Card } from '@material-ui/core';
 
 import Preview from './Preview'
 import Chat from './Chat';
+import { SocketContext } from '../context/SocketContext';
 
 
 const VisitorView = ({ uuidRoom, currentRoom, player, mapsGamePreview, isAlone, isEnd, boxProps }) => {
+  const { sendSocket } = useContext(SocketContext);
 
-  const leaveRoom = (e, sendSocket, uuidRoom, uuidUser, endGame) => {
+  const leaveRoom = (e, uuidRoom, uuidUser, endGame) => {
     e.preventDefault()
     sendSocket('server/leave-room', {
       uuidRoom,
@@ -29,19 +31,21 @@ const VisitorView = ({ uuidRoom, currentRoom, player, mapsGamePreview, isAlone, 
   return (
     <div>
       Vous regardez en tant que visiteur
-      <div className="d-flex jcnt--center aitems--fs fdir--row">
+      <div className="d-flex jcnt--center aitems--fs fdir--row test--visitor-view">
         <div>
           <Button
             id="visiorLeave"
+            className="test--leave-visitor"
             data-testid='btnVisiorLeave'
             color="secondary"
-            onClick={e => leaveRoom(e, sendSocket, currentRoom.channel, player.uuid, false)}
+            onClick={e => leaveRoom(e, currentRoom.channel, player.uuid, false)}
           >
             Quitter la room { isEnd }
           </Button>
           {
             isEnd &&
             <Button
+              className="test--regame-visitor"
               id="joinRoom"
               data-testid='btnLeave'
               color="primary"

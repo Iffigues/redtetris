@@ -1,23 +1,23 @@
 import socketIOClient from "socket.io-client"
 import Server from "../../src/server/class/Server"
 import instanceRooms from '../../src/server/class/tetris/Rooms'
-import { params } from "../../params"
 import SocketsManager from "../../src/server/class/sockets/SocketsManager";
+require('dotenv').config() 
+
 
 describe('Server tests', () => {
   let channel = "";
   let uidplayer = "";
-  const { host, port, url } = params;
   let server;
   let socketClient;
 
   beforeEach(done => {
-    socketClient = socketIOClient(url)
+    socketClient = socketIOClient(process.env.API_URL)
     const srvInstance = new Server(true)
     socketClient.on('connect', () => {
       console.log("connected")
     });
-    server = srvInstance.app.listen({ host, port }, () => {
+    server = srvInstance.app.listen(process.env.PORT_DEV_SERVER, () => {
       done()
     })
     const socketsManager = new SocketsManager(server);
