@@ -8,7 +8,7 @@ class mounter {
 		}
 }
 
-class I extends mounter {
+export class I extends mounter {
 	constructor() {
 		super();
 		this.state = false;
@@ -26,7 +26,7 @@ class I extends mounter {
 	}
 }
 
-class O extends mounter {
+export class O extends mounter {
 	constructor() {
 		super();
 		this.state = false;
@@ -44,7 +44,7 @@ class O extends mounter {
 	}
 }
 
-class T extends mounter {
+export class T extends mounter {
 	constructor() {
 		super();
 		this.state = false;
@@ -62,7 +62,7 @@ class T extends mounter {
 	}
 }
 
-class J extends mounter {
+export class J extends mounter {
 	constructor() {
 		super();
 		this.state = false;
@@ -80,7 +80,7 @@ class J extends mounter {
 	}
 }
 
-class L extends mounter {
+export class L extends mounter {
 	constructor() {	
 		super();
 		this.state = false;
@@ -99,7 +99,7 @@ class L extends mounter {
 }
 
 
-class S extends mounter {
+export class S extends mounter {
 	constructor() {
 		super();
 		this.state = false;
@@ -117,7 +117,7 @@ class S extends mounter {
 	}
 }
 
-class Z extends mounter {
+export class Z extends mounter {
 	constructor() {
 		super();
 		this.state = false;

@@ -4,7 +4,7 @@ import '@testing-library/jest-dom/extend-expect';
 import { render } from '@testing-library/react'
 import { shallow } from 'enzyme';
 import Preview from '../../../src/client/components/preview'
-import { player_instance, room_instance } from "../helpers/data";
+import { player_instance1, room1 } from "../helpers/data";
 
 describe('Preview component', () => {
 
@@ -17,30 +17,30 @@ describe('Preview component', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
-  test('Can mount', () => {
+  it('Can mount', () => {
     const Wr = () => (
       <Preview
-        mapsGamePreview={_.filter(room_instance.players, item => item.uuid !== player_instance.uuid && !item.visitor)}
+        mapsGamePreview={_.filter(room1.players, item => item.uuid !== player_instance1.uuid && !item.visitor)}
         isVisitor={false}
         isAlone={false}
-        score={room_instance.players[player_instance.uuid].score}
-        sheet={room_instance.players[player_instance.uuid].sheets[0]}
-        uuidRoom={room_instance.channel}
+        score={room1.players[player_instance1.uuid].score}
+        sheet={room1.players[player_instance1.uuid].sheets[0]}
+        uuidRoom={room1.channel}
       />
     )
     const w = render(<Wr />);
     expect(w).not.toBeNull()
   })
 
-  test('Element not visitor', () => {
+  it('Element not visitor', () => {
     const Wr = () => (
       <Preview
-        mapsGamePreview={_.filter(room_instance.players, item => item.uuid !== player_instance.uuid && !item.visitor)}
+        mapsGamePreview={_.filter(room1.players, item => item.uuid !== player_instance1.uuid && !item.visitor)}
         isVisitor={true}
         isAlone={false}
-        score={room_instance.players[player_instance.uuid].score}
-        sheet={room_instance.players[player_instance.uuid].sheets[0]}
-        uuidRoom={room_instance.channel}
+        score={room1.players[player_instance1.uuid].score}
+        sheet={room1.players[player_instance1.uuid].sheets[0]}
+        uuidRoom={room1.channel}
       />
     )
 

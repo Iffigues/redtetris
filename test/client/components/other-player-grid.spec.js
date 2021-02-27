@@ -4,7 +4,7 @@ import Enzyme, { mount, shallow } from "enzyme";
 import OtherPlayerGrid from '../../../src/client/components/OtherPlayerGrid'
 import { render } from '@testing-library/react'
 import Adapter from "enzyme-adapter-react-16";
-import { player_instance, room_instance, visitor_player, rooms_1 } from '../helpers/data'
+import { player_instance1, rooms_instance, visitor_player, room1 } from '../helpers/data'
 import { TestAppSocketProvider } from "../helpers/socketContext";
 import { TestAppUserProvider } from "../helpers/userContext";
 import { TestAppRoomsProvider } from "../helpers/roomsContext";
@@ -24,7 +24,7 @@ describe('Alert component', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
-  test('Can mount', () => {
+  it('Can mount', () => {
 
     const CurrentPlayerSetter = ({ children }) => {
       const { updatePlayer } = useContext(UserContext);
@@ -37,7 +37,7 @@ describe('Alert component', () => {
     const CurrentRoomsSetter = ({ children }) => {
       const { updateRooms } = useContext(RoomsContext);
       useEffect(() => {
-        updateRooms(rooms_1);
+        updateRooms(rooms_instance);
       }, []);
       return <>{children}</>;
     };
@@ -50,7 +50,7 @@ describe('Alert component', () => {
               <CurrentRoomsSetter>
                 <OtherPlayerGrid
                   isAlone={false}
-                  mapGamePreview={room_instance.players[player_instance.uuid]}
+                  mapGamePreview={room1.players[player_instance1.uuid]}
                 />
               </CurrentRoomsSetter>
             </TestAppRoomsProvider>

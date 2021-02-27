@@ -12,7 +12,7 @@ Enzyme.configure({ adapter: new Adapter() });
 describe('Alert component', () => {
 
   
-  test('Is exists', () => {
+  it('Is exists', () => {
     const CurrentAlertSetter = ({ children }) => {
       const { sendAlert } = useContext(AlertContext);
       useEffect(() => {
@@ -32,7 +32,7 @@ describe('Alert component', () => {
     render(<Wrapper />);
   });
 
-  test('Have alert', () => {
+  it('Have alert', () => {
   
     const Wrapper = () => (
       <TestAppAlertProvider>

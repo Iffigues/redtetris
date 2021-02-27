@@ -2,13 +2,35 @@ import uuidv4 from 'uuid'
 import Player from '../../../../src/server/class/tetris/Player';
 import Room from '../../../../src/server/class/tetris/Room';
 
+const date = new Date()
 
 // UTILS AND CONSTANTS
-export const player_instance = new Player('owalid123', () => {}, true);
+export const player_instance1 = new Player('owalid1', () => {}, true);
 export const player_visitor_instance = new Player('owalid_visitor', () => {}, true, true);
-const r = new Room(player_instance, false);
-r.addPlayer(player_visitor_instance);
-export const room_instance = r;
+
+const r1 = new Room(player_instance1, false);
+r1.addPlayer(player_visitor_instance);
+
+r1.addMessage({
+  login: null,
+  uuidUser: -1,
+  time: `${date.getHours()}:${date.getMinutes()}`,
+  content: `owalid1 à rejoint la room`
+})
+
+export const room1 = r1
+
+export const player_instance2 = new Player('owalid2', () => {}, true);
+export const player_instance3 = new Player('owalid', () => {}, true);
+const room2 = new Room(player_instance2, false);
+room2.addPlayer(player_instance3);
+
+export const rooms_instance = {
+  [room1.channel]: room1,
+  [room2.channel]: room2
+};
+
+// export const room
 
 const GAME_WIDTH = 10;
 const GAME_HEIGHT = 20;

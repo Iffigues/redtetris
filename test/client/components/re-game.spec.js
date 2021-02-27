@@ -4,7 +4,7 @@ import Enzyme, { shallow } from "enzyme";
 import ReGame from '../../../src/client/components/ReGame'
 import { render } from '@testing-library/react'
 import Adapter from "enzyme-adapter-react-16";
-import { player_instance, room_instance, visitor_player, rooms_1 } from '../helpers/data'
+import { player_instance1, rooms_instance, visitor_player, room1 } from '../helpers/data'
 import { TestAppSocketProvider } from "../helpers/socketContext";
 import { TestAppUserProvider } from "../helpers/userContext";
 import { TestAppRoomsProvider } from "../helpers/roomsContext";
@@ -24,7 +24,7 @@ describe('Alert component', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
-  test('Can mount', () => {
+  it('Can mount', () => {
 
     const CurrentPlayerSetter = ({ children }) => {
       const { updatePlayer } = useContext(UserContext);
@@ -37,7 +37,7 @@ describe('Alert component', () => {
     const CurrentRoomsSetter = ({ children }) => {
       const { updateRooms } = useContext(RoomsContext);
       useEffect(() => {
-        updateRooms(rooms_1);
+        updateRooms(rooms_instance);
       }, []);
       return <>{children}</>;
     };
@@ -50,8 +50,8 @@ describe('Alert component', () => {
               <CurrentRoomsSetter>
                 <ReGame
                   finalScore={[{ login: "owalid", score: 1000}, { login: "owalid2", score: 0 }]}
-                  player={player_instance}
-                  currentRoom={room_instance}
+                  player={player_instance1}
+                  currentRoom={room1}
                 />
               </CurrentRoomsSetter>
             </TestAppRoomsProvider>

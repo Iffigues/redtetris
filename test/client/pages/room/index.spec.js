@@ -1,5 +1,5 @@
 import { MemoryRouter as Router, Route } from 'react-router-dom';
-import { uuid_1, visitor_player, rooms_1 } from '../../helpers/data';
+import { uuid_1, visitor_player, rooms_instance } from '../../helpers/data';
 import React, { useContext, useEffect } from "react";
 import Enzyme, { shallow } from "enzyme";
 import { render } from '@testing-library/react'
@@ -21,7 +21,7 @@ describe("Test Room", () => {
     const CurrentRoomsSetter = ({ children }) => {
       const { updateRooms } = useContext(RoomsContext);
       useEffect(() => {
-        updateRooms(rooms_1);
+        updateRooms(rooms_instance);
       }, []);
       return <>{children}</>;
     };
@@ -60,7 +60,7 @@ describe("Test Room", () => {
     const CurrentRoomsSetter = ({ children }) => {
       const { updateRooms } = useContext(RoomsContext);
       useEffect(() => {
-        updateRooms(rooms_1);
+        updateRooms(rooms_instance);
       }, []);
       return <>{children}</>;
     };
@@ -85,6 +85,23 @@ describe("Test Room", () => {
 
     const wrapper = mountWithRouter(<Wrapper />);
     expect(wrapper).not.toBeNull()
+  })
+
+  // TODO: room not started and admin player
+  // TODO: room not started and admin not player
+  // TODO: room not playing 
+  // TODO: room started, playing
+  test("room not started and admin player", () => {
+   
+  })
+  test("room not started and admin not player", () => {
+   
+  })
+  test("room not playing", () => {
+   
+  })
+  test("room started, playing", () => {
+   
   })
 
   

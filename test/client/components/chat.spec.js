@@ -5,7 +5,7 @@ import Chat from '../../../src/client/components/Chat'
 import { render, fireEvent } from '@testing-library/react'
 import Adapter from "enzyme-adapter-react-16";
 import io, { serverSocket, cleanUp } from 'socket.io-client';
-import { player_instance, room_instance, visitor_player, rooms_1 } from '../helpers/data'
+import { rooms_instance, visitor_player, room1 } from '../helpers/data'
 import { TestAppSocketProvider } from "../helpers/socketContext";
 import { TestAppUserProvider } from "../helpers/userContext";
 import { TestAppRoomsProvider } from "../helpers/roomsContext";
@@ -31,7 +31,7 @@ describe('Chat component', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
-  test('Can mount', () => {
+  it('Can mount', () => {
 
     const CurrentPlayerSetter = ({ children }) => {
       const { updatePlayer } = useContext(UserContext);
@@ -44,7 +44,7 @@ describe('Chat component', () => {
     const CurrentRoomsSetter = ({ children }) => {
       const { updateRooms } = useContext(RoomsContext);
       useEffect(() => {
-        updateRooms(rooms_1);
+        updateRooms(rooms_instance);
       }, []);
       return <>{children}</>;
     };
@@ -56,7 +56,7 @@ describe('Chat component', () => {
             <TestAppRoomsProvider>
               <CurrentRoomsSetter>
                 <Chat
-                  uuidRoom={rooms_1.channel}
+                  uuidRoom={room1.channel}
                   />
               </CurrentRoomsSetter>
             </TestAppRoomsProvider>
@@ -68,7 +68,7 @@ describe('Chat component', () => {
     expect(w).not.toBeNull()
   })
 
-  test('Test button message', () => {
+  it('Test button message', () => {
     const CurrentPlayerSetter = ({ children }) => {
       const { updatePlayer } = useContext(UserContext);
       useEffect(() => {
@@ -80,7 +80,7 @@ describe('Chat component', () => {
     const CurrentRoomsSetter = ({ children }) => {
       const { updateRooms } = useContext(RoomsContext);
       useEffect(() => {
-        updateRooms(rooms_1);
+        updateRooms(rooms_instance);
       }, []);
       return <>{children}</>;
     };
@@ -92,7 +92,7 @@ describe('Chat component', () => {
             <TestAppRoomsProvider>
               <CurrentRoomsSetter>
                 <Chat
-                  uuidRoom={rooms_1.channel}
+                  uuidRoom={room1.channel}
                   />
               </CurrentRoomsSetter>
             </TestAppRoomsProvider>
@@ -109,7 +109,7 @@ describe('Chat component', () => {
     expect(button_submit).not.toBeDisabled();
   })
 
-  test('Send message', () => {
+  it('Send message', () => {
     const CurrentPlayerSetter = ({ children }) => {
       const { updatePlayer } = useContext(UserContext);
       useEffect(() => {
@@ -121,7 +121,7 @@ describe('Chat component', () => {
     const CurrentRoomsSetter = ({ children }) => {
       const { updateRooms } = useContext(RoomsContext);
       useEffect(() => {
-        updateRooms(rooms_1);
+        updateRooms(rooms_instance);
       }, []);
       return <>{children}</>;
     };
@@ -133,7 +133,7 @@ describe('Chat component', () => {
             <TestAppRoomsProvider>
               <CurrentRoomsSetter>
                 <Chat
-                  uuidRoom={rooms_1.channel}
+                  uuidRoom={room1.channel}
                   />
               </CurrentRoomsSetter>
             </TestAppRoomsProvider>
@@ -149,7 +149,7 @@ describe('Chat component', () => {
     fireEvent.click(button_submit)
   })
 
-  test('Focus unFocus input', () => {
+  it('Focus unFocus input', () => {
     const CurrentPlayerSetter = ({ children }) => {
       const { updatePlayer } = useContext(UserContext);
       useEffect(() => {
@@ -161,7 +161,7 @@ describe('Chat component', () => {
     const CurrentRoomsSetter = ({ children }) => {
       const { updateRooms } = useContext(RoomsContext);
       useEffect(() => {
-        updateRooms(rooms_1);
+        updateRooms(rooms_instance);
       }, []);
       return <>{children}</>;
     };
@@ -173,7 +173,7 @@ describe('Chat component', () => {
             <TestAppRoomsProvider>
               <CurrentRoomsSetter>
                 <Chat
-                  uuidRoom={rooms_1.channel}
+                  uuidRoom={room1.channel}
                   />
               </CurrentRoomsSetter>
             </TestAppRoomsProvider>
@@ -188,7 +188,7 @@ describe('Chat component', () => {
     fireEvent.focusOut(input_messsage)
   })
 
-  test('Have base message', () => {
+  it('Have base message', () => {
     const CurrentPlayerSetter = ({ children }) => {
       const { updatePlayer } = useContext(UserContext);
       useEffect(() => {
@@ -200,7 +200,7 @@ describe('Chat component', () => {
     const CurrentRoomsSetter = ({ children }) => {
       const { updateRooms } = useContext(RoomsContext);
       useEffect(() => {
-        updateRooms(rooms_1);
+        updateRooms(rooms_instance);
       }, []);
       return <>{children}</>;
     };
@@ -212,7 +212,7 @@ describe('Chat component', () => {
             <TestAppRoomsProvider>
               <CurrentRoomsSetter>
                 <Chat
-                  uuidRoom={rooms_1.channel}
+                  uuidRoom={room1.channel}
                   />
               </CurrentRoomsSetter>
             </TestAppRoomsProvider>
@@ -222,11 +222,11 @@ describe('Chat component', () => {
     )
     const { container } = render(<Wr />);
     const message_base = container.querySelector('.test--message-base')
-    expect(message_base).toBeNull();
+    expect(message_base).not.toBeNull();
 
   })
 
-  test('Send message', () => {
+  it('Send message', () => {
     const CurrentPlayerSetter = ({ children }) => {
       const { updatePlayer } = useContext(UserContext);
       useEffect(() => {
@@ -238,7 +238,7 @@ describe('Chat component', () => {
     const CurrentRoomsSetter = ({ children }) => {
       const { updateRooms } = useContext(RoomsContext);
       useEffect(() => {
-        updateRooms(rooms_1);
+        updateRooms(rooms_instance);
       }, []);
       return <>{children}</>;
     };
@@ -250,7 +250,7 @@ describe('Chat component', () => {
             <TestAppRoomsProvider>
               <CurrentRoomsSetter>
                 <Chat
-                  uuidRoom={rooms_1.channel}
+                  uuidRoom={room1.channel}
                   />
               </CurrentRoomsSetter>
             </TestAppRoomsProvider>
@@ -268,7 +268,7 @@ describe('Chat component', () => {
     expect(message_user).toBeNull();
   })
 
-  test('Scape without focus', () => {
+  it('Scape without focus', () => {
     const ENDPOINT = 'localhost:3004';
     const mockSocket = io(ENDPOINT);
 
@@ -283,7 +283,7 @@ describe('Chat component', () => {
     const CurrentRoomsSetter = ({ children }) => {
       const { updateRooms } = useContext(RoomsContext);
       useEffect(() => {
-        updateRooms(rooms_1);
+        updateRooms(rooms_instance);
       }, []);
       return <>{children}</>;
     };
@@ -295,7 +295,7 @@ describe('Chat component', () => {
             <TestAppRoomsProvider>
               <CurrentRoomsSetter>
                 <Chat
-                  uuidRoom={rooms_1.channel}
+                  uuidRoom={room1.channel}
                   />
               </CurrentRoomsSetter>
             </TestAppRoomsProvider>
@@ -314,7 +314,7 @@ describe('Chat component', () => {
     expect(mockSocket.emit).toHaveBeenCalledTimes(2)
   })
 
-  test('Arrow without focus', () => {
+  it('Arrow without focus', () => {
     const ENDPOINT = 'localhost:3004';
     const mockSocket = io(ENDPOINT);
 
@@ -329,7 +329,7 @@ describe('Chat component', () => {
     const CurrentRoomsSetter = ({ children }) => {
       const { updateRooms } = useContext(RoomsContext);
       useEffect(() => {
-        updateRooms(rooms_1);
+        updateRooms(rooms_instance);
       }, []);
       return <>{children}</>;
     };
@@ -341,7 +341,7 @@ describe('Chat component', () => {
             <TestAppRoomsProvider>
               <CurrentRoomsSetter>
                 <Chat
-                  uuidRoom={rooms_1.channel}
+                  uuidRoom={room1.channel}
                   />
               </CurrentRoomsSetter>
             </TestAppRoomsProvider>

@@ -1,7 +1,12 @@
 import socketIOClient from "socket.io-client"
+import _ from 'lodash'
 import Server from "../../src/server/class/Server"
 import instanceRooms from '../../src/server/class/tetris/Rooms'
 import SocketsManager from "../../src/server/class/sockets/SocketsManager";
+import Game from "../../src/server/class/tetris/Game";
+import Player from "../../src/server/class/tetris/Player";
+import Room from "../../src/server/class/tetris/Room";
+import Block, { I, O, T, S, Z, J, L } from "../../src/server/class/tetris/Tetriminos";
 require('dotenv').config() 
 
 
@@ -17,9 +22,7 @@ describe('Server tests', () => {
     socketClient.on('connect', () => {
       console.log("connected")
     });
-    server = srvInstance.app.listen(process.env.PORT_DEV_SERVER, () => {
-      done()
-    })
+    server = srvInstance.app.listen(process.env.PORT_DEV_SERVER, () => done())
     const socketsManager = new SocketsManager(server);
     srvInstance.setServer(server)
     srvInstance.setSocketManager(socketsManager)
@@ -41,9 +44,7 @@ describe('Server tests', () => {
   
   it('Should ping', (done) => {
     socketClient.emit("server/ping");
-    socketClient.on("client/pong", () => {
-      done()
-    })
+    socketClient.on("client/pong", () => done())
   });
 
   it('create room', (done) => {
@@ -68,7 +69,6 @@ describe('Server tests', () => {
   it('join room', (done) => {
     const current_room = getCurrentRoom()
     const data = { channel: current_room.channel, login: "bobo" }
-    console.log("data", data)
 	  socketClient.on('client/join-room', (rooms) => {
       let player = rooms.player
       expect(player.end).toBe(false);
@@ -105,7 +105,6 @@ describe('Server tests', () => {
     const data = { key: "ArrowUp", channel: current_room.channel, uuidUser: current_player.uuid }
     
     socketClient.on('client/update-rooms', (rooms) => {
-      console.log(rooms);
       done()
     });
     socketClient.emit('server/key-up', data);
@@ -166,6 +165,51 @@ describe('Server tests', () => {
     });
     socketClient.emit("server/end-game",  data);
   });
+
+  it('init game instance', () => {
+    const game = new Game(() => {})
+    expect(typeof game.initActionObject() === "object").toBe(true)
+    expect(Object.keys(game.initActionObject()).length).toBe(5)
+  })
+
+  it('testing Action Game instance', () => {
+    const game = new Game(() => {})
+    expect(game.initActionObject()["ArrowUp"].toString()).not.toBeNull()
+    expect(game.initActionObject()["ArrowDown"].toString()).not.toBeNull()
+    expect(game.initActionObject()["ArrowLeft"].toString()).not.toBeNull()
+    expect(game.initActionObject()["ArrowRight"].toString()).not.toBeNull()
+    expect(game.initActionObject()[" "].toString()).not.toBeNull()
+  })
+
+  it('Start Game instance', () => {
+    const player = new Player("login", () => {}, true);
+    const room = new Room(player, false)
+    room.startGame()
+  })
+  
+  it('Call action Game instance', () => {
+    const current_room = getCurrentRoom()
+    const current_player = current_room.players[Object.keys(current_room.players)[0]]
+    console.log("current_player.block", current_player.block)
+    current_player.addSheet();
+    current_player.block = _.cloneDeep(current_player.sheets.shift());
+    current_player.right()
+  })
+
+  it('Tetrominos', () => {
+    const block = new Block();
+    const randomBlock = block.newBlock()
+    const allBlocks = [I, O, T, S, Z, J, L];
+    let founded = false;
+    allBlocks.map(tetro => {
+      if (randomBlock instanceof tetro) {
+        founded = true
+      }
+    })
+    
+    expect(founded).toBe(true)
+
+  })
 
   
 });

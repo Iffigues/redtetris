@@ -6,7 +6,7 @@ import Enzyme, { mount, shallow } from "enzyme";
 import Chat from '../../../src/client/components/Chat'
 import { render, fireEvent } from '@testing-library/react'
 import Adapter from "enzyme-adapter-react-16";
-import { player_instance, room_instance, visitor_player, rooms_1 } from '../helpers/data'
+import { player_instance1, rooms_instance, visitor_player, room1 } from '../helpers/data'
 import { TestAppSocketProvider } from "../helpers/socketContext";
 import { TestAppUserProvider } from "../helpers/userContext";
 import { TestAppRoomsProvider } from "../helpers/roomsContext";
@@ -38,12 +38,12 @@ describe('VisitorView component', () => {
 
   const Wrapper = () => (
     <VisitorView
-      uuidRoom={room_instance.channel}
-      currentRoom={room_instance}
-      player={player_instance}
-      mapsGamePreview={_.filter(room_instance.players, item => item.uuid !== player_instance.uuid && !item.visitor)}
-      isAlone={Object.keys(room_instance.players).length === 1}
-      isEnd={room_instance.players[player_instance.uuid].end}
+      uuidRoom={room1.channel}
+      currentRoom={room1}
+      player={player_instance1}
+      mapsGamePreview={_.filter(room1.players, item => item.uuid !== player_instance1.uuid && !item.visitor)}
+      isAlone={Object.keys(room1.players).length === 1}
+      isEnd={room1.players[player_instance1.uuid].end}
       boxProps={boxProps}
     />
   )
@@ -58,7 +58,7 @@ describe('VisitorView component', () => {
     const CurrentRoomsSetter = ({ children }) => {
       const { updateRooms } = useContext(RoomsContext);
       useEffect(() => {
-        updateRooms(rooms_1);
+        updateRooms(rooms_instance);
       }, []);
       return <>{children}</>;
     };
@@ -76,12 +76,12 @@ describe('VisitorView component', () => {
               <TestAppRoomsProvider>
                 <CurrentRoomsSetter>
                   <VisitorView
-                    uuidRoom={room_instance.channel}
-                    currentRoom={room_instance}
-                    player={player_instance}
-                    mapsGamePreview={_.filter(room_instance.players, item => item.uuid !== player_instance.uuid && !item.visitor)}
-                    isAlone={Object.keys(room_instance.players).length === 1}
-                    isEnd={room_instance.players[player_instance.uuid].end}
+                    uuidRoom={room1.channel}
+                    currentRoom={room1}
+                    player={player_instance1}
+                    mapsGamePreview={_.filter(room1.players, item => item.uuid !== player_instance1.uuid && !item.visitor)}
+                    isAlone={Object.keys(room1.players).length === 1}
+                    isEnd={room1.players[player_instance1.uuid].end}
                     boxProps={boxProps}
                   />
                 </CurrentRoomsSetter>
@@ -97,7 +97,7 @@ describe('VisitorView component', () => {
     const CurrentRoomsSetter = ({ children }) => {
       const { updateRooms } = useContext(RoomsContext);
       useEffect(() => {
-        updateRooms(rooms_1);
+        updateRooms(rooms_instance);
       }, []);
       return <>{children}</>;
     };
@@ -115,12 +115,12 @@ describe('VisitorView component', () => {
               <TestAppRoomsProvider>
                 <CurrentRoomsSetter>
                   <VisitorView
-                    uuidRoom={room_instance.channel}
-                    currentRoom={room_instance}
-                    player={player_instance}
-                    mapsGamePreview={_.filter(room_instance.players, item => item.uuid !== player_instance.uuid && !item.visitor)}
-                    isAlone={Object.keys(room_instance.players).length === 1}
-                    isEnd={room_instance.players[player_instance.uuid].end}
+                    uuidRoom={room1.channel}
+                    currentRoom={room1}
+                    player={player_instance1}
+                    mapsGamePreview={_.filter(room1.players, item => item.uuid !== player_instance1.uuid && !item.visitor)}
+                    isAlone={Object.keys(room1.players).length === 1}
+                    isEnd={room1.players[player_instance1.uuid].end}
                     boxProps={boxProps}
                   />
                 </CurrentRoomsSetter>
@@ -139,7 +139,7 @@ describe('VisitorView component', () => {
     const CurrentRoomsSetter = ({ children }) => {
       const { updateRooms } = useContext(RoomsContext);
       useEffect(() => {
-        updateRooms(rooms_1);
+        updateRooms(rooms_instance);
       }, []);
       return <>{children}</>;
     };
@@ -157,12 +157,12 @@ describe('VisitorView component', () => {
               <TestAppRoomsProvider>
                 <CurrentRoomsSetter>
                   <VisitorView
-                    uuidRoom={room_instance.channel}
-                    currentRoom={room_instance}
-                    player={player_instance}
-                    mapsGamePreview={_.filter(room_instance.players, item => item.uuid !== player_instance.uuid && !item.visitor)}
-                    isAlone={Object.keys(room_instance.players).length === 1}
-                    isEnd={room_instance.players[player_instance.uuid].end}
+                    uuidRoom={room1.channel}
+                    currentRoom={room1}
+                    player={player_instance1}
+                    mapsGamePreview={_.filter(room1.players, item => item.uuid !== player_instance1.uuid && !item.visitor)}
+                    isAlone={Object.keys(room1.players).length === 1}
+                    isEnd={room1.players[player_instance1.uuid].end}
                     boxProps={boxProps}
                   />
                 </CurrentRoomsSetter>
@@ -181,7 +181,7 @@ describe('VisitorView component', () => {
     const CurrentRoomsSetter = ({ children }) => {
       const { updateRooms } = useContext(RoomsContext);
       useEffect(() => {
-        updateRooms(rooms_1);
+        updateRooms(rooms_instance);
       }, []);
       return <>{children}</>;
     };
@@ -199,12 +199,12 @@ describe('VisitorView component', () => {
               <TestAppRoomsProvider>
                 <CurrentRoomsSetter>
                   <VisitorView
-                    uuidRoom={room_instance.channel}
-                    currentRoom={room_instance}
-                    player={player_instance}
-                    mapsGamePreview={_.filter(room_instance.players, item => item.uuid !== player_instance.uuid && !item.visitor)}
-                    isAlone={Object.keys(room_instance.players).length === 1}
-                    isEnd={room_instance.players[player_instance.uuid].end}
+                    uuidRoom={room1.channel}
+                    currentRoom={room1}
+                    player={player_instance1}
+                    mapsGamePreview={_.filter(room1.players, item => item.uuid !== player_instance1.uuid && !item.visitor)}
+                    isAlone={Object.keys(room1.players).length === 1}
+                    isEnd={room1.players[player_instance1.uuid].end}
                     boxProps={boxProps}
                   />
                 </CurrentRoomsSetter>
@@ -227,7 +227,7 @@ describe('VisitorView component', () => {
     const CurrentRoomsSetter = ({ children }) => {
       const { updateRooms } = useContext(RoomsContext);
       useEffect(() => {
-        updateRooms(rooms_1);
+        updateRooms(rooms_instance);
       }, []);
       return <>{children}</>;
     };
@@ -245,12 +245,12 @@ describe('VisitorView component', () => {
               <TestAppRoomsProvider>
                 <CurrentRoomsSetter>
                   <VisitorView
-                    uuidRoom={room_instance.channel}
-                    currentRoom={room_instance}
-                    player={player_instance}
-                    mapsGamePreview={_.filter(room_instance.players, item => item.uuid !== player_instance.uuid && !item.visitor)}
-                    isAlone={Object.keys(room_instance.players).length === 1}
-                    isEnd={room_instance.players[player_instance.uuid].end}
+                    uuidRoom={room1.channel}
+                    currentRoom={room1}
+                    player={player_instance1}
+                    mapsGamePreview={_.filter(room1.players, item => item.uuid !== player_instance1.uuid && !item.visitor)}
+                    isAlone={Object.keys(room1.players).length === 1}
+                    isEnd={room1.players[player_instance1.uuid].end}
                     boxProps={boxProps}
                   />
                 </CurrentRoomsSetter>

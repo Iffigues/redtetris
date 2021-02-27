@@ -17,7 +17,7 @@ describe('Cell component', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
-  test('Can mount', () => {
+  it('Can mount', () => {
     const Wr = () => (
       <Cell
         type={1}

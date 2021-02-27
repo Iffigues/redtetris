@@ -8,14 +8,14 @@ import { render } from '@testing-library/react'
 import { Context as UserContext } from "../../../src/client/context/UserContext";
 import { Context as RoomsContext } from "../../../src/client/context/RoomsContext";
 import { TestAppUserProvider } from "../helpers/userContext";
-import { player_instance, room_instance, visitor_player, rooms_1, player_visitor_instance } from '../helpers/data'
+import { player_instance1, rooms_instance, visitor_player, room1, player_visitor_instance } from '../helpers/data'
 import { TestAppSocketProvider } from "../helpers/socketContext";
 import { TestAppRoomsProvider } from "../helpers/roomsContext";
 
 
 Enzyme.configure({ adapter: new Adapter() });
 describe('Board component', () => {
-  test('Is exists', () => {
+  it('Is exists', () => {
     const CurrentUserSetter = ({ children }) => {
       const { updateUuidRoom, updatePlayer } = useContext(UserContext);
       useEffect(() => {
@@ -34,7 +34,7 @@ describe('Board component', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
-  test('Can mount', () => {
+  it('Can mount', () => {
     const CurrentPlayerSetter = ({ children }) => {
       const { updatePlayer } = useContext(UserContext);
       useEffect(() => {
@@ -46,7 +46,7 @@ describe('Board component', () => {
     const CurrentRoomsSetter = ({ children }) => {
       const { updateRooms } = useContext(RoomsContext);
       useEffect(() => {
-        updateRooms(rooms_1);
+        updateRooms(rooms_instance);
       }, []);
       return <>{children}</>;
     };
@@ -59,15 +59,15 @@ describe('Board component', () => {
               <CurrentRoomsSetter>
                 <Board
                   song={false}
-                  currentRoom={room_instance}
-                  isEnd={room_instance.players[player_instance.uuid].end}
-                  mapGame={room_instance.players[player_instance.uuid].currentMapGame}
-                  isAlone={Object.keys(room_instance.players).length === 1}
-                  mapsGamePreview={_.filter(room_instance.players, item => item.uuid !== player_instance.uuid && !item.visitor)}
-                  score={room_instance.players[player_instance.uuid].score}
-                  sheet={room_instance.players[player_instance.uuid].sheets[0]}
-                  finalScore={room_instance.finalScore}
-                  uuidRoom={room_instance.channel}
+                  currentRoom={room1}
+                  isEnd={room1.players[player_instance1.uuid].end}
+                  mapGame={room1.players[player_instance1.uuid].currentMapGame}
+                  isAlone={Object.keys(room1.players).length === 1}
+                  mapsGamePreview={_.filter(room1.players, item => item.uuid !== player_instance1.uuid && !item.visitor)}
+                  score={room1.players[player_instance1.uuid].score}
+                  sheet={room1.players[player_instance1.uuid].sheets[0]}
+                  finalScore={room1.finalScore}
+                  uuidRoom={room1.channel}
                 />
               </CurrentRoomsSetter>
             </TestAppRoomsProvider>
@@ -78,7 +78,7 @@ describe('Board component', () => {
     render(<Wr />);
   })
 
-  test('Board Visitor', () => {
+  it('Board Visitor', () => {
     const CurrentPlayerSetter = ({ children }) => {
       const { updatePlayer } = useContext(UserContext);
       useEffect(() => {
@@ -90,7 +90,7 @@ describe('Board component', () => {
     const CurrentRoomsSetter = ({ children }) => {
       const { updateRooms } = useContext(RoomsContext);
       useEffect(() => {
-        updateRooms(rooms_1);
+        updateRooms(rooms_instance);
       }, []);
       return <>{children}</>;
     };
@@ -103,15 +103,15 @@ describe('Board component', () => {
               <CurrentRoomsSetter>
                 <Board
                   song={false}
-                  currentRoom={room_instance}
-                  isEnd={room_instance.players[player_visitor_instance.uuid].end}
-                  mapGame={room_instance.players[player_visitor_instance.uuid].currentMapGame}
-                  isAlone={Object.keys(room_instance.players).length === 1}
-                  mapsGamePreview={_.filter(room_instance.players, item => item.uuid !== player_visitor_instance.uuid && !item.visitor)}
-                  score={room_instance.players[player_visitor_instance.uuid].score}
-                  sheet={room_instance.players[player_visitor_instance.uuid].sheets[0]}
-                  finalScore={room_instance.finalScore}
-                  uuidRoom={room_instance.channel}
+                  currentRoom={room1}
+                  isEnd={room1.players[player_visitor_instance.uuid].end}
+                  mapGame={room1.players[player_visitor_instance.uuid].currentMapGame}
+                  isAlone={Object.keys(room1.players).length === 1}
+                  mapsGamePreview={_.filter(room1.players, item => item.uuid !== player_visitor_instance.uuid && !item.visitor)}
+                  score={room1.players[player_visitor_instance.uuid].score}
+                  sheet={room1.players[player_visitor_instance.uuid].sheets[0]}
+                  finalScore={room1.finalScore}
+                  uuidRoom={room1.channel}
                 />
               </CurrentRoomsSetter>
             </TestAppRoomsProvider>
@@ -124,11 +124,11 @@ describe('Board component', () => {
     expect(container_not_visitor).toBeNull()
   })
 
-  test('Board Player', () => {
+  it('Board Player', () => {
     const CurrentPlayerSetter = ({ children }) => {
       const { updatePlayer } = useContext(UserContext);
       useEffect(() => {
-        updatePlayer(player_instance);
+        updatePlayer(player_instance1);
       }, [])
       return <>{children}</>;
     };
@@ -136,7 +136,7 @@ describe('Board component', () => {
     const CurrentRoomsSetter = ({ children }) => {
       const { updateRooms } = useContext(RoomsContext);
       useEffect(() => {
-        updateRooms(rooms_1);
+        updateRooms(rooms_instance);
       }, []);
       return <>{children}</>;
     };
@@ -149,15 +149,15 @@ describe('Board component', () => {
               <CurrentRoomsSetter>
                 <Board
                   song={false}
-                  currentRoom={room_instance}
-                  isEnd={room_instance.players[player_instance.uuid].end}
-                  mapGame={room_instance.players[player_instance.uuid].currentMapGame}
-                  isAlone={Object.keys(room_instance.players).length === 1}
-                  mapsGamePreview={_.filter(room_instance.players, item => item.uuid !== player_instance.uuid && !item.visitor)}
-                  score={room_instance.players[player_instance.uuid].score}
-                  sheet={room_instance.players[player_instance.uuid].sheets[0]}
-                  finalScore={room_instance.finalScore}
-                  uuidRoom={room_instance.channel}
+                  currentRoom={room1}
+                  isEnd={room1.players[player_instance1.uuid].end}
+                  mapGame={room1.players[player_instance1.uuid].currentMapGame}
+                  isAlone={Object.keys(room1.players).length === 1}
+                  mapsGamePreview={_.filter(room1.players, item => item.uuid !== player_instance1.uuid && !item.visitor)}
+                  score={room1.players[player_instance1.uuid].score}
+                  sheet={room1.players[player_instance1.uuid].sheets[0]}
+                  finalScore={room1.finalScore}
+                  uuidRoom={room1.channel}
                 />
               </CurrentRoomsSetter>
             </TestAppRoomsProvider>
