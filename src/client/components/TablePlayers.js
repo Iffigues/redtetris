@@ -26,7 +26,6 @@ const TablePlayers = ({ login }) => {
   const { sendSocket } = useContext(SocketContext);
   const { state: { rooms } } = useContext(RoomsContext);
   const classes = useStyles();
-  console.log("rooms", rooms)
 
   const joinRoom = (e, roomSelected) => {
     e.preventDefault();

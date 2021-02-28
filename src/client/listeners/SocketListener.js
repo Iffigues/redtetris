@@ -35,10 +35,6 @@ export default (socketClient) => {
       updateRooms(rooms)
     })
 
-    socketClient.on('client/start-game', () => {
-      console.log('client/start-game')
-    })
-
     return () => socketClient.disconnect();
   }, [])
 }

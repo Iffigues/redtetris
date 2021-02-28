@@ -20,7 +20,7 @@ describe('Server tests', () => {
     socketClient = socketIOClient(process.env.API_URL)
     const srvInstance = new Server(true)
     socketClient.on('connect', () => {
-      console.log("connected")
+      console.log("user connected")
     });
     server = srvInstance.app.listen(process.env.PORT_DEV_SERVER, () => done())
     const socketsManager = new SocketsManager(server);
@@ -190,7 +190,6 @@ describe('Server tests', () => {
   it('Call action Game instance', () => {
     const current_room = getCurrentRoom()
     const current_player = current_room.players[Object.keys(current_room.players)[0]]
-    console.log("current_player.block", current_player.block)
     current_player.addSheet();
     current_player.block = _.cloneDeep(current_player.sheets.shift());
     current_player.right()

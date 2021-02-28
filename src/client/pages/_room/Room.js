@@ -14,16 +14,12 @@ import ModalResume from '../../components/ModalResume';
 
 const Room = () => {
   const { uuidRoom } = useParams()
-  console.log("uuidRoom", uuidRoom)
   const [song, setSong] = useState(false);
   const history = useHistory()
   const { state: { player } } = useContext(UserContext);
   const { state: { rooms } } = useContext(RoomsContext);
   const { sendSocket } = useContext(SocketContext);
   const { sendAlert } = useContext(AlertContext);
-
-  console.log("rooms", rooms)
-  console.log("uuidRoom", uuidRoom)
 
   const handleSetStartGame = () => {
     sendSocket('server/start-game', { uuidRoom })
