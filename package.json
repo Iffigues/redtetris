@@ -11,7 +11,8 @@
     "sass": "sass --style=compressed src/client/styles/main.scss:public/assets/styles/main.css",
     "test": "NODE_ENV=test jest --config ./jest.config.json --no-cache '--maxWorkers=1' --detectOpenHandles",
     "test:watch": "NODE_ENV=test npm run test -- --watch --silent",
-    "coverage": "NODE_ENV=test npm run test -- --coverage --silent",
+    "coverage": "NODE_ENV=test npm run test -- --coverage --silent && npm run posttest:cov",
+    "posttest:cov": "node open-cov.command.js",
     "eslint": "eslint src"
   },
   "dependencies": {
@@ -47,6 +48,7 @@
     "@babel/node": "^7.12.13",
     "@babel/preset-env": "^7.12.13",
     "@babel/preset-react": "7.12.13",
+    "@reach/router": "^1.3.4",
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
     "@wojtekmaj/enzyme-adapter-react-17": "^0.4.1",
@@ -70,6 +72,7 @@
     "jest-enzyme": "^7.1.2",
     "jsdom": "^16.4.0",
     "mocha": "^8.2.1",
+    "node": "^15.8.0",
     "node-sass": "^4.14.1",
     "nyc": "^15.1.0",
     "react-addons-test-utils": "^15.6.2",

@@ -18,20 +18,7 @@ jest.mock('socket.io-client', () => {
 Enzyme.configure({ adapter: new Adapter() });
 
 
-describe('FormCreateRoom component', () => {
-
-  const Wrapper = () => (
-    <FormCreateRoom
-      login="toto"
-    />
-  )
-  
-  it('Is exists', () => {
-    const wrapper = shallow(<Wrapper />);
-    expect(wrapper).toMatchSnapshot();
-  });
-  
-  
+describe('FormCreateRoom component', () => {  
   it('Can mount', () => {
     const Wr = () => (
       <TestAppSocketProvider>

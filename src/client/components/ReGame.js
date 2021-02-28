@@ -40,7 +40,7 @@ const ReGame = ({ finalScore, player, currentRoom }) => {
               {score.login} {score.score}
             </p>
           ))
-        : <p>Votre score final est de {currentRoom.players[player.uuid].score}</p>
+        : <p className="test--alone-player">Votre score final est de {currentRoom.players[player.uuid].score}</p>
       }
       
       {
@@ -49,7 +49,7 @@ const ReGame = ({ finalScore, player, currentRoom }) => {
          (
             <div className="d-flex jcnt--center aitems--center fdir--row">
               <Button
-                className="ml-2 test--btn-join-room"
+                className="ml-2 test--btn-leave-room"
                 id="leaveRoom"
                 variant="contained"
                 color="secondary"
@@ -59,7 +59,7 @@ const ReGame = ({ finalScore, player, currentRoom }) => {
                 Quitter
               </Button>
               <Button
-                className="mr-2 test--btn-join-room"
+                className="mr-2 test--btn-re-game"
                 id="wantReGame"
                 variant="contained"
                 color="primary"

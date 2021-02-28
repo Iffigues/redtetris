@@ -35,23 +35,6 @@ describe('VisitorView component', () => {
     style: { backgroundColor: 'white', height: '100%', width: '100%'},
     m: 1
   };
-
-  const Wrapper = () => (
-    <VisitorView
-      uuidRoom={room1.channel}
-      currentRoom={room1}
-      player={player_instance1}
-      mapsGamePreview={_.filter(room1.players, item => item.uuid !== player_instance1.uuid && !item.visitor)}
-      isAlone={Object.keys(room1.players).length === 1}
-      isEnd={room1.players[player_instance1.uuid].end}
-      boxProps={boxProps}
-    />
-  )
-  
-  it('Is exists', () => {
-    const wrapper = shallow(<Wrapper />);
-    expect(wrapper).toMatchSnapshot();
-  });
   
   
   it('Can mount', () => {
