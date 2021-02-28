@@ -26,9 +26,6 @@ const ModalResume = ({ setSong, isPlaying, song, player, uuidRoom }) => {
   const { sendSocket } = useContext(SocketContext);
   const classes = useStyles();
 
-  const handleCloseModal = () => {
-    console.log("HandleCloseModal")
-  };
 
   const leaveRoom = (e) => {
     e.preventDefault()
@@ -52,7 +49,6 @@ const ModalResume = ({ setSong, isPlaying, song, player, uuidRoom }) => {
         disablePortal
         disableEnforceFocus
         disableAutoFocus
-        onClose={handleCloseModal}
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
       >

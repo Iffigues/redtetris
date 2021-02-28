@@ -70,7 +70,7 @@ return (
                 return (
                   <div
                     className="test--message-base"
-                    key={msg}
+                    key={msg.uuid}
                   >
                     <p>
                       <span className={`bold medium-text ${(msg.uuidUser === -1) ? "text--green" : "text--red"}`}>
@@ -82,7 +82,7 @@ return (
               } else {
                   return (
                     <div
-                      key={msg}
+                      key={msg.uuid}
                       className={`${msg.uuidUser === player.uuid
                         ? 'aself--fend bubble--me'
                         : 'aself--fstart bubble--other'}
