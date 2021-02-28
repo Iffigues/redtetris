@@ -22,19 +22,7 @@ jest.mock('socket.io-client', () => {
 Enzyme.configure({ adapter: new Adapter() });
 
 
-describe('VisitorView component', () => {
-
-  const Wrapper = () => (
-    <TablePlayers
-      login="toto"
-    />
-  )
-  
-  it('Is exists', () => {
-    const wrapper = shallow(<Wrapper />);
-    expect(wrapper).toMatchSnapshot();
-  });
-  
+describe('VisitorView component', () => {  
   
   it('Can mount', () => {
     const CurrentRoomsSetter = ({ children }) => {
@@ -109,7 +97,7 @@ describe('VisitorView component', () => {
   })
 
   it('Can join room', () => {
-    const ENDPOINT = 'localhost:3004';
+    const ENDPOINT = 'localhost:3000';
     const mockSocket = io(ENDPOINT);
     const CurrentRoomsSetter = ({ children }) => {
       const { updateRooms } = useContext(RoomsContext);
@@ -135,7 +123,6 @@ describe('VisitorView component', () => {
     const join_room = container.querySelectorAll('.test--btn-join-room')[0]
     fireEvent.click(join_room)
     expect(mockSocket.emit).toHaveBeenCalledTimes(1)
-
   })
 
 });

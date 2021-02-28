@@ -9,15 +9,6 @@ import Adapter from "enzyme-adapter-react-16";
 Enzyme.configure({ adapter: new Adapter() });
 describe('Alert component', () => {
 
-  const Wrapper = () => (
-    <Game />
-  )
-
-  it('Is exists', () => {
-    const wrapper = shallow(<Wrapper />);
-    expect(wrapper).toMatchSnapshot();
-  });
-
   it('Can mount', () => {
     const Wr = () => (
       <Game

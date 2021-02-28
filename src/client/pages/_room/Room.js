@@ -1,7 +1,6 @@
 // Libs
 import React, { useContext, useState, useEffect } from 'react';
-import { withRouter } from 'react-router';
-import { useHistory } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
 import Button from '@material-ui/core/Button';
 import _ from 'lodash'
 
@@ -13,9 +12,9 @@ import Board from '../../components/Board';
 import ModalResume from '../../components/ModalResume';
 
 
-const Room = (props) => {
-  const { match } = props
-  const { uuidRoom } = match.params;
+const Room = () => {
+  const { uuidRoom } = useParams()
+  console.log("uuidRoom", uuidRoom)
   const [song, setSong] = useState(false);
   const history = useHistory()
   const { state: { player } } = useContext(UserContext);
@@ -23,6 +22,8 @@ const Room = (props) => {
   const { sendSocket } = useContext(SocketContext);
   const { sendAlert } = useContext(AlertContext);
 
+  console.log("rooms", rooms)
+  console.log("uuidRoom", uuidRoom)
 
   const handleSetStartGame = () => {
     sendSocket('server/start-game', { uuidRoom })
@@ -48,7 +49,7 @@ const Room = (props) => {
       return (
         <div className="d-flex jcnt--center aitems--center fdir--row pt-3">
           <Button
-            className="aself--center"
+            className="aself--center test--btn-start-game"
             variant="contained"
             onClick={handleSetStartGame}
             data-testid='gameElmt'
@@ -59,23 +60,25 @@ const Room = (props) => {
       )
     } else if (!rooms[uuidRoom].isStart && !player.admin) {
       return (
-        <p>
+        <p className="test--wait-admin-message">
           Veuillez attendre que le maitre du jeux commence la partie
         </p>
       )
     } else if (!rooms[uuidRoom].isPlaying) {
       return (
-       <ModalResume
-          isPlaying={!rooms[uuidRoom].isPlaying}
-          setSong={setSong}
-          song={song}
-          player={player}
-          uuidRoom={uuidRoom}
-        />
+        <div className="test--modal-active">
+          <ModalResume
+            isPlaying={!rooms[uuidRoom].isPlaying}
+            setSong={setSong}
+            song={song}
+            player={player}
+            uuidRoom={uuidRoom}
+          />
+        </div>
       )
     } else {
       return (
-        <div className="overflow-h">
+        <div className="overflow-h test--is-playing">
           <Board
             data-testid="gameElmt"
             song={song}
@@ -101,4 +104,4 @@ const Room = (props) => {
   }
 }
 
-export default withRouter(Room)
+export default Room

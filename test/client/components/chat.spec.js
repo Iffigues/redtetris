@@ -5,7 +5,7 @@ import Chat from '../../../src/client/components/Chat'
 import { render, fireEvent } from '@testing-library/react'
 import Adapter from "enzyme-adapter-react-16";
 import io, { serverSocket, cleanUp } from 'socket.io-client';
-import { rooms_instance, visitor_player, room1 } from '../helpers/data'
+import { rooms_instance, visitor_player, room1, room3 } from '../helpers/data'
 import { TestAppSocketProvider } from "../helpers/socketContext";
 import { TestAppUserProvider } from "../helpers/userContext";
 import { TestAppRoomsProvider } from "../helpers/roomsContext";
@@ -222,6 +222,44 @@ describe('Chat component', () => {
     )
     const { container } = render(<Wr />);
     const message_base = container.querySelector('.test--message-base')
+    expect(message_base).not.toBeNull();
+
+  })
+
+  it('Have message user', () => {
+    const CurrentPlayerSetter = ({ children }) => {
+      const { updatePlayer } = useContext(UserContext);
+      useEffect(() => {
+        updatePlayer(visitor_player);
+      }, [])
+      return <>{children}</>;
+    };
+
+    const CurrentRoomsSetter = ({ children }) => {
+      const { updateRooms } = useContext(RoomsContext);
+      useEffect(() => {
+        updateRooms(rooms_instance);
+      }, []);
+      return <>{children}</>;
+    };
+
+    const Wr = () => (
+      <TestAppSocketProvider>
+        <TestAppUserProvider>
+          <CurrentPlayerSetter>
+            <TestAppRoomsProvider>
+              <CurrentRoomsSetter>
+                <Chat
+                  uuidRoom={room3.channel}
+                  />
+              </CurrentRoomsSetter>
+            </TestAppRoomsProvider>
+          </CurrentPlayerSetter>
+        </TestAppUserProvider>
+      </TestAppSocketProvider>
+    )
+    const { container } = render(<Wr />);
+    const message_base = container.querySelector('.test--message-user')
     expect(message_base).not.toBeNull();
 
   })

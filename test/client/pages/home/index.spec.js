@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import '@testing-library/jest-dom/extend-expect';
-import { render, fireEvent, waitFor } from '@testing-library/react'
+import { render, fireEvent } from '@testing-library/react'
 import HomePage from "../../../../src/client/pages/home/Home"
 import { Context as RoomsContext } from "../../../../src/client/context/RoomsContext";
 import { TestAppAlertProvider } from "../../helpers/alertContext";
@@ -88,7 +88,6 @@ describe("Test HomePage", () => {
     fireEvent.change(input_login, { target: { value: 'abcd' } });
     expect(btn_create_room).not.toBeDisabled();
     fireEvent.click(btn_create_room)
-    waitFor(1000)
     expect(table_room).toBeNull()
   })
 

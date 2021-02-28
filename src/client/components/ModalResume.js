@@ -1,9 +1,11 @@
 // Libs
-import React from 'react';
+import React, { useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Modal from '@material-ui/core/Modal';
 import _ from 'lodash'
+import { SocketContext } from "../context/SocketContext";
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -21,6 +23,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ModalResume = ({ setSong, isPlaying, song, player, uuidRoom }) => {
+  const { sendSocket } = useContext(SocketContext);
   const classes = useStyles();
 
   const handleCloseModal = () => {
@@ -59,6 +62,7 @@ const ModalResume = ({ setSong, isPlaying, song, player, uuidRoom }) => {
           </div>
           <div className="d-flex jcnt--space-ar fdir--row">
             <Button
+              className="test--btn-change-song-pref"
               id="songRoom"
               data-testid='btnSong'
               onClick={e => changeSongPref(e)}
@@ -69,6 +73,7 @@ const ModalResume = ({ setSong, isPlaying, song, player, uuidRoom }) => {
           <div className="d-flex jcnt--space-ar fdir--row">
             <div className="aself--fstart p-2">
               <Button
+                className="test--btn-leave-room"
                 id="leaveRoom"
                 variant="contained"
                 color="secondary"
@@ -80,6 +85,7 @@ const ModalResume = ({ setSong, isPlaying, song, player, uuidRoom }) => {
             </div>
             <div className="aself--fstart p-2">
               <Button
+                className="test--btn-resume"
                 id="resume"
                 variant="contained"
                 color="primary"

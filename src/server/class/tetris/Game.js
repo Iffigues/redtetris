@@ -49,7 +49,6 @@ class Game extends Piece {
 	}
 
 	createIntervalGame = () => {
-    console.log("createInterval hello world")
 		const timer = setTimeout(() => {
 			if (this.isPlaying) {
 				if (!this.block) {
