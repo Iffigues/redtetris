@@ -65,8 +65,8 @@ return (
     <div id="chat" className="container--chat">
       <div className="chat d-flex fdir--column">
         {
-            rooms && rooms[uuidRoom].messages.map(msg => {
-              if (!msg.login) {
+          rooms && rooms[uuidRoom].messages.map(msg => {
+            if (!msg.login) {
                 return (
                   <div
                     className="test--message-base"
