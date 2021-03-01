@@ -1,6 +1,6 @@
 import React from "react";
 import '@testing-library/jest-dom/extend-expect';
-import Enzyme, { mount, shallow } from "enzyme";
+import Enzyme from "enzyme";
 import Game from '../../../src/client/components/game'
 import { render } from '@testing-library/react'
 import { player_instance1, room1 } from "../helpers/data";

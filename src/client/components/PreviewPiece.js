@@ -3,7 +3,7 @@ import { TETROMINOS } from '../plugins/tetrominos';
 import Cell from './cell';
 import StyledPreview from './style/styledPreview';
 
-const PreviewPiece = ({sheet}) => {
+const PreviewPiece = ({ sheet }) => {
   const game = { game: TETROMINOS[sheet.type].shape }
   return (
     <div>

@@ -1,8 +1,8 @@
 import React, { useContext, useEffect } from "react";
 import _ from 'lodash'
 import '@testing-library/jest-dom/extend-expect';
-import io, { serverSocket, cleanUp } from 'socket.io-client';
-import Enzyme, { mount, shallow } from "enzyme";
+import io from 'socket.io-client';
+import Enzyme from "enzyme";
 import { render, fireEvent } from '@testing-library/react'
 import Adapter from "@wojtekmaj/enzyme-adapter-react-17";
 import { rooms_instance } from '../helpers/data'

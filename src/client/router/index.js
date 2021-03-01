@@ -1,6 +1,5 @@
 import React from "react";
-import { HashRouter, BrowserRouter, Route, Switch } from 'react-router-dom';
-
+import { HashRouter, Route, Switch } from 'react-router-dom';
 // components
 import Alerts from '../components/Alerts'
 

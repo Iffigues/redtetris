@@ -1,16 +1,11 @@
-import React, { useContext, useEffect } from "react";
+import React from "react";
 import '@testing-library/jest-dom/extend-expect';
-import Enzyme, { mount, shallow } from "enzyme";
-import Chat from '../../../src/client/components/Chat'
+import Enzyme from "enzyme";
 import { render, fireEvent } from '@testing-library/react'
 import Adapter from "enzyme-adapter-react-16";
-import { player_instance1, room1, visitor_player, rooms_1 } from '../helpers/data'
-import io, { serverSocket, cleanUp } from 'socket.io-client';
+import { player_instance1, room1 } from '../helpers/data'
+import io from 'socket.io-client';
 import { TestAppSocketProvider } from "../helpers/socketContext";
-import { TestAppUserProvider } from "../helpers/userContext";
-import { TestAppRoomsProvider } from "../helpers/roomsContext";
-import { Context as UserContext } from "../../../src/client/context/UserContext";
-import { Context as RoomsContext } from "../../../src/client/context/RoomsContext";
 import ModalResume from "../../../src/client/components/ModalResume";
 
 jest.mock('socket.io-client', () => {

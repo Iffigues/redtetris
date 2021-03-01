@@ -92,11 +92,8 @@ const Room = () => {
       )
     }
   } else {
-    return (
-      <div>
-        <p>.....</p>
-      </div>
-    )
+    history.replace('/');
+    return ("")
   }
 }
 

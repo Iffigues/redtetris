@@ -14,5 +14,3 @@ const Alerts = () => {
 }
 
 export default Alerts
-
-// use memo

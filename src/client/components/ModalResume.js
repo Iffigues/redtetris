@@ -6,8 +6,6 @@ import Modal from '@material-ui/core/Modal';
 import _ from 'lodash'
 import { SocketContext } from "../context/SocketContext";
 
-
-
 const useStyles = makeStyles((theme) => ({
   modal: {
     display: 'flex',

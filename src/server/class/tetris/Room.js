@@ -127,7 +127,7 @@ class Room {
 	}
 
 	onKey = (key, uuidUser) => {
-		this.players[uuidUser].move(key);
+		this.players[uuidUser].moveAction(key);
 	}
 
 	countPlayer = () => {
