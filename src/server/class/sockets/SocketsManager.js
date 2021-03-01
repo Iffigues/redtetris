@@ -91,7 +91,7 @@ class SocketsManager {
         this.rooms.deleteRoom(uuidRoom)
         this.updateRooms(this.rooms, socket)
       }
-      // socket.leave(uuidUser);
+      socket.leave(uuidUser);
     });
     
     // join room
@@ -114,7 +114,6 @@ class SocketsManager {
 
       this.updateRooms(this.rooms, socket)
       socket.emit('client/join-room', { uuidRoom: channel, player })
-      // socket.to(channel).emit('client/global/join-room', { player })
     });
     
   }

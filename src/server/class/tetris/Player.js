@@ -11,7 +11,6 @@ class Player extends Game {
 		this.name = name
 		this.admin = admin;
 		this.time = 1000;
-
 		this.currentMapGame = null
 		this.nextMapGame = null;
 		this.block = null;
@@ -60,7 +59,7 @@ class Player extends Game {
 	}
 
 	destroyLine = (i) => {
-   		 while (i > 1) {
+    while (i > 1) {
 			this.nextMapGame[19 - this.indestructible].fill(-1);
 			this.indestructible = this.indestructible + 1;
 			i = i - 1;

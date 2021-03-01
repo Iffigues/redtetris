@@ -3,7 +3,7 @@ import bodyParser from 'body-parser';
 import cors from 'cors'
 import express from 'express'
 import SocketsManager from './sockets/SocketsManager';
-const logerror = debug('tetris:error'), loginfo = debug('tetris:info')
+const loginfo = debug('tetris:info')
 require('dotenv').config() 
 
 class Server {
