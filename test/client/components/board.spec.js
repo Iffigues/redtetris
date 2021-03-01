@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import _ from 'lodash'
 import '@testing-library/jest-dom/extend-expect';
-import Enzyme, { mount, shallow } from "enzyme";
+import Enzyme, { shallow } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import Board from '../../../src/client/components/board'
 import { render } from '@testing-library/react'

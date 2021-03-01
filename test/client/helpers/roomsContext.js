@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import Enzyme, { mount } from "enzyme";
+import Enzyme from "enzyme";
 import { rooms_instance } from "../helpers/data";
 import Adapter from "enzyme-adapter-react-16";
 import { Provider as RoomsProvider } from "../../../src/client/context/RoomsContext";

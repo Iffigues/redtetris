@@ -1,10 +1,10 @@
 import React, { useContext, useEffect } from "react";
 import '@testing-library/jest-dom/extend-expect';
-import Enzyme, { mount, shallow } from "enzyme";
+import Enzyme, { shallow } from "enzyme";
 import Chat from '../../../src/client/components/Chat'
 import { render, fireEvent } from '@testing-library/react'
 import Adapter from "enzyme-adapter-react-16";
-import io, { serverSocket, cleanUp } from 'socket.io-client';
+import io from 'socket.io-client';
 import { rooms_instance, visitor_player, room1, room3 } from '../helpers/data'
 import { TestAppSocketProvider } from "../helpers/socketContext";
 import { TestAppUserProvider } from "../helpers/userContext";

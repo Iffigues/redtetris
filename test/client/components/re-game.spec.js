@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import '@testing-library/jest-dom/extend-expect';
 import Enzyme, { shallow } from "enzyme";
-import io, { serverSocket, cleanUp } from 'socket.io-client';
+import io from 'socket.io-client';
 import ReGame from '../../../src/client/components/ReGame'
 import { render, fireEvent } from '@testing-library/react'
 import Adapter from "enzyme-adapter-react-16";

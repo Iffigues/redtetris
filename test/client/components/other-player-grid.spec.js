@@ -11,7 +11,6 @@ import { TestAppRoomsProvider } from "../helpers/roomsContext";
 import { Context as UserContext } from "../../../src/client/context/UserContext";
 import { Context as RoomsContext } from "../../../src/client/context/RoomsContext";
 
-
 Enzyme.configure({ adapter: new Adapter() });
 describe('Alert component', () => {
 

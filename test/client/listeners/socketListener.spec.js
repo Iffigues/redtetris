@@ -1,9 +1,8 @@
-import React,  { useContext } from 'react';
-import io, { serverSocket, cleanUp } from 'socket.io-client';
-import { render, fireEvent } from '@testing-library/react';
+import React from 'react';
+import io from 'socket.io-client';
+import { render } from '@testing-library/react';
 import HomePage from "../../../src/client/pages/home/Home"
 import { player_instance1, room2, room1 } from "../helpers/data";
-import { Context as RoomsContext } from "../../../src/client/context/RoomsContext";
 import { TestAppAlertProvider } from "../helpers/alertContext";
 import { TestAppRoomsProvider } from "../helpers/roomsContext";
 import { TestAppSocketProvider } from "../helpers/socketContext";

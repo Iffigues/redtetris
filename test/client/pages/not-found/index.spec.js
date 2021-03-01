@@ -1,7 +1,7 @@
-import React, { useContext, useEffect } from "react";
+import React from "react";
 import '@testing-library/jest-dom/extend-expect';
-import { MemoryRouter as Router, Route } from 'react-router-dom';
-import { render, fireEvent } from '@testing-library/react'
+import { MemoryRouter as Router } from 'react-router-dom';
+import { render } from '@testing-library/react'
 import { describe, expect } from "@jest/globals";
 import ErrorPage from "../../../../src/client/pages/notfound/ErrorPage";
 

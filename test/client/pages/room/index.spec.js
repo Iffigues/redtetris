@@ -2,7 +2,7 @@ import { MemoryRouter, Route, Router } from 'react-router-dom';
 import ReactRouter from 'react-router'
 import { uuid_1, visitor_player, rooms_instance, player_instance1, room1, player_visitor_instance, player_instance2, room2, room3, player_instance4 } from '../../helpers/data';
 import React, { useContext, useEffect } from "react";
-import io, { serverSocket, cleanUp } from 'socket.io-client';
+import io from 'socket.io-client';
 import Enzyme, { shallow } from "enzyme";
 import { render, fireEvent } from '@testing-library/react'
 import Adapter from "enzyme-adapter-react-16";
@@ -11,7 +11,7 @@ import { TestAppAlertProvider } from "../../helpers/alertContext";
 import { TestAppRoomsProvider } from "../../helpers/roomsContext";
 import { TestAppSocketProvider } from "../../helpers/socketContext";
 import { TestAppUserProvider } from "../../helpers/userContext";
-import { describe, expect, test } from "@jest/globals";
+import { describe, expect } from "@jest/globals";
 import { Context as RoomsContext } from "../../../../src/client/context/RoomsContext";
 import { Context as UserContext } from "../../../../src/client/context/UserContext";
 import { createMemoryHistory } from "history";
@@ -96,10 +96,6 @@ describe("Test Room", () => {
     expect(wrapper).not.toBeNull()
   })
 
-  // TODO: room not started and admin player
-  // TODO: room not started and admin not player
-  // TODO: room not playing 
-  // TODO: room started, playing
   it("room not started and admin player", () => {
 
     const ENDPOINT = 'localhost:3004';

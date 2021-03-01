@@ -1,6 +1,6 @@
 import React from "react";
 import '@testing-library/jest-dom/extend-expect';
-import Enzyme, { mount, shallow } from "enzyme";
+import Enzyme, { shallow } from "enzyme";
 import PreviewPiece from '../../../src/client/components/previewPiece'
 import Adapter from "enzyme-adapter-react-16";
 import { render } from '@testing-library/react'
