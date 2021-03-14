@@ -1,27 +1,26 @@
 import React from 'react';
-import Game from './game'
-import Grid from '@material-ui/core/Grid';
-import Card from '@material-ui/core/Card';
-
-const boxProps = {
-  bgcolor: 'background.paper',
-  bordercolor: 'text.primary',
-  border: 1,
-  borderradius: "borderRadius",
-  style: { backgroundColor: 'white', width: '100vw'},
-};
+import _ from 'lodash';
+import Game from './Game';
 
 const OtherPlayerGrid = ({ isAlone, mapGamePreview }) => {
+
   if (!isAlone) {
+    const gamePreview = _.cloneDeep(mapGamePreview.currentMapGame)
+    gamePreview.map((row, id_row) => {
+      row.map((piece, id_piece) => {
+        if (piece === 8) {
+          gamePreview[id_row][id_piece] = 0
+        }
+      })
+    });
     return (
       <Game
-        game={mapGamePreview.currentMapGame}
-        isOtherUser={true}
+      mapGame={gamePreview}
+      isOtherUser={true}
       />
     )
-  } else {
-    return '';
-  }
+  } 
+  return ("")
 }
 
 export default OtherPlayerGrid

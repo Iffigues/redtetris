@@ -5,13 +5,12 @@ import Game from './Game'
 const GAME_WIDTH = 10;
 const GAME_HEIGHT = 20;
 class Player extends Game {
-	constructor (name, updateRoomFunction, admin = false) {
+	constructor (name, updateRoomFunction, admin = false, visitor = false) {
 		super(updateRoomFunction)
 		this.uuid = uuidv4()
 		this.name = name
 		this.admin = admin;
 		this.time = 1000;
-
 		this.currentMapGame = null
 		this.nextMapGame = null;
 		this.block = null;
@@ -19,7 +18,7 @@ class Player extends Game {
 		this.score = null;
 		this.end = null;
 		this.requestNewGame = null;
-    this.visitor = false;
+    this.visitor = visitor;
 		this.initGame();
 	}
 	
@@ -60,7 +59,7 @@ class Player extends Game {
 	}
 
 	destroyLine = (i) => {
-   		 while (i > 1) {
+    while (i > 1) {
 			this.nextMapGame[19 - this.indestructible].fill(-1);
 			this.indestructible = this.indestructible + 1;
 			i = i - 1;

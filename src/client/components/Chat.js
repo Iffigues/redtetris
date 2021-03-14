@@ -65,29 +65,33 @@ return (
     <div id="chat" className="container--chat">
       <div className="chat d-flex fdir--column">
         {
-            rooms && rooms[uuidRoom].messages.map(msg => {
-              if (!msg.login) {
+          rooms && rooms[uuidRoom].messages.map(msg => {
+            if (!msg.login) {
                 return (
-                  <>
-                    <p key={msg}>
+                  <div
+                    className="test--message-base"
+                    key={msg.uuid}
+                  >
+                    <p>
                       <span className={`bold medium-text ${(msg.uuidUser === -1) ? "text--green" : "text--red"}`}>
                         {msg.time} -- { msg.content }
                       </span><br />
                     </p>
-                  </>
+                  </div>
                 )
               } else {
                   return (
                     <div
-                    key={msg}
-                    className={`${msg.uuidUser === player.uuid
-                      ? 'aself--fend bubble--me'
-                      : 'aself--fstart bubble--other'}
-                      aself--fstart
-                      pb-2
-                      bubble
+                      key={msg.uuid}
+                      className={`${msg.uuidUser === player.uuid
+                        ? 'aself--fend bubble--me'
+                        : 'aself--fstart bubble--other'}
+                        aself--fstart
+                        pb-2
+                        bubble
+                        test--message-user
                       `}
-                      >
+                    >
                     <p>
                       <span className="bold medium-text">{ msg.login }:</span> { msg.content } <br />
                     </p>
@@ -118,7 +122,7 @@ return (
               }}
               />
             <Button
-              className="aself--center mt-2 test--btn-join-room"
+              className="aself--center mt-2 test--btn-submit-message"
               color="primary"
               data-testid='btnLogin'
               disabled={message.length === 0}

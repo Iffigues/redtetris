@@ -1,6 +1,7 @@
 import React from "react";
 import '@testing-library/jest-dom/extend-expect';
-import Enzyme, { mount, shallow } from "enzyme";
+import Enzyme, { shallow } from "enzyme";
+import { render } from '@testing-library/react'
 import Cell from '../../../src/client/components/cell'
 import Adapter from "enzyme-adapter-react-16";
 
@@ -16,14 +17,14 @@ describe('Cell component', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
-  test('Can mount', () => {
+  it('Can mount', () => {
     const Wr = () => (
       <Cell
         type={1}
         isOtherUser={false}
       />
     )
-    const w = mount(<Wr />);
+    const w = render(<Wr />);
     expect(w).not.toBeNull()
   })
 });

@@ -5,7 +5,9 @@ import { SocketContextProvider } from "./context/SocketContext";
 import { Provider as AlertContext } from "./context/AlertContext";
 import { Provider as UserContext } from "./context/UserContext";
 import { Provider as RoomsContext } from "./context/RoomsContext";
-require('./styles/main.scss');
+process.env.NODE_ENV === "production"
+  ? require("../../public/assets/styles/main.css")
+  : require("./styles/main.scss");
 
 const App = () => (
   <AlertContext>

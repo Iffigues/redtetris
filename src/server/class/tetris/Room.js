@@ -70,7 +70,7 @@ class Room {
 	}
 
 	addMessage = (data) => {
-		this.messages.push({ ...data })
+		this.messages.push({ ...data, uuid: uuidv4() })
 	}
 
 	changeVisitorMode = (uuidUser) => {
@@ -127,7 +127,7 @@ class Room {
 	}
 
 	onKey = (key, uuidUser) => {
-		this.players[uuidUser].move(key);
+		this.players[uuidUser].moveAction(key);
 	}
 
 	countPlayer = () => {

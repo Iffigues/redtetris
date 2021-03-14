@@ -1,6 +1,5 @@
 import _ from 'lodash'
 import Piece from './Piece'
-import regeneratorRuntime from "regenerator-runtime";
 
 class Game extends Piece {
 	constructor(updateRoomFunction) {
@@ -20,12 +19,12 @@ class Game extends Piece {
 			'ArrowUp': () => this.rotateR(),
 			'ArrowDown': () => this.down(),
 			'ArrowLeft': () => this.left(),
-			'ArrowRight': () => this.rigth(),
+			'ArrowRight': () => this.right(),
 			' ': () => this.space()
 		}
 	}
 
-	blockCPY = (block) => {
+	getBlockShadow = (block) => {
 		return {
 			block: _.cloneDeep(block.block),
 			y: block.y,
@@ -37,18 +36,18 @@ class Game extends Piece {
 	}
 
 	makeShadow = (block) => {
-		let r = this.blockCPY(block);
-		if (!this.canPose(r, 0, 1)) {
+		let blockClone = this.getBlockShadow(block);
+		if (!this.canPose(blockClone, 0, 1)) {
 			this.shadow = null;
 		} else {
-			while (this.canPose(r, 0, 1)) {
-        r.y = r.y + 1;
+			while (this.canPose(blockClone, 0, 1)) {
+        blockClone.y = blockClone.y + 1;
       }
-			this.shadow = r;
+			this.shadow = blockClone;
 		}
 	}
 
-	createIntervalGame = async () => {
+	createIntervalGame = () => {
 		const timer = setTimeout(() => {
 			if (this.isPlaying) {
 				if (!this.block) {
@@ -87,15 +86,21 @@ class Game extends Piece {
 
 	sendMap = () => {
 		this.makeShadow(this.block);
-		if (this.shadow) this.draw(this.shadow, 8);
+		if (this.shadow) {
+      this.draw(this.shadow, 8);
+    }
 		this.draw(this.block, this.block.type);
 		this.currentMapGame = _.cloneDeep(this.nextMapGame);
-		if (this.updateRoomFunction) this.updateRoomFunction();
-		if (this.shadow) this.draw(this.shadow, 0);
+		if (this.updateRoomFunction) {
+      this.updateRoomFunction();
+    }
+		if (this.shadow) {
+      this.draw(this.shadow, 0);
+    }
 		this.draw(this.block, 0);
 	}
 
- 	setMoose = (yy, xx) => {
+ 	moveBlock = (yy, xx) => {
 		if (yy !== 0 && this.canPose(this.block, xx, yy)) {
 			this.block.y += yy;
 		}
@@ -105,39 +110,39 @@ class Game extends Piece {
 		this.sendMap();
 	}
 
-	move = (event) => {
+	moveAction = (event) => {
 		if (this.block && event && Object.keys(this.action).includes(event)) {
 			this.action[event]();
 		}
 	}
 
 	left = () => {
-		this.setMoose(0, -1);
+		this.moveBlock(0, -1);
 	}
 	
-	rigth = () => {
-		this.setMoose(0, 1);
+	right = () => {
+		this.moveBlock(0, 1);
 	}
 	
 	down = () => {
-		this.setMoose(1, 0);
+		this.moveBlock(1, 0);
 	}
 
-	rotateL = async () => {
+	rotateL = () => {
 		if (this.block.rotate) {
 			this.rotate(this.block, 0);
 			this.sendMap();
 		}
 	}
 	
-	rotateR = async () => {
+	rotateR = () => {
 		if (this.block.rotate) {
 			this.rotate(this.block, 1);
 			this.sendMap();
 		}
 	}
 	
-	space = async () => {
+	space = () => {
 		this.lock = false;
 		while (this.canPose(this.block, 0, 1)) {
 			this.block.y += 1;
@@ -158,7 +163,7 @@ class Game extends Piece {
 
 	wash = (e) => {
 		this.nextMapGame.splice(e, 1);
-		this.nextMapGame.unshift([0,0,0,0,0,0,0,0,0,0]);
+		this.nextMapGame.unshift([0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
 	}
 
 	verifLine = () => {
@@ -175,7 +180,7 @@ class Game extends Piece {
 			if (u === 1) {
 				arr = arr + 1;
 				this.score = Math.ceil((this.score + 1000) * 1.1);
-				if (this.timing > 100) this.timing = this.timing -30;
+				this.timing = (this.timing > 100) ? this.timing - 30 : this.timing;
 				this.wash(i);
 				arr = arr + this.verifLine();
 			}

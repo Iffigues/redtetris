@@ -90,7 +90,7 @@ class Piece {
 		if (!Number.isInteger(direction) || direction > 1 || direction < 0) return false;
 
 		let srs = (direction === 0) ? this.srs : this.lrs
-		let blk = this.copyBlock(block);
+		let blockCopy = this.copyBlock(block);
 		
 		for (let i = 0; i < 4; i++) {
 			let xs = srs[0][0] * block.block[i].x + srs[0][1] * block.block[i].y;
@@ -100,7 +100,7 @@ class Piece {
 		}
 
 		if (!this.willBePosed(block)) {
-			block = this.retro(block, blk);
+			this.retro(block, blockCopy);
 			return false;
 		}
 		return true;

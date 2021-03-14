@@ -1,26 +1,28 @@
 import socketIOClient from "socket.io-client"
+import _ from 'lodash'
 import Server from "../../src/server/class/Server"
 import instanceRooms from '../../src/server/class/tetris/Rooms'
-import { params } from "../../params"
-import debug from 'debug'
 import SocketsManager from "../../src/server/class/sockets/SocketsManager";
+import Game from "../../src/server/class/tetris/Game";
+import Player from "../../src/server/class/tetris/Player";
+import Room from "../../src/server/class/tetris/Room";
+import Block, { I, O, T, S, Z, J, L } from "../../src/server/class/tetris/Tetriminos";
+require('dotenv').config() 
+
 
 describe('Server tests', () => {
   let channel = "";
   let uidplayer = "";
-  const { host, port, url } = params;
   let server;
   let socketClient;
 
   beforeEach(done => {
-    socketClient = socketIOClient(url)
+    socketClient = socketIOClient(process.env.API_URL)
     const srvInstance = new Server(true)
     socketClient.on('connect', () => {
-      console.log("connected")
+      console.log("user connected")
     });
-    server = srvInstance.app.listen({ host, port }, () => {
-      done()
-    })
+    server = srvInstance.app.listen(process.env.PORT_DEV_SERVER, () => done())
     const socketsManager = new SocketsManager(server);
     srvInstance.setServer(server)
     srvInstance.setSocketManager(socketsManager)
@@ -42,14 +44,12 @@ describe('Server tests', () => {
   
   it('Should ping', (done) => {
     socketClient.emit("server/ping");
-    socketClient.on("client/pong", () => {
-      done()
-    })
+    socketClient.on("client/pong", () => done())
   });
 
   it('create room', (done) => {
     const data = { login: 'owalid', playSolo: false }
-    socketClient.on('client/update-rooms' , (rooms) => {
+    socketClient.on('client/update-rooms', (rooms) => {
       const room = rooms._data[Object.keys(rooms._data)[0]]
       const player = room.players[Object.keys(room.players)[0]]
       channel = room.channel;
@@ -75,7 +75,6 @@ describe('Server tests', () => {
       expect(player.lock).toBe(true);
       expect(player.name).toBe("bobo");
       expect(player.admin).toBe(false);
-      expect(player.live).toBe(true);
       expect(player.score).toBe(0);
       expect(player.block).toBe(null);
       expect(player.visitor).toBe(false);
@@ -89,7 +88,6 @@ describe('Server tests', () => {
 
   it('start room', (done) =>  {
     const current_room = getCurrentRoom()
-
     const data = { uuidRoom: current_room.channel }
     socketClient.on('client/update-rooms', (rooms) => {
       let room = rooms._data[channel];
@@ -107,7 +105,6 @@ describe('Server tests', () => {
     const data = { key: "ArrowUp", channel: current_room.channel, uuidUser: current_player.uuid }
     
     socketClient.on('client/update-rooms', (rooms) => {
-      console.log(rooms);
       done()
     });
     socketClient.emit('server/key-up', data);
@@ -135,4 +132,83 @@ describe('Server tests', () => {
     })
     socketClient.emit("server/leave-room",  data);
   });
+
+	it('visitor join room', (done) =>  {
+    const current_room = getCurrentRoom()
+    const current_player = current_room.players[Object.keys(current_room.players)[0]]
+    const data = { channel: current_room.channel, uuidUser: current_player.uuid }
+    expect(Object.keys(current_room.players).length).toBe(1)
+    socketClient.on('client/update-user', (player) => {
+      expect(player).not.toBe(null)
+      done()
+    })
+    socketClient.emit("server/visitor-join-room",  data);
+  });
+
+	it('end game visitor', (done) =>  {
+    const current_room = getCurrentRoom()
+    const data = { channel: current_room.channel }
+    expect(Object.keys(current_room.players).length).toBe(1)
+    socketClient.on('client/update-rooms', () => {
+      done()
+    });
+    socketClient.emit("server/end-game-visitor",  data);
+  });
+
+	it('end game', (done) =>  {
+    const current_room = getCurrentRoom()
+    const current_player = current_room.players[Object.keys(current_room.players)[0]]
+    const data = { channel: current_room.channel, uuidUser: current_player.uuid }
+    expect(Object.keys(current_room.players).length).toBe(1)
+    socketClient.on('client/update-rooms', () => {
+      done()
+    });
+    socketClient.emit("server/end-game",  data);
+  });
+
+  it('init game instance', () => {
+    const game = new Game(() => {})
+    expect(typeof game.initActionObject() === "object").toBe(true)
+    expect(Object.keys(game.initActionObject()).length).toBe(5)
+  })
+
+  it('testing Action Game instance', () => {
+    const game = new Game(() => {})
+    expect(game.initActionObject()["ArrowUp"].toString()).not.toBeNull()
+    expect(game.initActionObject()["ArrowDown"].toString()).not.toBeNull()
+    expect(game.initActionObject()["ArrowLeft"].toString()).not.toBeNull()
+    expect(game.initActionObject()["ArrowRight"].toString()).not.toBeNull()
+    expect(game.initActionObject()[" "].toString()).not.toBeNull()
+  })
+
+  it('Start Game instance', () => {
+    const player = new Player("login", () => {}, true);
+    const room = new Room(player, false)
+    room.startGame()
+  })
+  
+  it('Call action Game instance', () => {
+    const current_room = getCurrentRoom()
+    const current_player = current_room.players[Object.keys(current_room.players)[0]]
+    current_player.addSheet();
+    current_player.block = _.cloneDeep(current_player.sheets.shift());
+    current_player.right()
+  })
+
+  it('Tetrominos', () => {
+    const block = new Block();
+    const randomBlock = block.newBlock()
+    const allBlocks = [I, O, T, S, Z, J, L];
+    let founded = false;
+    allBlocks.map(tetro => {
+      if (randomBlock instanceof tetro) {
+        founded = true
+      }
+    })
+    
+    expect(founded).toBe(true)
+
+  })
+
+  
 });

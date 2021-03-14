@@ -2,10 +2,62 @@ import uuidv4 from 'uuid'
 import Player from '../../../../src/server/class/tetris/Player';
 import Room from '../../../../src/server/class/tetris/Room';
 
+const date = new Date()
 
 // UTILS AND CONSTANTS
-export const player_instance = new Player('owalid123', () => {}, true);
-export const room_instance = new Room(player_instance, false);
+export const player_instance1 = new Player('owalid1', () => {}, true);
+export const player_visitor_instance = new Player('owalid_visitor', () => {}, false, true);
+
+const r1 = new Room(player_instance1, false);
+r1.addPlayer(player_visitor_instance);
+
+r1.addMessage({
+  login: null,
+  uuidUser: -1,
+  time: `${date.getHours()}:${date.getMinutes()}`,
+  content: `owalid1 à rejoint la room`
+})
+
+export const room1 = r1
+
+export const player_instance2 = new Player('owalid2', () => {}, true);
+export const player_instance3 = new Player('owalid', () => {}, false);
+const r2 = new Room(player_instance2, false);
+r2.addPlayer(player_instance3);
+r2.startGame();
+export const room2 = r2
+
+
+export const player_instance4 = new Player('owalid44', () => {}, true);
+export const player_instance5 = new Player('owalid55', () => {}, false);
+const r3 = new Room(player_instance4, false);
+r3.addPlayer(player_instance5);
+r3.startGame();
+r3.changeIsPlaying();
+r3.addMessage({
+  login: player_instance4.name,
+  uuidUser: player_instance4.uuid,
+  time: `${date.getHours()}:${date.getMinutes()}`,
+  content: `${player_instance4.name} à rejoint la room`
+})
+export const room3 = r3
+
+
+export const player_instanceSolo = new Player('owalid44', () => {}, true);
+const r4 = new Room(player_instanceSolo, true);
+r4.addPlayer(player_instance5);
+r4.startGame();
+r4.changeIsPlaying();
+export const room4 = r4
+
+
+export const rooms_instance = {
+  [room1.channel]: room1,
+  [room2.channel]: room2,
+  [room3.channel]: room3
+};
+
+// export const room
 
 const GAME_WIDTH = 10;
 const GAME_HEIGHT = 20;

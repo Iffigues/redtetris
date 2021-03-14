@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import Enzyme, { mount } from "enzyme";
+import Enzyme from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import { Provider as AlertProvider } from "../../../src/client/context/AlertContext";
 import { Context as AlertContext } from "../../../src/client/context/AlertContext";

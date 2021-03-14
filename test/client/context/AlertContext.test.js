@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from "react";
-import Enzyme, { mount } from "enzyme";
+import Enzyme from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
+import { render } from '@testing-library/react'
 import { Context as AlertContext } from "../../../src/client/context/AlertContext";
 import { TestAppAlertProvider } from "../helpers/alertContext";
 import { describe, expect, test } from "@jest/globals";
@@ -23,7 +24,7 @@ describe("Test Alert context", () => {
         <AlertSenderComp />
       </TestAppAlertProvider>
     );
-    mount(<Wrapper />);
+    render(<Wrapper />);
     expect(contextValue.message).toBe('It\'s little test');
     expect(contextValue.type).toBe('info');
   })

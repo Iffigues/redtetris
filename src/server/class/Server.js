@@ -2,21 +2,18 @@ import debug from 'debug'
 import bodyParser from 'body-parser';
 import cors from 'cors'
 import express from 'express'
-// import { initListener } from './sockets/initSocket';
-import { params } from '../../../params'
 import SocketsManager from './sockets/SocketsManager';
-const logerror = debug('tetris:error'), loginfo = debug('tetris:info')
+const loginfo = debug('tetris:info')
+require('dotenv').config() 
 
 class Server {
 	constructor (isTesting = false) {
-		const { host, port } = params;
 		this.app = express();
 		this.app.use(cors())
-		this.params = params;
 		this.app.use(bodyParser.json({limit: '10mb', extended: true}));
 		if (!isTesting) {
-			this.server = this.app.listen({ host, port }, () => {
-				loginfo(`tetris listen on ${this.params.url}`);
+			this.server = this.app.listen(process.env.port || process.env.PORT_DEV_SERVER, () => {
+				loginfo(`tetris listen on ${process.env.port || process.env.PORT_DEV_SERVER}`);
 			})
 			const socketsManager = new SocketsManager(this.server);
 			this.app.io = socketsManager.io;
