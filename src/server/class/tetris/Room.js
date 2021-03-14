@@ -11,7 +11,6 @@ class Room {
 		this.block = new Block();
 		this.channel = channel;
 		this.players = {};
-		this.isLastRequestNewGame =  false;
 		this.messages = [];
     this.arrPlayer = [];
     this.finalScore = [];
@@ -90,13 +89,13 @@ class Room {
     delete this.players[uuidUser]
 
 		if (endGame) {
-			this.isLastRequestNewGame = true;
+			let isLastRequestNewGame = true;
 			_.map(this.players, player => {
 				if (player.requestNewGame === false) {
-					this.isLastRequestNewGame = false
+					isLastRequestNewGame = false
 				}
 			})
-			if (this.isLastRequestNewGame) {
+			if (isLastRequestNewGame) {
 				_.map(this.players, player => {
 					player.initGame();
 				})
