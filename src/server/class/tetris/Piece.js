@@ -12,16 +12,15 @@ class Piece {
 	}
 
 	canPose = (block, xp, yp) => {
-		let xx = block.x + xp;
-		let yy = block.y + yp;
+		let xx = parseInt(`${(block && Object.keys(block).includes("x") && block.x) ? block.x : 1}`) + xp;
+		let yy = parseInt(`${(block && Object.keys(block).includes("y") && block.y) ? block.y : 1}`) + yp;
 
 		if (xx < 0 || yy < 0 || xx > 9 || yy >= 20 - this.indestructible) {
 			return false;
 		}
 		for (let i = 0; i < 4; i++) {
-      let haveBlock = (block && Object.keys(block).includes("block") && block.block && Array.isArray(block.block) && block.block.length - 1 > i && block.block[i])
-			let abx = parseInt(`${(haveBlock && Object.keys(block.block[i]).includes("x")) ? block.block[i].x : 0}`) + xx;
-			let aby = parseInt(`${(haveBlock && Object.keys(block.block[i]).includes("y")) ? block.block[i].y : 0}`) + yy;
+			let abx = block.block[i].x + xx;
+			let aby = block.block[i].y + yy;
 
 			if (abx < 0 || abx > 9 ||  aby >= 20 - this.indestructible || aby < 0) {
 				return false;
