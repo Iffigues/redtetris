@@ -89,7 +89,7 @@ class Room {
     delete this.players[uuidUser]
 
 		if (endGame) {
-			const isLastRequestNewGame = true;
+			let isLastRequestNewGame = true;
 			_.map(this.players, player => {
 				if (player.requestNewGame === false) {
 					isLastRequestNewGame = false
