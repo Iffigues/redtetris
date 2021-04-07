@@ -28,12 +28,25 @@ class SocketsManager {
     socket.on('disconnect', () => {
       if (process.env.NODE_ENV !== "test" && Object.keys(sockets).includes(socket.id)) {
         const { uuidUser, channel } = sockets[socket.id]
+
+        const date = new Date()
+        const player = _.filter(this.rooms._data[channel].players, player => player.uuid === uuidUser)
         const isLast = this.rooms.deletePlayer(channel, uuidUser, false)
+        
+        if (player && Array.isArray(player) && player.length > 0) {
+          this.rooms.addMessage(channel, {
+            login: null,
+            uuidUser: -2,
+            time: `${date.getHours()}:${date.getMinutes()}`,
+            content: `${player[0].name} à été deconnecté de la room`
+          })
+        }
         this.updateRooms(this.rooms, socket)
         if (isLast === true) this.rooms.deleteRoom(channel)
         this.updateRooms(this.rooms, socket)
         socket.leave(channel);
         socket.leave(uuidUser);
+        delete sockets[socket.id]
       }
       socket.disconnect();
     });
@@ -104,6 +117,8 @@ class SocketsManager {
       socket.emit('client/join-room', { uuidRoom: channel, player });
       socket.join(channel);
       socket.join(player.uuid);
+      sockets[socket.id] = { channel: channel, uuidUser: player.uuid }
+
 
       this.rooms.addMessage(channel, {
         login: null,

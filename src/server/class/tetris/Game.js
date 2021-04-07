@@ -157,11 +157,6 @@ class Game extends Piece {
 
 	draw = (blk, z) => {
 		for (let i = 0; i < 4; i++) {
-      console.log("nextMapGame", this.nextMapGame)
-      console.log("blk.y", blk.y)
-      console.log("blk.block[y].y", blk.block[i].y)
-      console.log("blk.x", blk.x)
-      console.log("blk.block[y].x", blk.block[i].x)
 			this.nextMapGame[blk.y + blk.block[i].y][blk.x + blk.block[i].x] = z;
 		}
 	}
