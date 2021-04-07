@@ -48,7 +48,9 @@ class Rooms {
   }
 
   onKey = (key, channel, uuidUser) => {
-    this._data[channel].onKey(key, uuidUser);
+    if (this._data[channel] && Object.keys(this._data[channel]).includes("onKey") && key && uuidUser) {
+      this._data[channel].onKey(key, uuidUser);
+    }
   }
 
   deleteRoom = (channel) => {
