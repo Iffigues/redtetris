@@ -54,8 +54,9 @@ class Game extends Piece {
 					this.addSheet();
 					this.block = _.cloneDeep(this.sheets.shift());
 					this.addSheet();
-                    if (this.block == undefined)
+                    if (!this.block) {
                         return 0;
+		}
 					if (!this.canPose(this.block, 0, 0)) {
 						this.end = true;
 						clearTimeout(timer);
