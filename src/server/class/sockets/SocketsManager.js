@@ -30,8 +30,12 @@ class SocketsManager {
         const { uuidUser, channel } = sockets[socket.id]
 
         const date = new Date()
-        const player = _.filter(this.rooms._data[channel].players, player => player.uuid === uuidUser)
-        const isLast = this.rooms.deletePlayer(channel, uuidUser, false)
+        let player = null
+        let isLast = false
+        if (this.rooms._data && Object.keys(this.rooms._data).includes(channel)) {
+          player = _.filter(this.rooms._data[channel].players, player => player.uuid === uuidUser)
+          isLast = this.rooms.deletePlayer(channel, uuidUser, false)
+        }
         
         if (player && Array.isArray(player) && player.length > 0) {
           this.rooms.addMessage(channel, {
@@ -85,14 +89,19 @@ class SocketsManager {
       const date = new Date()
       endGame = endGame || false
 
-      const player = _.filter(this.rooms._data[uuidRoom].players, player => player.uuid === uuidUser)
+      let player = null
+      if (this.rooms._data && Object.keys(this.rooms._data).includes(uuidRoom)) {
+        player = _.filter(this.rooms._data[uuidRoom].players, player => player.uuid === uuidUser)
+      }
 
-      this.rooms.addMessage(uuidRoom, {
-        login: null,
-        uuidUser: -2,
-        time: `${date.getHours()}:${date.getMinutes()}`,
-        content: `${player[0].name} à quitté la room`
-      })
+      if (player) {
+        this.rooms.addMessage(uuidRoom, {
+          login: null,
+          uuidUser: -2,
+          time: `${date.getHours()}:${date.getMinutes()}`,
+          content: `${player[0].name} à quitté la room`
+        })
+      }
 
       const isLast = this.rooms.deletePlayer(uuidRoom, uuidUser, endGame)
       socket.emit('client/update-user', { uuidRoom: null, player: null })
