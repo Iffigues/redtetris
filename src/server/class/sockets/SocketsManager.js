@@ -62,6 +62,7 @@ class SocketsManager {
       const { login, playSolo } = data
       const date = new Date()
       const player = new Player(login, () => this.updateRooms(), true);
+
       const room = new Room(player, playSolo)
       this.rooms.addRoom(room);
       if (process.env.NODE_ENV !== "test") {
