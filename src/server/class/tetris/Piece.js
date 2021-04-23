@@ -12,23 +12,20 @@ class Piece {
 	}
 
 	
-	canPose = (block, xp, yp, ee) => {
-        let xx = 0;
-        let yy = 0;
-        try {
-    		xx = block.x + xp;
-		    yy = block.y + yp;
-        } catch (error) {
-            console.log(block);
-            console.log(ee);
-        }
+	canPose = (block, xp, yp) => {
+    const isNull = (value) => value === undefined || value === null;
+    
+    let xx = parseInt(`${(block && Object.keys(block).includes("x") && !isNull(block.x)) ? block.x : -1}`) + xp;
+    let yy = parseInt(`${(block && Object.keys(block).includes("y") && !isNull(block.y)) ? block.y : -1}`) + yp;
+
 		if (xx < 0 || yy < 0 || xx > 9 || yy >= 20 - this.indestructible) {
 			return false;
 		}
 
 		for (let i = 0; i < 4; i++) {
-			let abx = block.block[i].x + xx;
-			let aby = block.block[i].y + yy;
+      let haveBlock = !!(block && Object.keys(block).includes("block") && block.block && Array.isArray(block.block) && block.block.length > i && block.block[i])
+			let abx = parseInt(`${(haveBlock && Object.keys(block.block[i]).includes("x") && !isNull(block.block[i].x)) ? block.block[i].x : -1}`) + xx;
+			let aby = parseInt(`${(haveBlock && Object.keys(block.block[i]).includes("y") && !isNull(block.block[i].y)) ? block.block[i].y : -1}`) + yy;
 
 			if (abx < 0 || abx > 9 ||  aby >= 20 - this.indestructible || aby < 0) {
 				return false;
@@ -41,27 +38,6 @@ class Piece {
 
 		return true
 	}
-
-	/*canPose = (block, xp, yp) => {
-        
-        let xx = parseInt(`${(block && Object.keys(block).includes("x") && block.x) ? block.x : 0}`) + xp;
-	    let yy = parseInt(`${(block && Object.keys(block).includes("y") && block.y) ? block.y : 0}`) + yp;
-	    
-        if (xx < 0 || yy < 0 || xx > 9 || yy >= (20 - this.indestructible))
-		    return false;
-        
-    	for (let i = 0; i < 4; i++) {
-			let haveBlock = (block && Object.keys(block).includes("block") && block.block && Array.isArray(block.block) && block.block.length - 1 > i && block.block[i])
-			let abx = parseInt(`${(haveBlock && Object.keys(block.block[i]).includes("x")) ? block.block[i].x : 0}`) + xx;
-			let aby = parseInt(`${(haveBlock && Object.keys(block.block[i]).includes("y")) ? block.block[i].y : 0}`) + yy;
-			if (abx < 0 || abx > 9 ||  aby >= (20 - this.indestructible) || aby < 0)
-				return false;
-			if (this.nextMapGame[aby][abx] !== 0)
-				return false;
-		}
-
-		return true
-	}*/
 
 	copyBlock = (block) => {
 		return {
