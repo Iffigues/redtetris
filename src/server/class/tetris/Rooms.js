@@ -33,7 +33,9 @@ class Rooms {
   }
 
   reGame = (channel, uuidUser) => {
-    this._data[channel].reGame(uuidUser)
+    if (this._data[channel]) {  
+      this._data[channel].reGame(uuidUser)
+    }
   }
 
   addMessage = (channel, data) => {

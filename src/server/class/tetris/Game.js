@@ -41,9 +41,9 @@ class Game extends Piece {
 			this.shadow = null;
 		} else {
 			while (this.canPose(blockClone, 0, 1)) {
-                blockClone.y = blockClone.y + 1;
-        }
-		this.shadow = blockClone;
+        blockClone.y = blockClone.y + 1;
+      }
+      this.shadow = blockClone;
 		}
 	}
 
@@ -54,9 +54,9 @@ class Game extends Piece {
 					this.addSheet();
 					this.block = _.cloneDeep(this.sheets.shift());
 					this.addSheet();
-                    if (!this.block) {
-                        return 0;
-		}
+          if (!this.block) {
+            return 0;
+          }
 					if (!this.canPose(this.block, 0, 0)) {
 						this.end = true;
 						clearTimeout(timer);
@@ -160,11 +160,7 @@ class Game extends Piece {
 
 	draw = (blk, z) => {
 		for (let i = 0; i < 4; i++) {
-            //try {
 			this.nextMapGame[blk.y + blk.block[i].y][blk.x + blk.block[i].x] = z;
-           // } catch (error) {
-              //  console.log(blk);
-            //}
 		}
 	}
 
