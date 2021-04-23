@@ -14,7 +14,7 @@ class Room {
 		this.messages = [];
     this.arrPlayer = [];
     this.finalScore = [];
-		this.addPlayer(player);
+		this.addPlayer(player, true);
 	}
 
   playerEnd = (uuidUser) => {
@@ -114,10 +114,10 @@ class Room {
 				player.destroyLine(i)
 			}
 		})
-	}	
+	}
 
-	addPlayer = (player) => {
-    if (this.isStart || this.solo || Object.keys(this.players).length >= 3) {
+	addPlayer = (player, is_root = false) => {
+    if (!is_root && (this.isStart || this.solo || Object.keys(this.players).length >= 3)) {
       player.visitor = true
     } else {
       player.addSheetFunc(this.addSheet);
