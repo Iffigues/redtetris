@@ -212,6 +212,7 @@ class SocketsManager {
     this.defaultListener(socket);
     this.roomListener(socket);
     this.gameListener(socket);
+    this.updateRooms(this.rooms, socket)
   }
 }
 
