@@ -92,7 +92,9 @@ const Room = () => {
       )
     }
   } else {
-    history.replace('/');
+    if (process.env.NODE_ENV !== 'test') {
+      history.replace('/');
+    }
     return ("")
   }
 }
