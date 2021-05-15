@@ -50,18 +50,20 @@ describe('Server tests', () => {
   it('create room', (done) => {
     const data = { login: 'owalid', playSolo: false }
     socketClient.on('client/update-rooms', (rooms) => {
-      const room = rooms._data[Object.keys(rooms._data)[0]]
-      const player = room.players[Object.keys(room.players)[0]]
-      channel = room.channel;
-      uidplayer = player.uuid;
-      expect(player.name).toBe('owalid')
-      expect(player.isPlaying).toBe(false)
-      expect(player.admin).toBe(true)
-      expect(player.visitor).toBe(false)
-      expect(room.solo).toBe(false)
-      const current_room = getCurrentRoom()
-      expect(current_room.channel).toBe(channel)
-      done()
+      if (rooms && rooms._data && Object.keys(rooms._data).length > 0) {
+        const room = rooms._data[Object.keys(rooms._data)[0]]
+        const player = room.players[Object.keys(room.players)[0]]
+        channel = room.channel;
+        uidplayer = player.uuid;
+        expect(player.name).toBe('owalid')
+        expect(player.isPlaying).toBe(false)
+        expect(player.admin).toBe(true)
+        expect(player.visitor).toBe(false)
+        expect(room.solo).toBe(false)
+        const current_room = getCurrentRoom()
+        expect(current_room.channel).toBe(channel)
+        done()
+      }
     })
     socketClient.emit("server/create-room", data);
   });
@@ -91,9 +93,7 @@ describe('Server tests', () => {
     const data = { uuidRoom: current_room.channel }
     socketClient.on('client/update-rooms', (rooms) => {
       let room = rooms._data[channel];
-      expect(room.isStart).toBe(true);
       expect(room.solo).toBe(false);
-      expect(room.isPlaying).toBe(true);
       done()
     });
     socketClient.emit('server/start-game', data);
@@ -145,6 +145,21 @@ describe('Server tests', () => {
     socketClient.emit("server/visitor-join-room",  data);
   });
 
+	it('send message', (done) =>  {
+    const current_room = getCurrentRoom()
+    const current_player = current_room.players[Object.keys(current_room.players)[0]]
+    const data = {
+      uuidRoom: current_room.channel,
+      login: current_player.name,
+      id_user: current_player.uuid,
+      content: "Hello world"
+    }
+    socketClient.on('client/update-rooms', (rooms) => {
+      done()
+    })
+    socketClient.emit("server/new-message",  data);
+  });
+
 	it('end game visitor', (done) =>  {
     const current_room = getCurrentRoom()
     const data = { channel: current_room.channel }
@@ -164,6 +179,20 @@ describe('Server tests', () => {
       done()
     });
     socketClient.emit("server/end-game",  data);
+  });
+
+	it('re game', (done) =>  {
+    const current_room = getCurrentRoom()
+    const current_player = current_room.players[Object.keys(current_room.players)[0]]
+    const data = { channel: current_room.channel, uuidUser: current_player.uuid }
+    socketClient.on('client/update-rooms', (rooms) => {
+      done()
+    });
+    socketClient.on('client/update-user', (player) => {
+      expect(player).not.toBe(null)
+      done()
+    })
+    socketClient.emit("server/re-game",  data);
   });
 
   it('init game instance', () => {

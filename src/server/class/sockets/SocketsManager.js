@@ -27,6 +27,7 @@ class SocketsManager {
     })
     socket.on('disconnect', () => {
       if (process.env.NODE_ENV !== "test" && Object.keys(sockets).includes(socket.id)) {
+        console.log("disconnected ???")
         const { uuidUser, channel } = sockets[socket.id]
 
         const date = new Date()
@@ -65,6 +66,7 @@ class SocketsManager {
 
       const room = new Room(player, playSolo)
       this.rooms.addRoom(room);
+      this.updateRooms(this.rooms, socket)
       if (process.env.NODE_ENV !== "test") {
         sockets[socket.id] = { channel: room.channel, uuidUser: player.uuid }
       }
