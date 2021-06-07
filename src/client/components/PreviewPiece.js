@@ -1,6 +1,6 @@
 import React from 'react';
 import { TETROMINOS } from '../plugins/tetrominos';
-import Cell from './cell';
+import Cell from './Cell';
 import StyledPreview from './style/styledPreview';
 
 const PreviewPiece = ({ sheet }) => {

@@ -64,6 +64,14 @@ const ModalResume = ({ setSong, isPlaying, song, player, uuidRoom }) => {
               { song ? "🔈" : "🔇" }
             </Button>
           </div>
+          <div>
+            <p>➡️ Droite</p>
+            <p>⬅️ Gauche</p>
+            <p>⬆️ Rotation</p>
+            <p>⬇️ Bas</p>
+            <p>[ESPACE] Deplacer vers le bas</p>
+            <p>[ECHAP] Menu</p>
+          </div>
           <div className="d-flex jcnt--space-ar fdir--row">
             <div className="aself--fstart p-2">
               <Button
