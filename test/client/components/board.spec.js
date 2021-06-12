@@ -3,7 +3,7 @@ import _ from 'lodash'
 import '@testing-library/jest-dom/extend-expect';
 import Enzyme, { shallow } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
-import Board from '../../../src/client/components/board'
+import Board from '../../../src/client/components/Board'
 import { render } from '@testing-library/react'
 import { Context as UserContext } from "../../../src/client/context/UserContext";
 import { Context as RoomsContext } from "../../../src/client/context/RoomsContext";
