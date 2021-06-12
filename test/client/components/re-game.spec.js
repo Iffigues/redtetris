@@ -6,8 +6,8 @@ import ReGame from '../../../src/client/components/ReGame'
 import { render, fireEvent } from '@testing-library/react'
 import Adapter from "enzyme-adapter-react-16";
 import { player_instance1, rooms_instance, visitor_player, room1, player_instanceSolo, room4 } from '../helpers/data'
-import { TestAppSocketProvider } from "../helpers/socketContext";
-import { TestAppUserProvider } from "../helpers/userContext";
+import { TestAppSocketProvider } from "../helpers/SocketContext";
+import { TestAppUserProvider } from "../helpers/UserContext";
 import { TestAppRoomsProvider } from "../helpers/RoomsContext";
 import { Context as UserContext } from "../../../src/client/context/UserContext";
 import { Context as RoomsContext } from "../../../src/client/context/RoomsContext";

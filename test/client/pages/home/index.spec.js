@@ -3,10 +3,10 @@ import '@testing-library/jest-dom/extend-expect';
 import { render, fireEvent } from '@testing-library/react'
 import HomePage from "../../../../src/client/pages/home/Home"
 import { Context as RoomsContext } from "../../../../src/client/context/RoomsContext";
-import { TestAppAlertProvider } from "../../helpers/alertContext";
+import { TestAppAlertProvider } from "../../helpers/AlertContext";
 import { TestAppRoomsProvider } from "../../helpers/RoomsContext";
-import { TestAppSocketProvider } from "../../helpers/socketContext";
-import { TestAppUserProvider } from "../../helpers/userContext";
+import { TestAppSocketProvider } from "../../helpers/SocketContext";
+import { TestAppUserProvider } from "../../helpers/UserContext";
 import { describe, expect } from "@jest/globals";
 import { rooms_instance } from "../../helpers/data";
 

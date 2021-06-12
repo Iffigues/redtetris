@@ -4,7 +4,7 @@ import Adapter from "enzyme-adapter-react-16";
 import { players_2 } from "../helpers/data";
 import { render } from '@testing-library/react'
 import { Context as UserContext } from "../../../src/client/context/UserContext";
-import { TestAppUserProvider } from "../helpers/userContext";
+import { TestAppUserProvider } from "../helpers/UserContext";
 import { describe, expect, test } from "@jest/globals";
 
 Enzyme.configure({ adapter: new Adapter() });

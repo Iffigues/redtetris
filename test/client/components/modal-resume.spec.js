@@ -5,7 +5,7 @@ import { render, fireEvent } from '@testing-library/react'
 import Adapter from "enzyme-adapter-react-16";
 import { player_instance1, room1 } from '../helpers/data'
 import io from 'socket.io-client';
-import { TestAppSocketProvider } from "../helpers/socketContext";
+import { TestAppSocketProvider } from "../helpers/SocketContext";
 import ModalResume from "../../../src/client/components/ModalResume";
 
 jest.mock('socket.io-client', () => {

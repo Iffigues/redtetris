@@ -7,10 +7,10 @@ import Enzyme, { shallow } from "enzyme";
 import { render, fireEvent } from '@testing-library/react'
 import Adapter from "enzyme-adapter-react-16";
 import Room from '../../../../src/client/pages/_room/Room'
-import { TestAppAlertProvider } from "../../helpers/alertContext";
+import { TestAppAlertProvider } from "../../helpers/AlertContext";
 import { TestAppRoomsProvider } from "../../helpers/RoomsContext";
-import { TestAppSocketProvider } from "../../helpers/socketContext";
-import { TestAppUserProvider } from "../../helpers/userContext";
+import { TestAppSocketProvider } from "../../helpers/SocketContext";
+import { TestAppUserProvider } from "../../helpers/UserContext";
 import { describe, expect } from "@jest/globals";
 import { Context as RoomsContext } from "../../../../src/client/context/RoomsContext";
 import { Context as UserContext } from "../../../../src/client/context/UserContext";

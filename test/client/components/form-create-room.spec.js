@@ -5,7 +5,7 @@ import io from 'socket.io-client';
 import Enzyme from "enzyme";
 import { render, fireEvent } from '@testing-library/react'
 import Adapter from "enzyme-adapter-react-16";
-import { TestAppSocketProvider } from "../helpers/socketContext";
+import { TestAppSocketProvider } from "../helpers/SocketContext";
 import FormCreateRoom from "../../../src/client/components/FormCreateRoom";
 
 jest.mock('socket.io-client', () => {

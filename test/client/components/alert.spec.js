@@ -5,7 +5,7 @@ import { render } from '@testing-library/react'
 import Adapter from "enzyme-adapter-react-16";
 import Alerts from '../../../src/client/components/Alerts'
 import { Context as AlertContext } from "../../../src/client/context/AlertContext";
-import { TestAppAlertProvider } from "../helpers/alertContext";
+import { TestAppAlertProvider } from "../helpers/AlertContext";
 
 Enzyme.configure({ adapter: new Adapter() });
 

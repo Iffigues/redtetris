@@ -7,9 +7,9 @@ import Board from '../../../src/client/components/Board'
 import { render } from '@testing-library/react'
 import { Context as UserContext } from "../../../src/client/context/UserContext";
 import { Context as RoomsContext } from "../../../src/client/context/RoomsContext";
-import { TestAppUserProvider } from "../helpers/userContext";
+import { TestAppUserProvider } from "../helpers/UserContext";
 import { player_instance1, rooms_instance, visitor_player, room1, player_visitor_instance } from '../helpers/data'
-import { TestAppSocketProvider } from "../helpers/socketContext";
+import { TestAppSocketProvider } from "../helpers/SocketContext";
 import { TestAppRoomsProvider } from "../helpers/RoomsContext";
 
 

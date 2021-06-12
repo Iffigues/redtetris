@@ -3,7 +3,7 @@ import Enzyme from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import { render } from '@testing-library/react'
 import { Context as AlertContext } from "../../../src/client/context/AlertContext";
-import { TestAppAlertProvider } from "../helpers/alertContext";
+import { TestAppAlertProvider } from "../helpers/AlertContext";
 import { describe, expect, test } from "@jest/globals";
 
 Enzyme.configure({ adapter: new Adapter() });

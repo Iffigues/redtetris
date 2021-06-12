@@ -1,10 +1,10 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import { MemoryRouter as Router } from 'react-router-dom';
-import { TestAppAlertProviderWithAlerts } from "../helpers/alertContext";
+import { TestAppAlertProviderWithAlerts } from "../helpers/AlertContext";
 import { TestAppRoomsProviderWithRooms } from "../helpers/RoomsContext";
-import { TestAppSocketProviderWithSocketClient } from "../helpers/socketContext";
-import { TestAppUserProviderWithPlayer } from "../helpers/userContext";
+import { TestAppSocketProviderWithSocketClient } from "../helpers/SocketContext";
+import { TestAppUserProviderWithPlayer } from "../helpers/UserContext";
 import { uuid_1 } from '../helpers/data';
 
 

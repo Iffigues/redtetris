@@ -6,8 +6,8 @@ import Enzyme from "enzyme";
 import { render, fireEvent } from '@testing-library/react'
 import Adapter from "@wojtekmaj/enzyme-adapter-react-17";
 import { rooms_instance } from '../helpers/data'
-import { TestAppSocketProvider } from "../helpers/socketContext";
-import { TestAppUserProvider } from "../helpers/userContext";
+import { TestAppSocketProvider } from "../helpers/SocketContext";
+import { TestAppUserProvider } from "../helpers/UserContext";
 import { TestAppRoomsProvider } from "../helpers/RoomsContext";
 import { Context as RoomsContext } from "../../../src/client/context/RoomsContext";
 import TablePlayers from "../../../src/client/components/TablePlayers";
