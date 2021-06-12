@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import Enzyme from "enzyme";
-import { rooms_instance } from "../helpers/data";
+import { rooms_instance } from "./data";
 import Adapter from "enzyme-adapter-react-16";
 import { Provider as RoomsProvider } from "../../../src/client/context/RoomsContext";
 import { Context as RoomsContext } from "../../../src/client/context/RoomsContext";
