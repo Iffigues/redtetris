@@ -4,7 +4,7 @@ import { render } from '@testing-library/react';
 import HomePage from "../../../src/client/pages/home/Home"
 import { player_instance1, room2, room1 } from "../helpers/data";
 import { TestAppAlertProvider } from "../helpers/alertContext";
-import { TestAppRoomsProvider } from "../helpers/roomsContext";
+import { TestAppRoomsProvider } from "../helpers/RoomsContext";
 import { TestAppSocketProvider } from "../helpers/socketContext";
 import { TestAppUserProvider } from "../helpers/userContext";
 

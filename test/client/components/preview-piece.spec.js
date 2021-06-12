@@ -1,7 +1,7 @@
 import React from "react";
 import '@testing-library/jest-dom/extend-expect';
 import Enzyme, { shallow } from "enzyme";
-import PreviewPiece from '../../../src/client/components/previewPiece'
+import PreviewPiece from '../../../src/client/components/PreviewPiece'
 import Adapter from "enzyme-adapter-react-16";
 import { render } from '@testing-library/react'
 

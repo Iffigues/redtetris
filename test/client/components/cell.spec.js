@@ -2,7 +2,7 @@ import React from "react";
 import '@testing-library/jest-dom/extend-expect';
 import Enzyme, { shallow } from "enzyme";
 import { render } from '@testing-library/react'
-import Cell from '../../../src/client/components/cell'
+import Cell from '../../../src/client/components/Cell'
 import Adapter from "enzyme-adapter-react-16";
 
 Enzyme.configure({ adapter: new Adapter() });

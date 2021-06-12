@@ -10,7 +10,7 @@ import { Context as RoomsContext } from "../../../src/client/context/RoomsContex
 import { TestAppUserProvider } from "../helpers/userContext";
 import { player_instance1, rooms_instance, visitor_player, room1, player_visitor_instance } from '../helpers/data'
 import { TestAppSocketProvider } from "../helpers/socketContext";
-import { TestAppRoomsProvider } from "../helpers/roomsContext";
+import { TestAppRoomsProvider } from "../helpers/RoomsContext";
 
 
 Enzyme.configure({ adapter: new Adapter() });

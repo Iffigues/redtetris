@@ -3,7 +3,7 @@ import _ from 'lodash'
 import '@testing-library/jest-dom/extend-expect';
 import { render } from '@testing-library/react'
 import { shallow } from 'enzyme';
-import Preview from '../../../src/client/components/preview'
+import Preview from '../../../src/client/components/Preview'
 import { player_instance1, room1 } from "../helpers/data";
 
 describe('Preview component', () => {

@@ -8,7 +8,7 @@ import { render, fireEvent } from '@testing-library/react'
 import Adapter from "enzyme-adapter-react-16";
 import Room from '../../../../src/client/pages/_room/Room'
 import { TestAppAlertProvider } from "../../helpers/alertContext";
-import { TestAppRoomsProvider } from "../../helpers/roomsContext";
+import { TestAppRoomsProvider } from "../../helpers/RoomsContext";
 import { TestAppSocketProvider } from "../../helpers/socketContext";
 import { TestAppUserProvider } from "../../helpers/userContext";
 import { describe, expect } from "@jest/globals";

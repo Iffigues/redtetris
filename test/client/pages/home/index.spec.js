@@ -4,7 +4,7 @@ import { render, fireEvent } from '@testing-library/react'
 import HomePage from "../../../../src/client/pages/home/Home"
 import { Context as RoomsContext } from "../../../../src/client/context/RoomsContext";
 import { TestAppAlertProvider } from "../../helpers/alertContext";
-import { TestAppRoomsProvider } from "../../helpers/roomsContext";
+import { TestAppRoomsProvider } from "../../helpers/RoomsContext";
 import { TestAppSocketProvider } from "../../helpers/socketContext";
 import { TestAppUserProvider } from "../../helpers/userContext";
 import { describe, expect } from "@jest/globals";
