@@ -27,7 +27,7 @@ class SocketsManager {
     })
     socket.on('disconnect', () => {
       if (process.env.NODE_ENV !== "test" && Object.keys(sockets).includes(socket.id)) {
-        console.log("disconnected ???")
+        console.log("disconnected")
         const { uuidUser, channel } = sockets[socket.id]
 
         const date = new Date()
